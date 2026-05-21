@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mathis – Game Designer</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg: #0a0a0f;
+  --bg-card: #12121a;
+  --bg-card-hover: #1a1a26;
+  --text: #e8e6e3;
+  --text-muted: #8a8a9a;
+  --accent: #c9f24d;
+  --accent-dim: #a3c43e;
+  --border: #2a2a3a;
+  --font-display: 'Syne', sans-serif;
+  --font-body: 'Source Sans 3', sans-serif;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* ── NAV ── */
+nav {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 100;
+  padding: 1.2rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(10, 10, 15, 0.85);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+}
+
+nav .logo {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.1rem;
+  letter-spacing: -0.02em;
+  color: var(--accent);
+  text-decoration: none;
+}
+
+nav .nav-links { display: flex; gap: 2rem; }
+
+nav .nav-links a {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  transition: color 0.3s;
+}
+
+nav .nav-links a:hover { color: var(--accent); }
+
+/* ── PAGES ── */
+.page { display: none; min-height: 100vh; }
+.page.active { display: block; }
+
+/* ── HERO ── */
+.hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 8rem 3rem 4rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -40%;
+  right: -20%;
+  width: 700px;
+  height: 700px;
+  background: radial-gradient(circle, rgba(201, 242, 77, 0.06) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.hero-badge {
+  display: inline-block;
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--accent);
+  border: 1px solid rgba(201, 242, 77, 0.3);
+  padding: 0.4rem 1rem;
+  border-radius: 2px;
+  margin-bottom: 2rem;
+  width: fit-content;
+  animation: fadeInUp 0.8s ease-out both;
+}
+
+.hero h1 {
+  font-family: var(--font-display);
+  font-size: clamp(2.8rem, 7vw, 5.5rem);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  margin-bottom: 1.5rem;
+  animation: fadeInUp 0.8s ease-out 0.15s both;
+}
+
+.hero h1 span { color: var(--accent); }
+
+.hero-sub {
+  font-size: 1.15rem;
+  color: var(--text-muted);
+  max-width: 520px;
+  line-height: 1.7;
+  animation: fadeInUp 0.8s ease-out 0.3s both;
+}
+
+.hero-links {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2.5rem;
+  animation: fadeInUp 0.8s ease-out 0.45s both;
+}
+
+.hero-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.7rem 1.5rem;
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: none;
+  border-radius: 3px;
+  transition: all 0.3s;
+  letter-spacing: 0.02em;
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: var(--bg);
+}
+
+.btn-primary:hover {
+  background: #d4f76a;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(201, 242, 77, 0.2);
+}
+
+.btn-outline {
+  border: 1px solid var(--border);
+  color: var(--text);
+}
+
+.btn-outline:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* ── PROJECTS SECTION ── */
+.projects {
+  padding: 6rem 3rem 8rem;
+}
+
+.section-label {
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.8rem;
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  margin-bottom: 3.5rem;
+}
+
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1.5rem;
+}
+
+.project-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.2, 0, 0, 1);
+  cursor: pointer;
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+.project-card:hover {
+  background: var(--bg-card-hover);
+  border-color: rgba(201, 242, 77, 0.3);
+  transform: translateY(-4px);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.4);
+}
+
+.project-thumb {
+  width: 100%;
+  aspect-ratio: 16/10;
+  background: #1a1a26;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--border);
+  position: relative;
+  overflow: hidden;
+}
+
+.project-thumb::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(201, 242, 77, 0.03), transparent);
+}
+
+.project-info { padding: 1.5rem; }
+
+.project-tag {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent-dim);
+  margin-bottom: 0.5rem;
+}
+
+.project-info h3 {
+  font-family: var(--font-display);
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.01em;
+}
+
+.project-info p {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+.project-arrow {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 1rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--accent-dim);
+  transition: color 0.3s;
+}
+
+.project-card:hover .project-arrow { color: var(--accent); }
+
+/* ── ABOUT ── */
+.about {
+  padding: 6rem 3rem 8rem;
+  border-top: 1px solid var(--border);
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: start;
+}
+
+.about-text p {
+  color: var(--text-muted);
+  font-size: 1.05rem;
+  line-height: 1.8;
+  margin-bottom: 1.2rem;
+}
+
+.skill-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-top: 2rem;
+}
+
+.skill-tag {
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  padding: 0.4rem 0.9rem;
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  color: var(--text-muted);
+  transition: all 0.3s;
+}
+
+.skill-tag:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.about-details { display: flex; flex-direction: column; gap: 1.5rem; }
+
+.detail-block h4 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 0.9rem;
+  margin-bottom: 0.3rem;
+}
+
+.detail-block p {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+/* ── CONTACT ── */
+.contact {
+  padding: 6rem 3rem 4rem;
+  border-top: 1px solid var(--border);
+  text-align: center;
+}
+
+.contact h2 {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.contact p {
+  color: var(--text-muted);
+  margin-bottom: 2rem;
+  font-size: 1.05rem;
+}
+
+.contact-links { display: flex; gap: 1.5rem; justify-content: center; flex-wrap: wrap; }
+
+.contact-links a {
+  color: var(--text);
+  text-decoration: none;
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 0.6rem 1.2rem;
+  border: 1px solid var(--border);
+  border-radius: 3px;
+  transition: all 0.3s;
+}
+
+.contact-links a:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* ── FOOTER ── */
+footer {
+  padding: 2rem 3rem;
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+/* ═══════════════════════════════════
+   BOARD GAME CASE STUDY PAGE
+   ═══════════════════════════════════ */
+
+.case-hero {
+  padding: 10rem 3rem 4rem;
+  position: relative;
+}
+
+.case-hero::before {
+  content: '';
+  position: absolute;
+  top: -20%;
+  left: -10%;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(201, 242, 77, 0.05) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.case-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-bottom: 2.5rem;
+  transition: color 0.3s;
+  cursor: pointer;
+}
+
+.case-back:hover { color: var(--accent); }
+
+.case-meta {
+  display: flex;
+  gap: 2rem;
+  margin-top: 2rem;
+  flex-wrap: wrap;
+}
+
+.meta-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.meta-label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent-dim);
+}
+
+.meta-value {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.case-hero h1 {
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 5vw, 3.8rem);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  margin-bottom: 1rem;
+}
+
+.case-hero .hero-sub { max-width: 600px; }
+
+/* Case Study Image Placeholder */
+.case-image-full {
+  width: 100%;
+  max-width: 960px;
+  margin: 3rem auto;
+  padding: 0 3rem;
+}
+
+.case-image-full .img-placeholder {
+  width: 100%;
+  aspect-ratio: 16/9;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* Case Study Content */
+.case-content {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 3rem 3rem 6rem;
+}
+
+.case-content h2 {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin-top: 3.5rem;
+  margin-bottom: 1rem;
+  letter-spacing: -0.01em;
+  position: relative;
+  padding-left: 1.2rem;
+}
+
+.case-content h2::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.25em;
+  width: 3px;
+  height: 1em;
+  background: var(--accent);
+  border-radius: 2px;
+}
+
+.case-content p {
+  color: var(--text-muted);
+  font-size: 1.05rem;
+  line-height: 1.8;
+  margin-bottom: 1.2rem;
+}
+
+.case-content ul {
+  color: var(--text-muted);
+  font-size: 1.05rem;
+  line-height: 1.8;
+  margin-bottom: 1.2rem;
+  padding-left: 1.5rem;
+}
+
+.case-content ul li { margin-bottom: 0.5rem; }
+
+.case-gallery {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin: 2rem 0;
+}
+
+.case-gallery .img-placeholder {
+  aspect-ratio: 4/3;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.highlight-box {
+  background: var(--bg-card);
+  border-left: 3px solid var(--accent);
+  padding: 1.5rem 2rem;
+  margin: 2rem 0;
+  border-radius: 0 4px 4px 0;
+}
+
+.highlight-box p {
+  color: var(--text);
+  font-style: italic;
+  margin: 0;
+}
+
+.download-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  padding: 0.7rem 1.5rem;
+  background: var(--accent);
+  color: var(--bg);
+  text-decoration: none;
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  font-weight: 600;
+  border-radius: 3px;
+  transition: all 0.3s;
+}
+
+.download-link:hover {
+  background: #d4f76a;
+  transform: translateY(-2px);
+}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 768px) {
+  nav { padding: 1rem 1.5rem; }
+  nav .nav-links { gap: 1rem; }
+  nav .nav-links a { font-size: 0.8rem; }
+  .hero, .projects, .about, .contact, .case-hero { padding-left: 1.5rem; padding-right: 1.5rem; }
+  .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+  .hero-links { flex-direction: column; }
+  .case-gallery { grid-template-columns: 1fr; }
+  .case-content { padding-left: 1.5rem; padding-right: 1.5rem; }
+  .case-image-full { padding: 0 1.5rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ NAVIGATION ═══ -->
+<nav>
+  <a href="#" class="logo" onclick="showPage('home')">MATHIS</a>
+  <div class="nav-links">
+    <a href="#" onclick="showPage('home')">Projekte</a>
+    <a href="#about" onclick="showPage('home')">Über mich</a>
+    <a href="#contact" onclick="showPage('home')">Kontakt</a>
+  </div>
+</nav>
+
+<!-- ═════════════════════════════════
+     HOME / LANDING PAGE
+     ═════════════════════════════════ -->
+<div id="page-home" class="page active">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-badge">Portfolio 2026</div>
+    <h1>Mathis<br><span>Game Designer</span></h1>
+    <p class="hero-sub">
+      Core Game Designer mit Fokus auf kooperative Spielmechaniken, 
+      Spielbalance und durchdachte Spielerfahrungen – vom Brettspiel bis zum digitalen Prototyp.
+    </p>
+    <div class="hero-links">
+      <a href="#projects" class="btn-primary">Projekte ansehen ↓</a>
+      <a href="#contact" class="btn-outline">Kontakt</a>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section class="projects" id="projects">
+    <p class="section-label">Ausgewählte Arbeiten</p>
+    <h2 class="section-title">Projekte</h2>
+    <div class="project-grid">
+
+      <!-- Card 1: Brettspiel (links to case study) -->
+      <a class="project-card" onclick="showPage('boardgame')">
+        <div class="project-thumb">Bild / Foto einfügen</div>
+        <div class="project-info">
+          <p class="project-tag">Brettspiel · Game Design</p>
+          <h3>[Titel deines Brettspiels]</h3>
+          <p>Kooperatives Kartenspiel für 1–4 Spieler. Komplettes Design von der Idee bis zum fertigen Produkt.</p>
+          <div class="project-arrow">Case Study lesen →</div>
+        </div>
+      </a>
+
+      <!-- Card 2: Spielprototyp (links to itch.io) -->
+      <a class="project-card" href="https://dein-name.itch.io/dein-prototyp" target="_blank">
+        <div class="project-thumb">Screenshot einfügen</div>
+        <div class="project-info">
+          <p class="project-tag">Digitaler Prototyp · Unity / Godot</p>
+          <h3>[Titel deines Prototyps]</h3>
+          <p>Kurze Beschreibung deines Spielprototyps – Genre, Kernmechanik, was ihn besonders macht.</p>
+          <div class="project-arrow">Auf itch.io spielen →</div>
+        </div>
+      </a>
+
+      <!-- Card 3: 3D-Modell (links to ArtStation/Sketchfab) -->
+      <a class="project-card" href="https://www.artstation.com/dein-name" target="_blank">
+        <div class="project-thumb">Render einfügen</div>
+        <div class="project-info">
+          <p class="project-tag">3D Art · Blender</p>
+          <h3>[Titel deines 3D-Projekts]</h3>
+          <p>Kurze Beschreibung deines 3D-Modells – was du modelliert hast, Stil, technische Details.</p>
+          <div class="project-arrow">Auf ArtStation ansehen →</div>
+        </div>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="about" id="about">
+    <p class="section-label">Über mich</p>
+    <h2 class="section-title">Wer ich bin</h2>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>
+          Hier erzählst du in 2–3 Absätzen etwas über dich: Wer bist du? 
+          Was treibt dich an? Was fasziniert dich an Game Design? 
+          Erwähne deine Erfahrung bei Hidden Games und dein Studium.
+        </p>
+        <p>
+          Beschreibe deine Design-Philosophie. Du interessierst dich besonders 
+          für kooperative Spiele, für Balancing und dafür, wie Spielmechaniken 
+          bei unterschiedlichen Spieleranzahlen funktionieren.
+        </p>
+        <div class="skill-tags">
+          <span class="skill-tag">Game Design</span>
+          <span class="skill-tag">Kooperative Spiele</span>
+          <span class="skill-tag">Balancing</span>
+          <span class="skill-tag">Brettspieldesign</span>
+          <span class="skill-tag">Prototyping</span>
+          <span class="skill-tag">Blender</span>
+          <span class="skill-tag">Unity / Godot</span>
+          <span class="skill-tag">Spielanalyse</span>
+        </div>
+      </div>
+      <div class="about-details">
+        <div class="detail-block">
+          <h4>Ausbildung</h4>
+          <p>B.A. Game Design – IU Internationale Hochschule<br>Spezialisierung: Core Game Designer</p>
+        </div>
+        <div class="detail-block">
+          <h4>Berufserfahrung</h4>
+          <p>Hidden Games – [deine Rolle/Tätigkeit]</p>
+        </div>
+        <div class="detail-block">
+          <h4>Sprachen</h4>
+          <p>Deutsch (Muttersprache), Englisch</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact" id="contact">
+    <p class="section-label">Kontakt</p>
+    <h2>Lass uns reden</h2>
+    <p>Interesse an einer Zusammenarbeit oder Fragen zu meiner Arbeit?</p>
+    <div class="contact-links">
+      <a href="mailto:deine@email.de">✉ E-Mail</a>
+      <a href="https://www.linkedin.com/in/dein-profil" target="_blank">LinkedIn</a>
+      <a href="https://dein-name.itch.io" target="_blank">itch.io</a>
+      <a href="https://www.artstation.com/dein-name" target="_blank">ArtStation</a>
+    </div>
+  </section>
+
+  <footer>
+    <span>© 2026 Mathis</span>
+    <span>Game Designer</span>
+  </footer>
+
+</div>
+
+<!-- ═════════════════════════════════
+     BOARD GAME CASE STUDY PAGE
+     ═════════════════════════════════ -->
+<div id="page-boardgame" class="page">
+
+  <section class="case-hero">
+    <a class="case-back" onclick="showPage('home')">← Zurück zur Übersicht</a>
+    <p class="section-label">Case Study · Brettspiel</p>
+    <h1>[Titel deines Brettspiels]</h1>
+    <p class="hero-sub">
+      Ein kooperatives Kartenspiel für 1–4 Spieler. Hier beschreibst du in einem Satz, 
+      worum es geht und was das Spiel besonders macht.
+    </p>
+    <div class="case-meta">
+      <div class="meta-item">
+        <span class="meta-label">Zeitraum</span>
+        <span class="meta-value">2025 – 2026</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Rolle</span>
+        <span class="meta-value">Game Designer</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Typ</span>
+        <span class="meta-value">Kooperatives Kartenspiel</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Spieleranzahl</span>
+        <span class="meta-value">1 – 4</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="case-image-full">
+    <div class="img-placeholder">Hero-Bild des Spiels einfügen (z.B. Foto der Spielbox oder Spielsituation)</div>
+  </div>
+
+  <div class="case-content">
+
+    <h2>Überblick</h2>
+    <p>
+      Hier beschreibst du das Spiel in 2–3 Sätzen: Was ist die Prämisse? 
+      Was erleben die Spieler? Was ist das Ziel? Dieser Abschnitt gibt dem 
+      Leser sofort ein Bild davon, was dein Spiel ist.
+    </p>
+
+    <h2>Die Idee</h2>
+    <p>
+      Woher kam die Inspiration? Welches Problem wolltest du lösen oder 
+      welche Erfahrung wolltest du erschaffen? Beschreibe den Ausgangspunkt 
+      und deine initiale Vision für das Spiel.
+    </p>
+
+    <h2>Kernmechaniken</h2>
+    <p>
+      Erkläre die wichtigsten Spielmechaniken. Wie funktioniert das Spiel? 
+      Was macht es als kooperatives Erlebnis besonders?
+    </p>
+    <ul>
+      <li><strong>Mechanik 1:</strong> Beschreibung der Mechanik</li>
+      <li><strong>Mechanik 2:</strong> Beschreibung der Mechanik</li>
+      <li><strong>Mechanik 3:</strong> Beschreibung der Mechanik</li>
+    </ul>
+
+    <div class="case-gallery">
+      <div class="img-placeholder">Karten-Beispiele</div>
+      <div class="img-placeholder">Spielbrett / Setup</div>
+    </div>
+
+    <h2>Design-Prozess</h2>
+    <p>
+      Beschreibe deinen Prozess: Von der ersten Idee über Papierprototypen 
+      bis zum fertigen Spiel. Welche Schritte hast du durchlaufen? 
+      Welche Design-Entscheidungen waren besonders wichtig?
+    </p>
+
+    <div class="highlight-box">
+      <p>
+        „Hier kannst du ein besonders prägnantes Learning oder eine wichtige 
+        Design-Erkenntnis hervorheben, die du während des Projekts gewonnen hast."
+      </p>
+    </div>
+
+    <h2>Playtesting & Iteration</h2>
+    <p>
+      Wie hast du getestet? Welches Feedback hast du bekommen? 
+      Was hast du daraufhin geändert? Zeige, dass du iterativ arbeitest 
+      und auf Feedback reagierst – das ist für Arbeitgeber sehr wichtig.
+    </p>
+
+    <div class="case-gallery">
+      <div class="img-placeholder">Playtest-Foto 1</div>
+      <div class="img-placeholder">Playtest-Foto 2</div>
+    </div>
+
+    <h2>Skalierung & Balance</h2>
+    <p>
+      Wie funktioniert das Spiel mit unterschiedlichen Spieleranzahlen? 
+      Welche Anpassungen hast du vorgenommen, damit es zu zweit genauso 
+      gut funktioniert wie zu viert? Dieser Abschnitt zeigt deine 
+      analytische Stärke als Game Designer.
+    </p>
+
+    <h2>Ergebnis & Learnings</h2>
+    <p>
+      Was ist das fertige Produkt? Was hast du gelernt? 
+      Was würdest du beim nächsten Mal anders machen? 
+      Selbstreflexion zeigt Reife und professionelles Denken.
+    </p>
+
+    <a href="#" class="download-link">↓ Spielregeln als PDF herunterladen</a>
+
+  </div>
+
+  <footer>
+    <span>© 2026 Mathis</span>
+    <span>Game Designer</span>
+  </footer>
+
+</div>
+
+<!-- ═══ PAGE ROUTING ═══ -->
+<script>
+function showPage(page) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + page).classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// Smooth scroll for anchor links on home page
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function(e) {
+    const target = this.getAttribute('href');
+    if (target !== '#' && document.querySelector(target)) {
+      e.preventDefault();
+      document.querySelector(target).scrollIntoView({ behavior: 'smooth' });
+    }
+  });
+});
+</script>
+
+</body>
+</html>
