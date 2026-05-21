@@ -944,24 +944,103 @@ Wenn ich die ursprüngliche Vision auf ein einziges Designziel verdichte, dann i
 </div>
 
     <div class="case-gallery">
-      <div class="img-placeholder">Playtest-Foto 1</div>
-      <div class="img-placeholder">Playtest-Foto 2</div>
-    </div>
+  <img src="images/Playtest_Digital.png" alt="Digitaler Playtest in TTS" style="width:100%; border-radius:4px;">
+  <img src="images/Playtest_Analog.jpg" alt="Analoger Playtest" style="width:100%; border-radius:4px;">
+</div>
 
     <h2>Skalierung & Balance</h2>
-    <p>
-      Wie funktioniert das Spiel mit unterschiedlichen Spieleranzahlen? 
-      Welche Anpassungen hast du vorgenommen, damit es zu zweit genauso 
-      gut funktioniert wie zu viert? Dieser Abschnitt zeigt deine 
-      analytische Stärke als Game Designer.
-    </p>
+
+<h3>Die zentrale Herausforderung</h3>
+<p>
+  Das Grundproblem jeder kooperativen Skalierung lautet: Mehr Spieler bedeuten nicht einfach mehr Spaß, sondern mehr Handlungskapazität. Vier Spieler haben pro Runde rund das Vierfache an Aktionen zur Verfügung wie ein einzelner. Wenn ich nichts dagegen unternehme, wird das Spiel zu viert trivial, während es solo eine echte Herausforderung bleibt. Meine Aufgabe war es also, dafür zu sorgen, dass sich der Schwierigkeitsgrad über alle Spielerzahlen hinweg vergleichbar anfühlt, ohne für jede Spielerzahl ein eigenes Spiel zu bauen.
+</p>
+<p>
+  Mein wichtigstes analytisches Werkzeug dabei war die Unterscheidung zwischen Elementen, die ohnehin schon mit der Spielerzahl mitwachsen, und Elementen, die das nicht tun. Nur Letztere müssen aktiv skaliert werden. Diese Unterscheidung hat mich vor der häufigsten Falle bewahrt: der <strong>Doppelskalierung</strong>, bei der ein Element gleich zweifach erschwert wird und das Spiel dadurch unfair hart wird.
+</p>
+
+<h3>Die hybride Spielstruktur als Fundament</h3>
+<p>
+  Bevor ich einzelne Werte skaliert habe, musste die Grundstruktur stimmen. Ich habe mich für eine <strong>hybrid-simultane Spielstruktur</strong> entschieden. Die gemeinsamen Phasen – das Ausrichten der Maschine, das Ziehen der Wetterkarte und das Rundenende – erleben alle Spieler zusammen. Die Aktionsphase dagegen läuft sequenziell ab: Jeder Spieler spielt seinen eigenen Zug mit seinen eigenen fünf Aktionsmarkern.
+</p>
+<p>
+  Diese Entscheidung war analytisch motiviert. Eine vollständig simultane Struktur hätte das gesamte Solo-Regelwerk zerstört und unzählige Konfliktfälle erzeugt. Die hybride Struktur bewahrt dagegen rund neunzig Prozent des bestehenden Solo-Systems und macht das Spiel überhaupt erst sauber skalierbar. Sie löst außerdem das verbreitete Quarterback-Problem, bei dem ein dominanter Spieler allen anderen ihre Züge diktiert, weil jeder Spieler einen klar abgegrenzten eigenen Handlungsmoment hat.
+</p>
+
+<h3>Was ich skaliere – und was bewusst nicht</h3>
+<p>
+  Ich habe die Spielelemente systematisch danach sortiert, ob und wie sie mit der Spielerzahl wachsen.
+</p>
+<p>
+  Die <strong>Aktionsmarker pro Spieler</strong> bleiben konstant bei fünf. Sie dürfen nicht skaliert werden, weil die zusätzliche Handlungskapazität genau das ist, was mehr Spieler ausmacht. Hier liegt die Quelle des Problems, nicht seine Lösung.
+</p>
+<p>
+  Die <strong>Siegziele der Szenarien</strong> skalieren mit der Spielerzahl, allerdings bewusst nicht streng linear. Vier Spieler sind spielmechanisch nicht viermal so stark wie einer, sondern eher drei- bis dreieinhalbmal, weil ein Teil ihrer Aktionen in Koordination, Transport und Synergien fließt.
+</p>
+<p>
+  Die <strong>Effekte der Wetterkarten</strong> skalieren mit der Spielerzahl, weil die Gruppe insgesamt mehr Ressourcen besitzt und daher proportional mehr verlieren muss, damit die Bedrohung gleich schwer wiegt.
+</p>
+<p>
+  Die <strong>Werkzeugpreise</strong> skalieren linear – doppelter Preis bei zwei Spielern, vierfacher bei vier. Das ist hier korrekt, weil ein Werkzeug einen globalen Bonus gibt, von dem die ganze Gruppe profitiert. Der Preis spiegelt also den tatsächlichen Nutzen wider.
+</p>
+<p>
+  <strong>Bewusst nicht skaliert</strong> habe ich dagegen die Anzahl der Schuppenteile. Genau hier hätte die Doppelskalierung zugeschlagen, denn da die Werkzeugpreise bereits mit der Spielerzahl steigen, sind drei Schuppenteile zu viert schon automatisch viermal so teuer wie solo. Eine zusätzliche Erhöhung wäre eine doppelte Bestrafung gewesen. Diese Einsicht habe ich zum allgemeinen Prinzip erhoben: <em>Ein Element, das bereits über einen anderen Mechanismus skaliert, wird nicht ein zweites Mal skaliert.</em>
+</p>
+
+<h3>Drei Detailprobleme und ihre Lösungen</h3>
+<p>
+  Das erste betraf die <strong>Aktionskarten</strong>. Bei vier Spielern werden durch die höhere Aktionskapazität viel mehr Karten gezogen, was die Stapel leeren und starke Effekte inflationär machen würde. Statt die Effekte pauschal abzuschwächen, habe ich die Karten in drei Typen unterteilt: Reine Ressourcenboni bleiben unverändert, strukturelle Effekte bleiben bewusst selten und werden bei höherer Spielerzahl nicht vervielfacht. Nur die Stapelgröße selbst wächst moderat – und zwar ausschließlich mit schwachen Karten.
+</p>
+<p>
+  Das zweite betraf die <strong>langfristigen Aktionen</strong>. Vier Spieler könnten eine mehrstufige Aktion in einer einzigen Runde abschließen, was die Risiko- und Zeitabwägung zerstören würde. Meine Lösung: Pro Runde darf nur ein Spieler an einer bestimmten langfristigen Aktion arbeiten. Der Fortschritt bleibt bewusst gedrosselt.
+</p>
+<p>
+  Das dritte betraf die <strong>Achievements</strong>, die als Gruppe verdient werden und dadurch zu viert oft leichter zu erreichen wären. Achievements, die unabhängig von der Spielerzahl sind, bleiben gleich. Nur die spielerzahl-abhängigen Achievements bekommen mild ansteigende Schwellen.
+</p>
+
+<h3>Persönliches Inventar als bewusst eingeführtes Reibungselement</h3>
+<p>
+  Eine Anpassung möchte ich besonders hervorheben, weil sie zeigt, dass Skalierung nicht nur Erschwerung bedeutet, sondern auch <strong>neue Mechanik schaffen kann</strong>. Im Koop sammeln die Spieler Ressourcen zunächst in ein persönliches Inventar und übertragen sie erst am Rundenende ins gemeinsame Lager. Damit habe ich gezielt ein Logistikproblem eingeführt. Das persönliche Inventar zwingt jeden Spieler, seine eigenen Transportwege zu planen, und macht die Bewegung über die Insel zu einer echten taktischen Entscheidung.
+</p>
+
+<div class="highlight-box">
+  <p>
+    Skalierung ist für mich kein nachträgliches Anpassen von Zahlen, sondern eine analytische Disziplin. Ich gehe jedes Spielelement einzeln durch und frage, ob es bereits mitwächst, ob es linear oder unterproportional skalieren muss und ob eine Skalierung andere Mechaniken bricht. Genauso wichtig ist mir zu wissen, wann ich <em>nicht</em> skalieren darf. Die Entscheidung gegen die Skalierung der Schuppenteile war analytisch genauso wertvoll wie jede aktive Anpassung, weil sie eine Doppelbestrafung verhindert hat.
+  </p>
+</div>
 
     <h2>Ergebnis & Learnings</h2>
-    <p>
-      Was ist das fertige Produkt? Was hast du gelernt? 
-      Was würdest du beim nächsten Mal anders machen? 
-      Selbstreflexion zeigt Reife und professionelles Denken.
-    </p>
+
+<h3>Was ich gelernt habe</h3>
+<p>
+  Das wichtigste Learning aus diesem Projekt ist die Disziplin, eine Idee bewusst zu verkleinern, bevor ich sie vergrößere. Ich habe einen ganzen Spielmodus gestrichen, ein komplettes Ressourcensystem ausgetauscht und Schwächen meines eigenen Entwurfs offen benannt, statt sie zu beschönigen. Erst als das Fundament aus ausrichtbarer Maschine, Ressourcenkreislauf und Katastrophenleiste in sich stimmig war, konnte ich darauf verlässlich aufbauen.
+</p>
+<p>
+  Daneben habe ich gelernt, Designentscheidungen nicht allein aus dem Bauchgefühl zu treffen, sondern sie aus Personas, einer Spaß- und Frustanalyse und konkreten Kennzahlen herzuleiten. Und ich habe verstanden, dass Skalierung eine eigene analytische Disziplin ist, bei der das bewusste Nicht-Skalieren genauso wichtig sein kann wie die aktive Anpassung.
+</p>
+
+<h3>Was ich beim nächsten Mal anders machen würde</h3>
+<p>
+  Am deutlichsten würde ich <strong>früher und breiter mit unabhängigen Personen testen</strong>. Mein größter blinder Fleck war die Betriebsblindheit des Solo-Entwicklers. Ich habe vieles selbst getestet und analytisch über Kennzahlen abgesichert, aber zu wenig echtes Feedback von außen eingeholt – besonders bei den späteren und schwierigeren Szenarien.
+</p>
+<p>
+  Beim nächsten Mal würde ich von Anfang an ein strukturiertes Testprogramm mit verschiedenen Gruppen und Spielerzahlen einplanen, statt es ans Ende zu schieben. Außerdem würde ich die Komplexität noch konsequenter portionieren und neue Systeme erst dann hinzufügen, wenn das darunterliegende empirisch – und nicht nur rechnerisch – abgesichert ist.
+</p>
+
+<h3>Aktueller Stand und Ausblick</h3>
+<p>
+  Die Wettermaschine ist aktuell ein vollständig konzipiertes und spielbares Projekt, das ich mitten in der Weiterentwicklung habe. Das Solo-Spiel ist durchdesignt, dokumentiert und sowohl als physischer als auch als digitaler Prototyp spielbar. Derzeit erweitere ich es um einen kooperativen Modus mit eigenen Charakteren und um ein tiefergehendes Kampagnensystem mit freischaltbaren Verbesserungen und Achievements.
+</p>
+<p>
+  Wichtig zu wissen ist, dass das Spielregelheft noch nicht den aktuellsten Entwicklungsstand abbildet, sondern bisher auf den Solomodus begrenzt ist. Interessierte können die Anleitung gerne herunterladen, um einen Einblick in das bisherige Fundament zu bekommen.
+</p>
+
+<div class="highlight-box">
+  <p>
+    Der nächste große Schritt ist ein strukturiertes, unabhängiges Testprogramm, mit dem ich die bislang analytisch hergeleiteten Werte des Koop- und Kampagnenmodus empirisch absichern und das Spiel Schicht für Schicht zu einer runden Gesamterfahrung führen will.
+  </p>
+</div>
+
+<a href="images/Wettermaschine_Anleitung.pdf" class="download-link" target="_blank">↓ Spielregeln als PDF herunterladen</a>
 
     <a href="#" class="download-link">↓ Spielregeln als PDF herunterladen</a>
 
