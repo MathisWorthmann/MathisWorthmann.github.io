@@ -20,7 +20,7 @@ const translations = {
   "projects-label": "Selected Work",
   "projects-title": "Projects",
   "project1-tag": "Board Game · Game Design",
-  "project1-name": "Die Wettermaschine",
+  "project1-name": "Die Wettermaschine (The weather machine)",
   "project1-desc": "Cooperative board game for 1–4 players. Complete design from concept to finished product.",
   "project1-arrow": "Read Case Study →",
   "project2-tag": "Digital Prototype · Unity",
