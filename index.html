@@ -516,6 +516,16 @@ footer {
   border-radius: 2px;
 }
 
+.case-content h2 + h3 { margin-top: 0; }
+
+.case-content h3 {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin-top: 2.5rem;
+  margin-bottom: 0.8rem;
+}
+
 .case-content p {
   color: var(--text-muted);
   font-size: 1.05rem;
@@ -617,9 +627,10 @@ footer {
 <nav>
   <a href="#" class="logo" onclick="showPage('home')">MATHIS</a>
   <div class="nav-links">
-    <a href="#projects" onclick="showPage('home')">Projekte</a>
-    <a href="#about" onclick="showPage('home')">Über mich</a>
-    <a href="#contact" onclick="showPage('home')">Kontakt</a>
+    <a href="#projects" onclick="showPage('home')" data-i18n="nav-projects">Projekte</a>
+    <a href="#about" onclick="showPage('home')" data-i18n="nav-about">Über mich</a>
+    <a href="#contact" onclick="showPage('home')" data-i18n="nav-contact">Kontakt</a>
+    <a href="#" id="lang-toggle" style="color:var(--accent);font-weight:600;">EN</a>
   </div>
 </nav>
 
@@ -630,60 +641,60 @@ footer {
 
   <!-- HERO -->
   <section class="hero">
-    <div class="hero-badge">Portfolio</div>
+    <div class="hero-badge" data-i18n="hero-badge">Portfolio</div>
     <h1>Mathis<br><span>Game Designer</span></h1>
-    <p class="hero-sub">
+    <p class="hero-sub" data-i18n="hero-sub">
       Core Game Designer mit Fokus auf kooperative Spielmechaniken, 
       Spielbalance und durchdachte Spielerfahrungen – vom Brettspiel bis zum digitalen Prototyp.
     </p>
     <div class="hero-links">
-      <a href="#projects" class="btn-primary">Projekte ansehen ↓</a>
-      <a href="#contact" class="btn-outline">Kontakt</a>
+      <a href="#projects" class="btn-primary" data-i18n="hero-btn-projects">Projekte ansehen ↓</a>
+      <a href="#contact" class="btn-outline" data-i18n="hero-btn-contact">Kontakt</a>
     </div>
   </section>
 
   <!-- PROJECTS -->
   <section class="projects" id="projects">
-    <p class="section-label">Ausgewählte Arbeiten</p>
-    <h2 class="section-title">Projekte</h2>
+    <p class="section-label" data-i18n="projects-label">Ausgewählte Arbeiten</p>
+    <h2 class="section-title" data-i18n="projects-title">Projekte</h2>
     <div class="project-grid">
 
-      <!-- Card 1: Brettspiel (links to case study) -->
+      <!-- Card 1: Brettspiel -->
       <a class="project-card" onclick="showPage('boardgame')">
         <div class="project-thumb">
-  <img src="images/Wettermaschine_Cover.jpg" alt="Mein Brettspiel" style="width:100%; height:100%; object-fit:cover;">
-</div>
+          <img src="images/Wettermaschine_Cover.jpg" alt="Mein Brettspiel" style="width:100%; height:100%; object-fit:cover;">
+        </div>
         <div class="project-info">
-          <p class="project-tag">Brettspiel · Game Design</p>
-          <h3>Die Wettermaschine</h3>
-          <p>Kooperatives Brettspiel für 1–4 Spieler. Komplettes Design von der Idee bis zum fertigen Produkt.</p>
-          <div class="project-arrow">Case Study lesen →</div>
+          <p class="project-tag" data-i18n="project1-tag">Brettspiel · Game Design</p>
+          <h3 data-i18n="project1-name">Die Wettermaschine</h3>
+          <p data-i18n="project1-desc">Kooperatives Brettspiel für 1–4 Spieler. Komplettes Design von der Idee bis zum fertigen Produkt.</p>
+          <div class="project-arrow" data-i18n="project1-arrow">Case Study lesen →</div>
         </div>
       </a>
 
-      <!-- Card 2: Spielprototyp (links to itch.io) -->
+      <!-- Card 2: Spielprototyp -->
       <a class="project-card" href="https://mathisworthmann.itch.io/reign" target="_blank">
         <div class="project-thumb">
-  <img src="images/Reign_Cover.jpg" alt="Mein digitaler Prototyp" style="width:100%; height:100%; object-fit:cover;">
-</div>
+          <img src="images/Reign_Cover.jpg" alt="Mein digitaler Prototyp" style="width:100%; height:100%; object-fit:cover;">
+        </div>
         <div class="project-info">
-          <p class="project-tag">Digitaler Prototyp · Unity</p>
-          <h3>Reign</h3>
-          <p>Mittelalterliches Ressourcenverwaltungsspiel – Balanciere die Stände, verwalte die Macht. Das Reich steht und fällt mit deinen Entscheidungen.</p>
-          <div class="project-arrow">Auf itch.io spielen →</div>
+          <p class="project-tag" data-i18n="project2-tag">Digitaler Prototyp · Unity</p>
+          <h3 data-i18n="project2-name">Reign</h3>
+          <p data-i18n="project2-desc">Mittelalterliches Ressourcenverwaltungsspiel – Balanciere die Stände, verwalte die Macht. Das Reich steht und fällt mit deinen Entscheidungen.</p>
+          <div class="project-arrow" data-i18n="project2-arrow">Auf itch.io spielen →</div>
         </div>
       </a>
 
-      <!-- Card 3: 3D-Modell (links to ArtStation/Sketchfab) -->
+      <!-- Card 3: 3D-Modell -->
       <a class="project-card" href="https://www.artstation.com/artwork/y415x5" target="_blank">
         <div class="project-thumb">
-  <img src="images/Energiekern_Cover.png" alt="Mein 3D-Render" style="width:100%; height:100%; object-fit:cover;">
-</div>
+          <img src="images/Energiekern_Cover.png" alt="Mein 3D-Render" style="width:100%; height:100%; object-fit:cover;">
+        </div>
         <div class="project-info">
-          <p class="project-tag">3D Art · Blender</p>
-          <h3>Futuristischer Energiekern</h3>
-          <p>Entwicklung einer interaktiven Sci-Fi Szene in Unity mit selbst modellierten und texturierten Assets in Blender.</p>
-          <div class="project-arrow">Auf ArtStation ansehen →</div>
+          <p class="project-tag" data-i18n="project3-tag">3D Art · Blender</p>
+          <h3 data-i18n="project3-name">Futuristischer Energiekern</h3>
+          <p data-i18n="project3-desc">Entwicklung einer interaktiven Sci-Fi Szene in Unity mit selbst modellierten und texturierten Assets in Blender.</p>
+          <div class="project-arrow" data-i18n="project3-arrow">Auf ArtStation ansehen →</div>
         </div>
       </a>
 
@@ -692,17 +703,17 @@ footer {
 
   <!-- ABOUT -->
   <section class="about" id="about">
-    <p class="section-label">Über mich</p>
-    <h2 class="section-title">Wer ich bin</h2>
+    <p class="section-label" data-i18n="about-label">Über mich</p>
+    <h2 class="section-title" data-i18n="about-title">Wer ich bin</h2>
     <div class="about-grid">
       <div class="about-text">
-        <p>
+        <p data-i18n="about-text1">
           Ich bin Mathis, angehender Game Designer mit Spezialisierung auf Core Game Design. 
           In meinem Studium an der IU Internationale Hochschule und meiner Arbeit bei Hidden Games habe ich
           mich intensiv mit Spielmechaniken, Balancing und der Gestaltung durchdachter Spielerfahrungen beschäftigt.
           Meine Leidenschaft umfasst dabei sowohl analoge als auch digitale Spiele.
         </p>
-        <p>
+        <p data-i18n="about-text2">
           Gutes Game Design entsteht für mich, wenn Mechaniken nicht nur funktionieren, sondern ein gemeinsames Erlebnis schaffen. Ich denke Spiele von der Spielerfahrung her: 
           analytisch in der Umsetzung, aber immer mit dem Ziel, dass sich jede Entscheidung am Tisch oder am Bildschirm bedeutsam anfühlt. 
           Besonders reizen mich Spiele mit strategischer Tiefe, ob im Wettstreit gegeneinander oder im kooperativen Zusammenspiel, wo taktisches Denken über Erfolg und Niederlage entscheidet.
@@ -721,17 +732,17 @@ footer {
       </div>
       <div class="about-details">
         <div class="detail-block">
-          <h4>Ausbildung</h4>
-          <p>B.A. Game Design – IU Internationale Hochschule<br>Spezialisierung: Core Game Designer</p>
+          <h4 data-i18n="about-education-title">Ausbildung</h4>
+          <p data-i18n="about-education-text">B.A. Game Design – IU Internationale Hochschule<br>Spezialisierung: Core Game Designer</p>
         </div>
         <div class="detail-block">
-          <h4>Berufserfahrung</h4>
-          <p>Werkstudent bei Hidden Games <br>
+          <h4 data-i18n="about-experience-title">Berufserfahrung</h4>
+          <p data-i18n="about-experience-text">Werkstudent bei Hidden Games <br>
           Mitwirkung an der Entwicklung von Mystery- und Krimispielen</p>
         </div>
         <div class="detail-block">
-          <h4>Sprachen</h4>
-          <p>Deutsch (Muttersprache), Englisch</p>
+          <h4 data-i18n="about-languages-title">Sprachen</h4>
+          <p data-i18n="about-languages-text">Deutsch (Muttersprache), Englisch</p>
         </div>
       </div>
     </div>
@@ -739,9 +750,9 @@ footer {
 
   <!-- CONTACT -->
   <section class="contact" id="contact">
-    <p class="section-label">Kontakt</p>
-    <h2>Lass uns reden</h2>
-    <p>Interesse an einer Zusammenarbeit oder Fragen zu meiner Arbeit?</p>
+    <p class="section-label" data-i18n="contact-label">Kontakt</p>
+    <h2 data-i18n="contact-title">Lass uns reden</h2>
+    <p data-i18n="contact-sub">Interesse an einer Zusammenarbeit oder Fragen zu meiner Arbeit?</p>
     <div class="contact-links">
       <a href="mailto:mathis.worthmann@hotmail.com">✉ E-Mail</a>
       <a href="https://www.linkedin.com/in/mathis-worthmann-648772352/" target="_blank">LinkedIn</a>
@@ -752,7 +763,7 @@ footer {
 
   <footer>
     <span>© 2026 Mathis Worthmann</span>
-    <span>Game Designer</span>
+    <span data-i18n="footer-right">Game Designer</span>
   </footer>
 
 </div>
@@ -763,104 +774,62 @@ footer {
 <div id="page-boardgame" class="page">
 
   <section class="case-hero">
-    <a class="case-back" onclick="showPage('home')">← Zurück zur Übersicht</a>
-    <p class="section-label">Case Study · Brettspiel</p>
-    <h1>Die Wettermaschine</h1>
-    <p class="hero-sub">
+    <a class="case-back" onclick="showPage('home')" data-i18n="case-back">← Zurück zur Übersicht</a>
+    <p class="section-label" data-i18n="case-label">Case Study · Brettspiel</p>
+    <h1 data-i18n="case-title">Die Wettermaschine</h1>
+    <p class="hero-sub" data-i18n="case-sub">
       Ein kooperatives Brettspiel für 1–4 Spieler. Bändige eine fehlgeleitete Wettermaschine auf einer sturmgepeitschten Insel, bevor die Katastrophe alles verschlingt.
     </p>
     <div class="case-meta">
       <div class="meta-item">
-        <span class="meta-label">Zeitraum</span>
-        <span class="meta-value">2025 – 2026</span>
+        <span class="meta-label" data-i18n="meta-period-label">Zeitraum</span>
+        <span class="meta-value" data-i18n="meta-period-value">2025 – 2026</span>
       </div>
       <div class="meta-item">
-        <span class="meta-label">Rolle</span>
-        <span class="meta-value">Solo-Entwickler</span>
+        <span class="meta-label" data-i18n="meta-role-label">Rolle</span>
+        <span class="meta-value" data-i18n="meta-role-value">Solo-Entwickler</span>
       </div>
       <div class="meta-item">
-        <span class="meta-label">Typ</span>
-        <span class="meta-value">Kooperatives Brettspiel</span>
+        <span class="meta-label" data-i18n="meta-type-label">Typ</span>
+        <span class="meta-value" data-i18n="meta-type-value">Kooperatives Brettspiel</span>
       </div>
       <div class="meta-item">
-        <span class="meta-label">Spieleranzahl</span>
-        <span class="meta-value">1 – 4</span>
+        <span class="meta-label" data-i18n="meta-players-label">Spieleranzahl</span>
+        <span class="meta-value" data-i18n="meta-players-value">1 – 4</span>
       </div>
     </div>
   </section>
 
-<div class="case-image-full">
-  <img src="images/Wettermaschine_Cover1zu1.jpg" alt="Cover Die Wettermaschine" style="width:100%; border-radius:6px;">
-</div>
+  <div class="case-image-full">
+    <img src="images/Wettermaschine_Cover1zu1.jpg" alt="Cover Die Wettermaschine" style="width:100%; border-radius:6px;">
+  </div>
 
   <div class="case-content">
 
-    <h2>Überblick</h2>
-    <p>
-      "Die Wettermaschine" ist ein mechanik-fokussiertes, kooperatives Survival-Strategie-Kennerspiel für 1–4 Spieler, 
-      in dem die Spieler auf der abgelegenen Insel Tristan da Cunha im Jahr 1605 eine außer Kontrolle geratene Wettermaschine bändigen müssen. 
-      Sie sammeln Ressourcen, bauen die Stadt wieder auf und müssen Reparaturen durchführen, bevor der Katastrophenfortschritt die Insel zerstört. 
-      Das Spiel erstreckt sich über eine Kampagne aus neun aufeinander aufbauenden Szenarien mit freischaltbaren Upgrades und Achievements.
-    </p>
+    <h2 data-i18n="cs-overview-title">Überblick</h2>
+    <p data-i18n="cs-overview-text">"Die Wettermaschine" ist ein mechanik-fokussiertes, kooperatives Survival-Strategie-Kennerspiel für 1–4 Spieler, in dem die Spieler auf der abgelegenen Insel Tristan da Cunha im Jahr 1605 eine außer Kontrolle geratene Wettermaschine bändigen müssen. Sie sammeln Ressourcen, bauen die Stadt wieder auf und müssen Reparaturen durchführen, bevor der Katastrophenfortschritt die Insel zerstört. Das Spiel erstreckt sich über eine Kampagne aus neun aufeinander aufbauenden Szenarien mit freischaltbaren Upgrades und Achievements.</p>
 
-    <h2>Woher die Idee kam</h2>
-    <p>
-      Der Ursprung von Die Wettermaschine war kein methodischer Designprozess, sondern ein spontaner kreativer Moment. Ich lag im Bett und schlief, als ich um 6 Uhr morgens hochschreckte, und die Idee für ein eigenes Brettspiel 
-      war einfach da. 
-      Sie hielt mich wach, und das Spiel setzte sich vor meinem inneren Auge immer weiter zusammen. Das klingt ausgedacht und klischeehaft, ist aber genau so passiert.
-      Der Kern dieser ersten Vision war sofort klar umrissen: Eine Wettermaschine ist außer Kontrolle geraten und muss repariert werden, bevor sie eine Katastrophe auslöst. Das entscheidende Detail, das die Idee von Anfang an trug, 
-      war die Möglichkeit, die Maschine in verschiedene Richtungen auszurichten und damit ihre Effekte zu beeinflussen. Diese eine Mechanik ist bis heute das Herzstück des Spiels geblieben.
-    </p>
+    <h2 data-i18n="cs-idea-title">Woher die Idee kam</h2>
+    <p data-i18n="cs-idea-text">Der Ursprung von Die Wettermaschine war kein methodischer Designprozess, sondern ein spontaner kreativer Moment. Ich lag im Bett und schlief, als ich um 6 Uhr morgens hochschreckte, und die Idee für ein eigenes Brettspiel war einfach da. Sie hielt mich wach, und das Spiel setzte sich vor meinem inneren Auge immer weiter zusammen. Das klingt ausgedacht und klischeehaft, ist aber genau so passiert. Der Kern dieser ersten Vision war sofort klar umrissen: Eine Wettermaschine ist außer Kontrolle geraten und muss repariert werden, bevor sie eine Katastrophe auslöst. Das entscheidende Detail, das die Idee von Anfang an trug, war die Möglichkeit, die Maschine in verschiedene Richtungen auszurichten und damit ihre Effekte zu beeinflussen. Diese eine Mechanik ist bis heute das Herzstück des Spiels geblieben.</p>
 
-    <h2>Welche Erfahrung ich schaffen wollte</h2>
-    <p>
-      Meine initiale Vision drehte sich weniger darum, ein konkretes Problem zu lösen, als darum, ein bestimmtes Spielgefühl zu erzeugen. Rückblickend lassen sich drei Motivationen benennen, die mich angetrieben haben.
-      Erstens die Faszination für das Spiel gegen das Spiel. Ich bin bekennender Spieleliebhaber, und besonders Kennerspiele ziehen mich in ihren Bann. Mich begeistern Spiele, in denen man gegen das System antritt und es zu schlagen 
-      versucht, allein oder im Team. Daraus ergab sich fast zwangsläufig mein Genre-Entschluss: ein kooperatives Survival-Strategie-Kennerspiel.
-      Zweitens wollte ich Herausforderung mit Planbarkeit als zentrales Erlebnis verankern. Das Gefühl, das ich treffen 
-      wollte, war eine Mischung aus Bedrohung, Anspannung und der Genugtuung, übermächtige Naturgewalten am Ende doch zu bezwingen.
-      Drittens reizte mich der Effekt eines physischen Objekts, das beim Aufbau begeistert. Schon in meiner ersten Mindmap hielt ich fest, dass die Wettermaschine als Würfelturm funktionieren soll. Inspiriert von dem Spiel Flügelschlag wollte 
-      ich den Moment einfangen, in dem ein haptisches Element für ein spürbares „Woah" sorgt. Die Maschine sollte also nicht nur das Thema sein, sondern auch ein greifbares Spielobjekt.
-    </p>
+    <h2 data-i18n="cs-experience-title">Welche Erfahrung ich schaffen wollte</h2>
+    <p data-i18n="cs-experience-text">Meine initiale Vision drehte sich weniger darum, ein konkretes Problem zu lösen, als darum, ein bestimmtes Spielgefühl zu erzeugen. Rückblickend lassen sich drei Motivationen benennen, die mich angetrieben haben. Erstens die Faszination für das Spiel gegen das Spiel. Ich bin bekennender Spieleliebhaber, und besonders Kennerspiele ziehen mich in ihren Bann. Mich begeistern Spiele, in denen man gegen das System antritt und es zu schlagen versucht, allein oder im Team. Daraus ergab sich fast zwangsläufig mein Genre-Entschluss: ein kooperatives Survival-Strategie-Kennerspiel. Zweitens wollte ich Herausforderung mit Planbarkeit als zentrales Erlebnis verankern. Das Gefühl, das ich treffen wollte, war eine Mischung aus Bedrohung, Anspannung und der Genugtuung, übermächtige Naturgewalten am Ende doch zu bezwingen. Drittens reizte mich der Effekt eines physischen Objekts, das beim Aufbau begeistert. Schon in meiner ersten Mindmap hielt ich fest, dass die Wettermaschine als Würfelturm funktionieren soll. Inspiriert von dem Spiel Flügelschlag wollte ich den Moment einfangen, in dem ein haptisches Element für ein spürbares „Woah" sorgt. Die Maschine sollte also nicht nur das Thema sein, sondern auch ein greifbares Spielobjekt.</p>
 
-    <h2>Wie ich die Vision verankert habe</h2>
-    <p>
-      Anders als bei vielen Projekten kam bei mir das Setting gemeinsam mit der Spielidee, sodass es mir sogar schwerfiel, überhaupt Alternativen zu suchen. Trotzdem habe ich methodisch drei Optionen durchgespielt: ein neuzeitliches 
-      Insel-Setting, ein postapokalyptisches Ödland und ein mythisches Fantasy-Szenario. Entschieden habe ich mich für die abgelegene Insel Tristan da Cunha im Jahr 1605: ein exzentrischer Erfinder, der seine eigene Maschine 
-      bändigen muss, die er ursprünglich gebaut hatte, um die Insel sicherer und bewohnbarer zu machen.
-    </p>
-    <p>
-      Um die Idee im Genre-Kontext zu verorten, habe ich verwandte Spiele analysiert. Paleo lieferte das Vorbild für kooperatives Überleben mit Werkzeugen und einer Verlustmechanik. 
-      Harry Potter: Kampf um Hogwarts zeigte mir, wie eine Szenario-Progression mit ansteigendem Schwierigkeitsgrad funktioniert. Robinson Crusoe war besonders relevant, weil die Spieler dort 
-      wie in meiner Idee Ressourcen sammeln, Aktionen ausführen und kooperativ handeln müssen, und weil es als einziges der drei auch solo spielbar ist. Ergänzend habe ich mich von einzelnen Mechaniken aus weiteren Spielen 
-      inspirieren lassen, etwa dem Würfelturm aus Flügelschlag, der rundenabhängigen Verfügbarkeit von Orten aus Dune: Imperium und dem Aktionsmarker-System aus Time Rogue.
-    </p>
+    <h2 data-i18n="cs-anchoring-title">Wie ich die Vision verankert habe</h2>
+    <p data-i18n="cs-anchoring-text1">Anders als bei vielen Projekten kam bei mir das Setting gemeinsam mit der Spielidee, sodass es mir sogar schwerfiel, überhaupt Alternativen zu suchen. Trotzdem habe ich methodisch drei Optionen durchgespielt: ein neuzeitliches Insel-Setting, ein postapokalyptisches Ödland und ein mythisches Fantasy-Szenario. Entschieden habe ich mich für die abgelegene Insel Tristan da Cunha im Jahr 1605: ein exzentrischer Erfinder, der seine eigene Maschine bändigen muss, die er ursprünglich gebaut hatte, um die Insel sicherer und bewohnbarer zu machen.</p>
+    <p data-i18n="cs-anchoring-text2">Um die Idee im Genre-Kontext zu verorten, habe ich verwandte Spiele analysiert. Paleo lieferte das Vorbild für kooperatives Überleben mit Werkzeugen und einer Verlustmechanik. Harry Potter: Kampf um Hogwarts zeigte mir, wie eine Szenario-Progression mit ansteigendem Schwierigkeitsgrad funktioniert. Robinson Crusoe war besonders relevant, weil die Spieler dort wie in meiner Idee Ressourcen sammeln, Aktionen ausführen und kooperativ handeln müssen, und weil es als einziges der drei auch solo spielbar ist. Ergänzend habe ich mich von einzelnen Mechaniken aus weiteren Spielen inspirieren lassen, etwa dem Würfelturm aus Flügelschlag, der rundenabhängigen Verfügbarkeit von Orten aus Dune: Imperium und dem Aktionsmarker-System aus Time Rogue.</p>
 
-    <h2>Das Designziel hinter allem</h2>
-    <p>
-      Wenn ich die ursprüngliche Vision auf ein einziges Designziel verdichte, dann ist es das, was Salen und Zimmerman als meaningful play beschreiben. Spieler sollen Entscheidungen treffen, oft ohne vollständige Information, 
-      die das Spielgeschehen spürbar und nachvollziehbar beeinflussen. Die ausrichtbare Wettermaschine ist meine mechanische Antwort auf genau diesen Anspruch. Jede Runde steht eine echte Entscheidung an, nämlich wohin ich 
-      die Maschine richte, und diese Entscheidung hat unmittelbare Konsequenzen. Das ist der rote Faden, der sich von jener ersten Eingebung um 6 Uhr morgens bis zum heutigen Entwicklungsstand durchzieht.
-    </p>
+    <h2 data-i18n="cs-goal-title">Das Designziel hinter allem</h2>
+    <p data-i18n="cs-goal-text">Wenn ich die ursprüngliche Vision auf ein einziges Designziel verdichte, dann ist es das, was Salen und Zimmerman als meaningful play beschreiben. Spieler sollen Entscheidungen treffen, oft ohne vollständige Information, die das Spielgeschehen spürbar und nachvollziehbar beeinflussen. Die ausrichtbare Wettermaschine ist meine mechanische Antwort auf genau diesen Anspruch. Jede Runde steht eine echte Entscheidung an, nämlich wohin ich die Maschine richte, und diese Entscheidung hat unmittelbare Konsequenzen. Das ist der rote Faden, der sich von jener ersten Eingebung um 6 Uhr morgens bis zum heutigen Entwicklungsstand durchzieht.</p>
 
-    <h2>Kernmechaniken</h2>
-    <p>
-      Die Spieler richten jede Runde die Wettermaschine auf einen von vier Orten aus und ziehen dann eine Wetterkarte, deren Effekt von dieser Ausrichtung abhängt. Mit ihren begrenzten Aktionspunkten sammeln sie Ressourcen, 
-      bauen Werkzeuge und bringen Reparaturteile an der Maschine an, um das jeweilige Szenarioziel zu erreichen, bevor die Katastrophenleiste das Maximum erreicht und die Insel verloren ist.
-    </p>
+    <h2 data-i18n="cs-mechanics-title">Kernmechaniken</h2>
+    <p data-i18n="cs-mechanics-intro">Die Spieler richten jede Runde die Wettermaschine auf einen von vier Orten aus und ziehen dann eine Wetterkarte, deren Effekt von dieser Ausrichtung abhängt. Mit ihren begrenzten Aktionspunkten sammeln sie Ressourcen, bauen Werkzeuge und bringen Reparaturteile an der Maschine an, um das jeweilige Szenarioziel zu erreichen, bevor die Katastrophenleiste das Maximum erreicht und die Insel verloren ist.</p>
     <ul>
-      <li><strong>Mechanik 1: Die ausrichtbare Wettermaschine</strong><br> Das ist das Herzstück und das eigentliche Alleinstellungsmerkmal. Jede Runde richtet der Spieler (oder im Koop die Gruppe) die Maschine auf einen der vier Orte 
-        aus. Diese Ausrichtung bestimmt, welcher von vier möglichen Effekten der gezogenen Wetterkarte zum Tragen kommt. Daraus entsteht die zentrale Entscheidung des Spiels: Wohin richte ich die Maschine, 
-        um den größten Nutzen zu ziehen oder den größten Schaden zu vermeiden? Zusätzlich ist die Maschine physisch als Würfelturm umgesetzt, was sie auch haptisch zum Mittelpunkt macht.</li>
-      <li><strong>Mechanik 2: Das Wetterkarten-System mit Zeitdruck</strong><br> Jede Runde wird eine Wetterkarte gezogen, deren Effekt das Spiel erschwert. Die Karten haben einen ausrichtungsabhängigen und einen statischen Effekt. 
-        Eingemischte spezielle Wetterkarten beschleunigen ab einem bestimmten Punkt das Spiel, indem mehr Karten pro Runde gezogen werden müssen. Das erzeugt den Zeitdruck, der das Survival-Gefühl trägt.</li>
-      <li><strong>Mechanik 3: Die Katastrophenleiste als Verlust-Uhr</strong><br> Die Leiste läuft von 0 bis 10. Erreicht sie 10, ist das Spiel verloren. Sie steigt durch Wetterkarten und durch volle Orte (drei Ortsmarker auf einem Ort). 
-        Reparaturen an der Maschine können sie wieder senken. Diese Mechanik ist der ständige Gegenspieler und gibt dem ganzen Spiel seine Dringlichkeit.</li>
-      <li><strong>Mechanik 4: Ressourcenmanagement mit Aktionslimit</strong><br> Der Spieler hat pro Runde fünf Aktionsmarker. Mit diesen sammelt er an den Orten Ressourcen (Magnetiterz, Schwefel, Bernstein, Robben), veredelt sie in der 
-        Stadt, baut Werkzeuge und bringt Reparaturteile an. Die Knappheit von Aktionen zwingt zu ständiger Priorisierung. Hier sitzt der strategische Kern des Spiels.</li>
-      <li><strong>Mechanik 5: Langfristige Aktionen mit Fortschrittsbalken</strong><br> An vielen Orten gibt es mehrstufige Aktionen, die über 
-        mehrere Runden vorangetrieben werden und bei Abschluss eine starke Belohnung geben. Sie schaffen einen zweiten, langsameren Entscheidungshorizont neben dem kurzfristigen Ressourcensammeln und sind zugleich ein Werkzeug, 
-        um Ortsmarker abzubauen.</li>
+      <li><strong data-i18n="cs-mech1-title">Mechanik 1: Die ausrichtbare Wettermaschine</strong><br><span data-i18n="cs-mech1-text">Das ist das Herzstück und das eigentliche Alleinstellungsmerkmal. Jede Runde richtet der Spieler (oder im Koop die Gruppe) die Maschine auf einen der vier Orte aus. Diese Ausrichtung bestimmt, welcher von vier möglichen Effekten der gezogenen Wetterkarte zum Tragen kommt. Daraus entsteht die zentrale Entscheidung des Spiels: Wohin richte ich die Maschine, um den größten Nutzen zu ziehen oder den größten Schaden zu vermeiden? Zusätzlich ist die Maschine physisch als Würfelturm umgesetzt, was sie auch haptisch zum Mittelpunkt macht.</span></li>
+      <li><strong data-i18n="cs-mech2-title">Mechanik 2: Das Wetterkarten-System mit Zeitdruck</strong><br><span data-i18n="cs-mech2-text">Jede Runde wird eine Wetterkarte gezogen, deren Effekt das Spiel erschwert. Die Karten haben einen ausrichtungsabhängigen und einen statischen Effekt. Eingemischte spezielle Wetterkarten beschleunigen ab einem bestimmten Punkt das Spiel, indem mehr Karten pro Runde gezogen werden müssen. Das erzeugt den Zeitdruck, der das Survival-Gefühl trägt.</span></li>
+      <li><strong data-i18n="cs-mech3-title">Mechanik 3: Die Katastrophenleiste als Verlust-Uhr</strong><br><span data-i18n="cs-mech3-text">Die Leiste läuft von 0 bis 10. Erreicht sie 10, ist das Spiel verloren. Sie steigt durch Wetterkarten und durch volle Orte (drei Ortsmarker auf einem Ort). Reparaturen an der Maschine können sie wieder senken. Diese Mechanik ist der ständige Gegenspieler und gibt dem ganzen Spiel seine Dringlichkeit.</span></li>
+      <li><strong data-i18n="cs-mech4-title">Mechanik 4: Ressourcenmanagement mit Aktionslimit</strong><br><span data-i18n="cs-mech4-text">Der Spieler hat pro Runde fünf Aktionsmarker. Mit diesen sammelt er an den Orten Ressourcen (Magnetiterz, Schwefel, Bernstein, Robben), veredelt sie in der Stadt, baut Werkzeuge und bringt Reparaturteile an. Die Knappheit von Aktionen zwingt zu ständiger Priorisierung. Hier sitzt der strategische Kern des Spiels.</span></li>
+      <li><strong data-i18n="cs-mech5-title">Mechanik 5: Langfristige Aktionen mit Fortschrittsbalken</strong><br><span data-i18n="cs-mech5-text">An vielen Orten gibt es mehrstufige Aktionen, die über mehrere Runden vorangetrieben werden und bei Abschluss eine starke Belohnung geben. Sie schaffen einen zweiten, langsameren Entscheidungshorizont neben dem kurzfristigen Ressourcensammeln und sind zugleich ein Werkzeug, um Ortsmarker abzubauen.</span></li>
     </ul>
 
     <div class="case-gallery">
@@ -868,80 +837,46 @@ footer {
       <img src="images/Anleitung_Seite4.jpg" alt="Spielaufbau Die Wettermaschine" style="width:100%; border-radius:4px;">
     </div>
 
-    <h2>Design-Prozess</h2>
+    <h2 data-i18n="cs-process-title">Design-Prozess</h2>
 
-    <h3>Phase 1: Die Idee und ihre Verankerung</h3>
-    <p>
-      Nach der Spielanalyse und Setting-Wahl habe ich parallel einen analogen und einen digitalen Prototyp im Tabletop Simulator gebaut. Ergänzend entstand eine Mindmap für die Bausteine des Spiels und ein Moodboard, um das angestrebte Gefühl festzuhalten.
-    </p>
+    <h3 data-i18n="cs-phase1-title">Phase 1: Die Idee und ihre Verankerung</h3>
+    <p data-i18n="cs-phase1-text">Nach der Spielanalyse und Setting-Wahl habe ich parallel einen analogen und einen digitalen Prototyp im Tabletop Simulator gebaut. Ergänzend entstand eine Mindmap für die Bausteine des Spiels und ein Moodboard, um das angestrebte Gefühl festzuhalten.</p>
 
-    <h3>Phase 2: Prototyping und kritische Analyse</h3>
-    <p>
-      In der zweiten Phase habe ich den Prototyp systematisch weiterentwickelt und vor allem hinterfragt. Ich habe eine konkrete Persona definiert – den strategischen Solo-Vielspieler – und daraus eine Spaß- und Frustliste abgeleitet. Daraus wiederum habe ich messbare Balancing-Ziele formuliert, etwa eine angestrebte Siegchance zwischen 30 und 60 Prozent und das ausdrückliche Verbot dominanter Strategien. Um das Balancing überhaupt steuern zu können, habe ich konkrete Kennzahlen festgelegt, also Stellschrauben wie die Anzahl der Wetterkarten, die Höhe der Katastrophenleiste oder den durchschnittlichen Ressourcendurchsatz pro Runde. Ich habe den Prototyp digital spielbar gemacht und auf Steam veröffentlicht, um ihn leichter testen zu lassen.
-    </p>
+    <h3 data-i18n="cs-phase2-title">Phase 2: Prototyping und kritische Analyse</h3>
+    <p data-i18n="cs-phase2-text">In der zweiten Phase habe ich den Prototyp systematisch weiterentwickelt und vor allem hinterfragt. Ich habe eine konkrete Persona definiert – den strategischen Solo-Vielspieler – und daraus eine Spaß- und Frustliste abgeleitet. Daraus wiederum habe ich messbare Balancing-Ziele formuliert, etwa eine angestrebte Siegchance zwischen 30 und 60 Prozent und das ausdrückliche Verbot dominanter Strategien. Um das Balancing überhaupt steuern zu können, habe ich konkrete Kennzahlen festgelegt, also Stellschrauben wie die Anzahl der Wetterkarten, die Höhe der Katastrophenleiste oder den durchschnittlichen Ressourcendurchsatz pro Runde. Ich habe den Prototyp digital spielbar gemacht und auf Steam veröffentlicht, um ihn leichter testen zu lassen.</p>
 
-    <h3>Phase 3: Finalisierung</h3>
-    <p>
-      In der dritten Phase habe ich aus dem Prototyp ein vollständiges Produkt geformt. Dazu gehörten ein ausformuliertes Regelwerk im historischen Stil, neun aufeinander aufbauende Szenarien, eine durchgerechnete Preiskalkulation für verschiedene Produktionsmengen und ein physischer Prototyp, den ich selbst gebaut habe. Wichtig war mir hier auch die ehrliche Reflexion: Ich habe offene Schwachstellen klar benannt, statt sie zu verstecken – etwa das Problem der Ortsmarker und die Tatsache, dass ich zu wenige unabhängige Spieletests durchführen konnte.
-    </p>
+    <h3 data-i18n="cs-phase3-title">Phase 3: Finalisierung</h3>
+    <p data-i18n="cs-phase3-text">In der dritten Phase habe ich aus dem Prototyp ein vollständiges Produkt geformt. Dazu gehörten ein ausformuliertes Regelwerk im historischen Stil, neun aufeinander aufbauende Szenarien, eine durchgerechnete Preiskalkulation für verschiedene Produktionsmengen und ein physischer Prototyp, den ich selbst gebaut habe. Wichtig war mir hier auch die ehrliche Reflexion: Ich habe offene Schwachstellen klar benannt, statt sie zu verstecken – etwa das Problem der Ortsmarker und die Tatsache, dass ich zu wenige unabhängige Spieletests durchführen konnte.</p>
 
-    <h2>Die wichtigsten Design-Entscheidungen</h2>
+    <h2 data-i18n="cs-decisions-title">Die wichtigsten Design-Entscheidungen</h2>
 
-    <p>
-      Die erste war die Festlegung auf die <strong>ausrichtbare Maschine als unverrückbaren Kern</strong>. Alles andere im Spiel ordnet sich dieser einen Entscheidung pro Runde unter. Damit habe ich früh ein klares Fundament gesetzt, von dem ich nie abgewichen bin.
-    </p>
-    <p>
-      Die zweite war die <strong>bewusste Reduktion auf den Solo-Modus</strong>, ausgelöst durch externes Feedback – dazu mehr im Abschnitt Playtesting.
-    </p>
-    <p>
-      Die dritte war die <strong>thematische Überarbeitung der Ressourcen</strong>, ebenfalls eine direkte Reaktion auf Feedback, die ich im Playtesting-Abschnitt ausführlich beschreibe.
-    </p>
-    <p>
-      Die vierte war die <strong>Kampagnenstruktur</strong>. Statt einer Aneinanderreihung loser Partien habe ich neun Szenarien in fester Reihenfolge entworfen, die im Schwierigkeitsgrad ansteigen und thematisch eine Entwicklung erzählen – von der ersten Rückkehr in die zerstörte Stadt bis zum großen Finale an der Maschine.
-    </p>
+    <p data-i18n="cs-decision1">Die erste war die Festlegung auf die <strong>ausrichtbare Maschine als unverrückbaren Kern</strong>. Alles andere im Spiel ordnet sich dieser einen Entscheidung pro Runde unter. Damit habe ich früh ein klares Fundament gesetzt, von dem ich nie abgewichen bin.</p>
+    <p data-i18n="cs-decision2">Die zweite war die <strong>bewusste Reduktion auf den Solo-Modus</strong>, ausgelöst durch externes Feedback – dazu mehr im Abschnitt Playtesting.</p>
+    <p data-i18n="cs-decision3">Die dritte war die <strong>thematische Überarbeitung der Ressourcen</strong>, ebenfalls eine direkte Reaktion auf Feedback, die ich im Playtesting-Abschnitt ausführlich beschreibe.</p>
+    <p data-i18n="cs-decision4">Die vierte war die <strong>Kampagnenstruktur</strong>. Statt einer Aneinanderreihung loser Partien habe ich neun Szenarien in fester Reihenfolge entworfen, die im Schwierigkeitsgrad ansteigen und thematisch eine Entwicklung erzählen – von der ersten Rückkehr in die zerstörte Stadt bis zum großen Finale an der Maschine.</p>
 
     <div class="highlight-box">
-      <p>
-        „Betriebsblindheit ist die größte Gefahr des Solo-Entwicklers."
-      </p>
+      <p data-i18n="cs-highlight-blind">„Betriebsblindheit ist die größte Gefahr des Solo-Entwicklers."</p>
     </div>
 
-    <h2>Playtesting & Iteration</h2>
+    <h2 data-i18n="cs-playtest-title">Playtesting & Iteration</h2>
 
-    <h3>Wie ich getestet habe</h3>
-    <p>
-      Mein Testen lief auf mehreren Ebenen ab, die sich gegenseitig ergänzt haben. Zuerst habe ich parallel zwei Prototypen gebaut – einen analogen zum Anfassen und einen digitalen im Tabletop Simulator. Der digitale Prototyp war für mich das schnellere Iterationswerkzeug, weil ich dort Karten, Werte und Regeln verändern konnte, ohne jedes Mal neu basteln zu müssen. Den Großteil der Interaktionen habe ich zunächst selbst durchgespielt, da das Spiel als Solo-Spiel angelegt ist und ich mich selbst klar in der Zielgruppe verorte.
-    </p>
-    <p>
-      Über das reine Selbsttesten hinaus habe ich den Prototyp meiner Freundin und meiner C-Lab-Gruppe vorgestellt und sie spielen lassen, um Reaktionen von außen zu bekommen. Außerdem habe ich eine spielbare Version im Steam Workshop veröffentlicht, um die Hürde für weitere Tests zu senken.
-    </p>
-    <p>
-      Eine wichtige Ergänzung war das <strong>analytische Testen über Kennzahlen</strong>. Statt nur auf Bauchgefühl zu vertrauen, habe ich messbare Stellschrauben definiert – etwa die Anzahl der Wetterkarten, die Höhe der Katastrophenleiste, die durchschnittlich gesammelten und verlorenen Ressourcen pro Runde und das Aktionslimit. Diese Kennzahlen haben mir erlaubt, gezielt am Balancing zu drehen und Veränderungen nachvollziehbar zu bewerten.
-    </p>
+    <h3 data-i18n="cs-playtest-how-title">Wie ich getestet habe</h3>
+    <p data-i18n="cs-playtest-how-text1">Mein Testen lief auf mehreren Ebenen ab, die sich gegenseitig ergänzt haben. Zuerst habe ich parallel zwei Prototypen gebaut – einen analogen zum Anfassen und einen digitalen im Tabletop Simulator. Der digitale Prototyp war für mich das schnellere Iterationswerkzeug, weil ich dort Karten, Werte und Regeln verändern konnte, ohne jedes Mal neu basteln zu müssen. Den Großteil der Interaktionen habe ich zunächst selbst durchgespielt, da das Spiel als Solo-Spiel angelegt ist und ich mich selbst klar in der Zielgruppe verorte.</p>
+    <p data-i18n="cs-playtest-how-text2">Über das reine Selbsttesten hinaus habe ich den Prototyp meiner Freundin und meiner C-Lab-Gruppe vorgestellt und sie spielen lassen, um Reaktionen von außen zu bekommen. Außerdem habe ich eine spielbare Version im Steam Workshop veröffentlicht, um die Hürde für weitere Tests zu senken.</p>
+    <p data-i18n="cs-playtest-how-text3">Eine wichtige Ergänzung war das <strong>analytische Testen über Kennzahlen</strong>. Statt nur auf Bauchgefühl zu vertrauen, habe ich messbare Stellschrauben definiert – etwa die Anzahl der Wetterkarten, die Höhe der Katastrophenleiste, die durchschnittlich gesammelten und verlorenen Ressourcen pro Runde und das Aktionslimit. Diese Kennzahlen haben mir erlaubt, gezielt am Balancing zu drehen und Veränderungen nachvollziehbar zu bewerten.</p>
 
-    <h3>Welches Feedback ich bekommen habe</h3>
-    <p>
-      Das wertvollste Feedback hat zu zwei grundlegenden Kurskorrekturen geführt.
-    </p>
-    <p>
-      Die erste betraf den <strong>Spielumfang</strong>. Ursprünglich wollte ich das Spiel direkt kooperativ bauen. Im Austausch wurde deutlich, dass dies das Balancing in einem zu frühen Stadium überfordert hätte. Daraufhin habe ich den kooperativen Modus bewusst herausgenommen und mich auf einen sauber funktionierenden Solo-Modus konzentriert. Das war schmerzhaft, aber richtig, weil es mir erlaubt hat, das Fundament sauber auszubalancieren, bevor ich Komplexität hinzufügte.
-    </p>
-    <p>
-      Die zweite Korrektur betraf die <strong>Ressourcen</strong>. In einer frühen Version arbeitete ich mit generischen Ressourcen wie Getreide, Fisch und Wild. Diese passten weder zum kargen Inselsetting noch zur historischen Glaubwürdigkeit, die ich anstrebte. Ich habe sie durch stimmige Materialien ersetzt – Magnetiterz, Schwefel, Bernstein und Robben – passend zum Schauplatz Tristan da Cunha um 1605. Diese Änderung hat die Spielwelt deutlich kohärenter gemacht.
-    </p>
-    <p>
-      Aus dem konkreten Spieltesten kamen weitere, kleinere Anpassungen. Das Aktionslimit von fünf Aktionen pro Runde habe ich getestet und als stimmig bestätigt. Beim Spielen sind mir außerdem strukturelle Schwächen aufgefallen, die ich offen dokumentiert habe – etwa das Problem, dass sich Ortsmarker ohne Gegenmechanik anhäufen und die Ausrichtungsentscheidung entwerten, sowie eine erzählerische Unstimmigkeit bei den Trümmermarkern in der Stadt. Diese Beobachtungen sind direkt in die spätere Weiterentwicklung eingeflossen, in der ich gezielt Mechanismen entworfen habe, um Ortsmarker wieder aktiv abbauen zu können.
-    </p>
+    <h3 data-i18n="cs-feedback-title">Welches Feedback ich bekommen habe</h3>
+    <p data-i18n="cs-feedback-intro">Das wertvollste Feedback hat zu zwei grundlegenden Kurskorrekturen geführt.</p>
+    <p data-i18n="cs-feedback1">Die erste betraf den <strong>Spielumfang</strong>. Ursprünglich wollte ich das Spiel direkt kooperativ bauen. Im Austausch wurde deutlich, dass dies das Balancing in einem zu frühen Stadium überfordert hätte. Daraufhin habe ich den kooperativen Modus bewusst herausgenommen und mich auf einen sauber funktionierenden Solo-Modus konzentriert. Das war schmerzhaft, aber richtig, weil es mir erlaubt hat, das Fundament sauber auszubalancieren, bevor ich Komplexität hinzufügte.</p>
+    <p data-i18n="cs-feedback2">Die zweite Korrektur betraf die <strong>Ressourcen</strong>. In einer frühen Version arbeitete ich mit generischen Ressourcen wie Getreide, Fisch und Wild. Diese passten weder zum kargen Inselsetting noch zur historischen Glaubwürdigkeit, die ich anstrebte. Ich habe sie durch stimmige Materialien ersetzt – Magnetiterz, Schwefel, Bernstein und Robben – passend zum Schauplatz Tristan da Cunha um 1605. Diese Änderung hat die Spielwelt deutlich kohärenter gemacht.</p>
+    <p data-i18n="cs-feedback3">Aus dem konkreten Spieltesten kamen weitere, kleinere Anpassungen. Das Aktionslimit von fünf Aktionen pro Runde habe ich getestet und als stimmig bestätigt. Beim Spielen sind mir außerdem strukturelle Schwächen aufgefallen, die ich offen dokumentiert habe – etwa das Problem, dass sich Ortsmarker ohne Gegenmechanik anhäufen und die Ausrichtungsentscheidung entwerten, sowie eine erzählerische Unstimmigkeit bei den Trümmermarkern in der Stadt. Diese Beobachtungen sind direkt in die spätere Weiterentwicklung eingeflossen, in der ich gezielt Mechanismen entworfen habe, um Ortsmarker wieder aktiv abbauen zu können.</p>
 
-    <h3>Ehrliche Einordnung meiner Testtiefe</h3>
-    <p>
-      So iterativ mein Vorgehen war – eine Grenze benenne ich bewusst. Es ist mir nicht gelungen, genügend unabhängige Testpersonen zu gewinnen, besonders für die späteren und schwierigeren Szenarien. Das Balancing dieser Szenarien beruht daher stärker auf meinen Kennzahlen und Schätzungen als auf breiter empirischer Erprobung. Ich sehe das nicht als Makel, den ich verstecke, sondern als klar benannten nächsten Schritt.
-    </p>
+    <h3 data-i18n="cs-testdepth-title">Ehrliche Einordnung meiner Testtiefe</h3>
+    <p data-i18n="cs-testdepth-text">So iterativ mein Vorgehen war – eine Grenze benenne ich bewusst. Es ist mir nicht gelungen, genügend unabhängige Testpersonen zu gewinnen, besonders für die späteren und schwierigeren Szenarien. Das Balancing dieser Szenarien beruht daher stärker auf meinen Kennzahlen und Schätzungen als auf breiter empirischer Erprobung. Ich sehe das nicht als Makel, den ich verstecke, sondern als klar benannten nächsten Schritt.</p>
 
     <div class="highlight-box">
-      <p>
-        Mein Prozess zeigt, dass ich nicht in eine einzige Version verliebt bin, sondern bereit, sie auf Feedback hin grundlegend zu verändern. Ich habe einen ganzen Spielmodus gestrichen, ein komplettes Ressourcensystem ausgetauscht und Schwächen meines eigenen Entwurfs offen benannt. Gleichzeitig treffe ich Entscheidungen nicht beliebig, sondern leite sie aus Personas, einer Spaß- und Frustanalyse und konkreten Kennzahlen ab. Dieses Zusammenspiel aus messbarer Analyse und der Offenheit, eigene Annahmen zu verwerfen, ist der Kern meiner iterativen Arbeitsweise.
-      </p>
+      <p data-i18n="cs-highlight-process">Mein Prozess zeigt, dass ich nicht in eine einzige Version verliebt bin, sondern bereit, sie auf Feedback hin grundlegend zu verändern. Ich habe einen ganzen Spielmodus gestrichen, ein komplettes Ressourcensystem ausgetauscht und Schwächen meines eigenen Entwurfs offen benannt. Gleichzeitig treffe ich Entscheidungen nicht beliebig, sondern leite sie aus Personas, einer Spaß- und Frustanalyse und konkreten Kennzahlen ab. Dieses Zusammenspiel aus messbarer Analyse und der Offenheit, eigene Annahmen zu verwerfen, ist der Kern meiner iterativen Arbeitsweise.</p>
     </div>
 
     <div class="case-gallery">
@@ -949,100 +884,59 @@ footer {
       <img src="images/Playtest_Analog.jpg" alt="Analoger Playtest" style="width:100%; border-radius:4px;">
     </div>
 
-    <h2>Skalierung & Balance</h2>
+    <h2 data-i18n="cs-scaling-title">Skalierung & Balance</h2>
 
-    <h3>Die zentrale Herausforderung</h3>
-    <p>
-      Das Grundproblem jeder kooperativen Skalierung lautet: Mehr Spieler bedeuten nicht einfach mehr Spaß, sondern mehr Handlungskapazität. Vier Spieler haben pro Runde rund das Vierfache an Aktionen zur Verfügung wie ein einzelner. Wenn ich nichts dagegen unternehme, wird das Spiel zu viert trivial, während es solo eine echte Herausforderung bleibt. Meine Aufgabe war es also, dafür zu sorgen, dass sich der Schwierigkeitsgrad über alle Spielerzahlen hinweg vergleichbar anfühlt, ohne für jede Spielerzahl ein eigenes Spiel zu bauen.
-    </p>
-    <p>
-      Mein wichtigstes analytisches Werkzeug dabei war die Unterscheidung zwischen Elementen, die ohnehin schon mit der Spielerzahl mitwachsen, und Elementen, die das nicht tun. Nur Letztere müssen aktiv skaliert werden. Diese Unterscheidung hat mich vor der häufigsten Falle bewahrt: der <strong>Doppelskalierung</strong>, bei der ein Element gleich zweifach erschwert wird und das Spiel dadurch unfair hart wird.
-    </p>
+    <h3 data-i18n="cs-scaling-challenge-title">Die zentrale Herausforderung</h3>
+    <p data-i18n="cs-scaling-challenge-text1">Das Grundproblem jeder kooperativen Skalierung lautet: Mehr Spieler bedeuten nicht einfach mehr Spaß, sondern mehr Handlungskapazität. Vier Spieler haben pro Runde rund das Vierfache an Aktionen zur Verfügung wie ein einzelner. Wenn ich nichts dagegen unternehme, wird das Spiel zu viert trivial, während es solo eine echte Herausforderung bleibt. Meine Aufgabe war es also, dafür zu sorgen, dass sich der Schwierigkeitsgrad über alle Spielerzahlen hinweg vergleichbar anfühlt, ohne für jede Spielerzahl ein eigenes Spiel zu bauen.</p>
+    <p data-i18n="cs-scaling-challenge-text2">Mein wichtigstes analytisches Werkzeug dabei war die Unterscheidung zwischen Elementen, die ohnehin schon mit der Spielerzahl mitwachsen, und Elementen, die das nicht tun. Nur Letztere müssen aktiv skaliert werden. Diese Unterscheidung hat mich vor der häufigsten Falle bewahrt: der <strong>Doppelskalierung</strong>, bei der ein Element gleich zweifach erschwert wird und das Spiel dadurch unfair hart wird.</p>
 
-    <h3>Die hybride Spielstruktur als Fundament</h3>
-    <p>
-      Bevor ich einzelne Werte skaliert habe, musste die Grundstruktur stimmen. Ich habe mich für eine <strong>hybrid-simultane Spielstruktur</strong> entschieden. Die gemeinsamen Phasen – das Ausrichten der Maschine, das Ziehen der Wetterkarte und das Rundenende – erleben alle Spieler zusammen. Die Aktionsphase dagegen läuft sequenziell ab: Jeder Spieler spielt seinen eigenen Zug mit seinen eigenen fünf Aktionsmarkern.
-    </p>
-    <p>
-      Diese Entscheidung war analytisch motiviert. Eine vollständig simultane Struktur hätte das gesamte Solo-Regelwerk zerstört und unzählige Konfliktfälle erzeugt. Die hybride Struktur bewahrt dagegen rund neunzig Prozent des bestehenden Solo-Systems und macht das Spiel überhaupt erst sauber skalierbar. Sie löst außerdem das verbreitete Quarterback-Problem, bei dem ein dominanter Spieler allen anderen ihre Züge diktiert, weil jeder Spieler einen klar abgegrenzten eigenen Handlungsmoment hat.
-    </p>
+    <h3 data-i18n="cs-hybrid-title">Die hybride Spielstruktur als Fundament</h3>
+    <p data-i18n="cs-hybrid-text1">Bevor ich einzelne Werte skaliert habe, musste die Grundstruktur stimmen. Ich habe mich für eine <strong>hybrid-simultane Spielstruktur</strong> entschieden. Die gemeinsamen Phasen – das Ausrichten der Maschine, das Ziehen der Wetterkarte und das Rundenende – erleben alle Spieler zusammen. Die Aktionsphase dagegen läuft sequenziell ab: Jeder Spieler spielt seinen eigenen Zug mit seinen eigenen fünf Aktionsmarkern.</p>
+    <p data-i18n="cs-hybrid-text2">Diese Entscheidung war analytisch motiviert. Eine vollständig simultane Struktur hätte das gesamte Solo-Regelwerk zerstört und unzählige Konfliktfälle erzeugt. Die hybride Struktur bewahrt dagegen rund neunzig Prozent des bestehenden Solo-Systems und macht das Spiel überhaupt erst sauber skalierbar. Sie löst außerdem das verbreitete Quarterback-Problem, bei dem ein dominanter Spieler allen anderen ihre Züge diktiert, weil jeder Spieler einen klar abgegrenzten eigenen Handlungsmoment hat.</p>
 
-    <h3>Was ich skaliere – und was bewusst nicht</h3>
-    <p>
-      Ich habe die Spielelemente systematisch danach sortiert, ob und wie sie mit der Spielerzahl wachsen.
-    </p>
-    <p>
-      Die <strong>Aktionsmarker pro Spieler</strong> bleiben konstant bei fünf. Sie dürfen nicht skaliert werden, weil die zusätzliche Handlungskapazität genau das ist, was mehr Spieler ausmacht. Hier liegt die Quelle des Problems, nicht seine Lösung.
-    </p>
-    <p>
-      Die <strong>Siegziele der Szenarien</strong> skalieren mit der Spielerzahl, allerdings bewusst nicht streng linear. Vier Spieler sind spielmechanisch nicht viermal so stark wie einer, sondern eher drei- bis dreieinhalbmal, weil ein Teil ihrer Aktionen in Koordination, Transport und Synergien fließt.
-    </p>
-    <p>
-      Die <strong>Effekte der Wetterkarten</strong> skalieren mit der Spielerzahl, weil die Gruppe insgesamt mehr Ressourcen besitzt und daher proportional mehr verlieren muss, damit die Bedrohung gleich schwer wiegt.
-    </p>
-    <p>
-      Die <strong>Werkzeugpreise</strong> skalieren linear – doppelter Preis bei zwei Spielern, vierfacher bei vier. Das ist hier korrekt, weil ein Werkzeug einen globalen Bonus gibt, von dem die ganze Gruppe profitiert.
-    </p>
-    <p>
-      <strong>Bewusst nicht skaliert</strong> habe ich dagegen die Anzahl der Schuppenteile. Genau hier hätte die Doppelskalierung zugeschlagen, denn da die Werkzeugpreise bereits mit der Spielerzahl steigen, sind drei Schuppenteile zu viert schon automatisch viermal so teuer wie solo. Diese Einsicht habe ich zum allgemeinen Prinzip erhoben: <em>Ein Element, das bereits über einen anderen Mechanismus skaliert, wird nicht ein zweites Mal skaliert.</em>
-    </p>
+    <h3 data-i18n="cs-whatscale-title">Was ich skaliere – und was bewusst nicht</h3>
+    <p data-i18n="cs-whatscale-intro">Ich habe die Spielelemente systematisch danach sortiert, ob und wie sie mit der Spielerzahl wachsen.</p>
+    <p data-i18n="cs-whatscale-actions">Die <strong>Aktionsmarker pro Spieler</strong> bleiben konstant bei fünf. Sie dürfen nicht skaliert werden, weil die zusätzliche Handlungskapazität genau das ist, was mehr Spieler ausmacht. Hier liegt die Quelle des Problems, nicht seine Lösung.</p>
+    <p data-i18n="cs-whatscale-goals">Die <strong>Siegziele der Szenarien</strong> skalieren mit der Spielerzahl, allerdings bewusst nicht streng linear. Vier Spieler sind spielmechanisch nicht viermal so stark wie einer, sondern eher drei- bis dreieinhalbmal, weil ein Teil ihrer Aktionen in Koordination, Transport und Synergien fließt.</p>
+    <p data-i18n="cs-whatscale-weather">Die <strong>Effekte der Wetterkarten</strong> skalieren mit der Spielerzahl, weil die Gruppe insgesamt mehr Ressourcen besitzt und daher proportional mehr verlieren muss, damit die Bedrohung gleich schwer wiegt.</p>
+    <p data-i18n="cs-whatscale-tools">Die <strong>Werkzeugpreise</strong> skalieren linear – doppelter Preis bei zwei Spielern, vierfacher bei vier. Das ist hier korrekt, weil ein Werkzeug einen globalen Bonus gibt, von dem die ganze Gruppe profitiert.</p>
+    <p data-i18n="cs-whatscale-not"><strong>Bewusst nicht skaliert</strong> habe ich dagegen die Anzahl der Schuppenteile. Genau hier hätte die Doppelskalierung zugeschlagen, denn da die Werkzeugpreise bereits mit der Spielerzahl steigen, sind drei Schuppenteile zu viert schon automatisch viermal so teuer wie solo. Diese Einsicht habe ich zum allgemeinen Prinzip erhoben: <em>Ein Element, das bereits über einen anderen Mechanismus skaliert, wird nicht ein zweites Mal skaliert.</em></p>
 
-    <h3>Drei Detailprobleme und ihre Lösungen</h3>
-    <p>
-      Das erste betraf die <strong>Aktionskarten</strong>. Bei vier Spielern werden viel mehr Karten gezogen, was starke Effekte inflationär machen würde. Statt die Effekte pauschal abzuschwächen, habe ich die Karten in drei Typen unterteilt: Reine Ressourcenboni bleiben unverändert, strukturelle Effekte bleiben bewusst selten. Nur die Stapelgröße selbst wächst moderat – und zwar ausschließlich mit schwachen Karten.
-    </p>
-    <p>
-      Das zweite betraf die <strong>langfristigen Aktionen</strong>. Vier Spieler könnten eine mehrstufige Aktion in einer einzigen Runde abschließen, was die Risiko- und Zeitabwägung zerstören würde. Meine Lösung: Pro Runde darf nur ein Spieler an einer bestimmten langfristigen Aktion arbeiten.
-    </p>
-    <p>
-      Das dritte betraf die <strong>Achievements</strong>, die als Gruppe verdient werden und dadurch zu viert oft leichter zu erreichen wären. Spielerzahl-unabhängige Achievements bleiben gleich, die übrigen bekommen mild ansteigende Schwellen.
-    </p>
+    <h3 data-i18n="cs-detailproblems-title">Drei Detailprobleme und ihre Lösungen</h3>
+    <p data-i18n="cs-detail1">Das erste betraf die <strong>Aktionskarten</strong>. Bei vier Spielern werden viel mehr Karten gezogen, was starke Effekte inflationär machen würde. Statt die Effekte pauschal abzuschwächen, habe ich die Karten in drei Typen unterteilt: Reine Ressourcenboni bleiben unverändert, strukturelle Effekte bleiben bewusst selten. Nur die Stapelgröße selbst wächst moderat – und zwar ausschließlich mit schwachen Karten.</p>
+    <p data-i18n="cs-detail2">Das zweite betraf die <strong>langfristigen Aktionen</strong>. Vier Spieler könnten eine mehrstufige Aktion in einer einzigen Runde abschließen, was die Risiko- und Zeitabwägung zerstören würde. Meine Lösung: Pro Runde darf nur ein Spieler an einer bestimmten langfristigen Aktion arbeiten.</p>
+    <p data-i18n="cs-detail3">Das dritte betraf die <strong>Achievements</strong>, die als Gruppe verdient werden und dadurch zu viert oft leichter zu erreichen wären. Spielerzahl-unabhängige Achievements bleiben gleich, die übrigen bekommen mild ansteigende Schwellen.</p>
 
-    <h3>Persönliches Inventar als bewusst eingeführtes Reibungselement</h3>
-    <p>
-      Eine Anpassung möchte ich besonders hervorheben, weil sie zeigt, dass Skalierung nicht nur Erschwerung bedeutet, sondern auch <strong>neue Mechanik schaffen kann</strong>. Im Koop sammeln die Spieler Ressourcen zunächst in ein persönliches Inventar und übertragen sie erst am Rundenende ins gemeinsame Lager. Das persönliche Inventar zwingt jeden Spieler, seine eigenen Transportwege zu planen, und macht die Bewegung über die Insel zu einer echten taktischen Entscheidung.
-    </p>
+    <h3 data-i18n="cs-inventory-title">Persönliches Inventar als bewusst eingeführtes Reibungselement</h3>
+    <p data-i18n="cs-inventory-text">Eine Anpassung möchte ich besonders hervorheben, weil sie zeigt, dass Skalierung nicht nur Erschwerung bedeutet, sondern auch <strong>neue Mechanik schaffen kann</strong>. Im Koop sammeln die Spieler Ressourcen zunächst in ein persönliches Inventar und übertragen sie erst am Rundenende ins gemeinsame Lager. Das persönliche Inventar zwingt jeden Spieler, seine eigenen Transportwege zu planen, und macht die Bewegung über die Insel zu einer echten taktischen Entscheidung.</p>
 
     <div class="highlight-box">
-      <p>
-        Skalierung ist für mich kein nachträgliches Anpassen von Zahlen, sondern eine analytische Disziplin. Ich gehe jedes Spielelement einzeln durch und frage, ob es bereits mitwächst, ob es linear oder unterproportional skalieren muss und ob eine Skalierung andere Mechaniken bricht. Genauso wichtig ist mir zu wissen, wann ich <em>nicht</em> skalieren darf.
-      </p>
+      <p data-i18n="cs-highlight-scaling">Skalierung ist für mich kein nachträgliches Anpassen von Zahlen, sondern eine analytische Disziplin. Ich gehe jedes Spielelement einzeln durch und frage, ob es bereits mitwächst, ob es linear oder unterproportional skalieren muss und ob eine Skalierung andere Mechaniken bricht. Genauso wichtig ist mir zu wissen, wann ich <em>nicht</em> skalieren darf.</p>
     </div>
 
-    <h2>Ergebnis & Learnings</h2>
+    <h2 data-i18n="cs-learnings-title">Ergebnis & Learnings</h2>
 
-    <h3>Was ich gelernt habe</h3>
-    <p>
-      Das wichtigste Learning aus diesem Projekt ist die Disziplin, eine Idee bewusst zu verkleinern, bevor ich sie vergrößere. Erst als das Fundament aus ausrichtbarer Maschine, Ressourcenkreislauf und Katastrophenleiste in sich stimmig war, konnte ich darauf verlässlich aufbauen.
-      Daneben habe ich gelernt, Designentscheidungen nicht allein aus dem Bauchgefühl zu treffen, sondern sie aus Personas, einer Spaß- und Frustanalyse und konkreten Kennzahlen herzuleiten.
-    </p>
+    <h3 data-i18n="cs-learned-title">Was ich gelernt habe</h3>
+    <p data-i18n="cs-learned-text">Das wichtigste Learning aus diesem Projekt ist die Disziplin, eine Idee bewusst zu verkleinern, bevor ich sie vergrößere. Erst als das Fundament aus ausrichtbarer Maschine, Ressourcenkreislauf und Katastrophenleiste in sich stimmig war, konnte ich darauf verlässlich aufbauen. Daneben habe ich gelernt, Designentscheidungen nicht allein aus dem Bauchgefühl zu treffen, sondern sie aus Personas, einer Spaß- und Frustanalyse und konkreten Kennzahlen herzuleiten.</p>
 
-    <h3>Was ich beim nächsten Mal anders machen würde</h3>
-    <p>
-      Am deutlichsten würde ich <strong>früher und breiter mit unabhängigen Personen testen</strong>. Mein größter blinder Fleck war die Betriebsblindheit des Solo-Entwicklers. Beim nächsten Mal würde ich von Anfang an ein strukturiertes Testprogramm einplanen und die Komplexität noch konsequenter portionieren – neue Systeme erst dann hinzufügen, wenn das darunterliegende empirisch, und nicht nur rechnerisch, abgesichert ist.
-    </p>
+    <h3 data-i18n="cs-nexttime-title">Was ich beim nächsten Mal anders machen würde</h3>
+    <p data-i18n="cs-nexttime-text">Am deutlichsten würde ich <strong>früher und breiter mit unabhängigen Personen testen</strong>. Mein größter blinder Fleck war die Betriebsblindheit des Solo-Entwicklers. Beim nächsten Mal würde ich von Anfang an ein strukturiertes Testprogramm einplanen und die Komplexität noch konsequenter portionieren – neue Systeme erst dann hinzufügen, wenn das darunterliegende empirisch, und nicht nur rechnerisch, abgesichert ist.</p>
 
-    <h3>Aktueller Stand und Ausblick</h3>
-    <p>
-      Die Wettermaschine ist aktuell ein vollständig konzipiertes und spielbares Projekt, das ich mitten in der Weiterentwicklung habe. Das Solo-Spiel ist durchdesignt, dokumentiert und sowohl als physischer als auch als digitaler Prototyp spielbar. Derzeit erweitere ich es um einen kooperativen Modus mit eigenen Charakteren und um ein tiefergehendes Kampagnensystem mit freischaltbaren Verbesserungen und Achievements.
-    </p>
-    <p>
-      Wichtig zu wissen ist, dass das Spielregelheft noch nicht den aktuellsten Entwicklungsstand abbildet, sondern bisher auf den Solomodus begrenzt ist. Interessierte können die Anleitung gerne herunterladen, um einen Einblick in das bisherige Fundament zu bekommen.
-    </p>
+    <h3 data-i18n="cs-outlook-title">Aktueller Stand und Ausblick</h3>
+    <p data-i18n="cs-outlook-text1">Die Wettermaschine ist aktuell ein vollständig konzipiertes und spielbares Projekt, das ich mitten in der Weiterentwicklung habe. Das Solo-Spiel ist durchdesignt, dokumentiert und sowohl als physischer als auch als digitaler Prototyp spielbar. Derzeit erweitere ich es um einen kooperativen Modus mit eigenen Charakteren und um ein tiefergehendes Kampagnensystem mit freischaltbaren Verbesserungen und Achievements.</p>
+    <p data-i18n="cs-outlook-text2">Wichtig zu wissen ist, dass das Spielregelheft noch nicht den aktuellsten Entwicklungsstand abbildet, sondern bisher auf den Solomodus begrenzt ist. Interessierte können die Anleitung gerne herunterladen, um einen Einblick in das bisherige Fundament zu bekommen.</p>
 
     <div class="highlight-box">
-      <p>
-        Der nächste große Schritt ist ein strukturiertes, unabhängiges Testprogramm, mit dem ich die bislang analytisch hergeleiteten Werte des Koop- und Kampagnenmodus empirisch absichern und das Spiel Schicht für Schicht zu einer runden Gesamterfahrung führen will.
-      </p>
+      <p data-i18n="cs-highlight-outlook">Der nächste große Schritt ist ein strukturiertes, unabhängiges Testprogramm, mit dem ich die bislang analytisch hergeleiteten Werte des Koop- und Kampagnenmodus empirisch absichern und das Spiel Schicht für Schritt zu einer runden Gesamterfahrung führen will.</p>
     </div>
 
-<a href="images/Wettermaschine_Anleitung.pdf" class="download-link" target="_blank">↓ Spielregeln als PDF herunterladen</a>
+    <a href="images/Wettermaschine_Anleitung.pdf" class="download-link" target="_blank" data-i18n="cs-download">↓ Spielregeln als PDF herunterladen</a>
 
   </div>
 
   <footer>
     <span>© 2026 Mathis Worthmann</span>
-    <span>Game Designer</span>
+    <span data-i18n="footer-right">Game Designer</span>
   </footer>
 
 </div>
@@ -1084,6 +978,8 @@ document.querySelectorAll('.case-gallery img, .case-image-full img').forEach(img
 });
 </script>
 
+<!-- ═══ LANGUAGE SWITCHER ═══ -->
+<script src="translations.js"></script>
 
 </body>
 </html>
