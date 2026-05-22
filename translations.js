@@ -56,7 +56,7 @@ const translations = {
   "about-label": "About Me",
   "about-title": "Who I Am",
   "about-text1": "I'm Mathis, an aspiring Game Designer specializing in Core Game Design. Through my studies at IU International University and my work at Hidden Games, I've developed a deep engagement with game mechanics, balancing, and the craft of creating thoughtful player experiences. My passion encompasses both analog and digital games.",
-  "about-text2": "For me, good game design happens when mechanics don't just function, but create a shared experience. I approach games from the player experience: analytical in execution, but always aiming for every decision at the table or on screen to feel meaningful. I'm especially drawn to games with strategic depth, whether in competitive play or cooperative settings where tactical thinking determines success and failure.",
+  "about-text2": "For me, good game design happens when mechanics don't just function, but create a shared experience. I approach games from the player experience: analytical in execution, but always aiming for every decision at the table or on screen to feel meaningful. I'm especially drawn to games with strategic depth, whether in competitive play or cooperative settings where tactical thinking determines success and failure. Beyond game design, I write monthly film reviews in my Filmtagebuch about movies that move me.",
   "about-education-title": "Education",
   "about-education-text": "B.A. Game Design – IU International University<br>Specialization: Core Game Designer",
   "about-experience-title": "Work Experience",
