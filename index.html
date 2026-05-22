@@ -327,6 +327,84 @@ nav .nav-links a:hover { color: var(--accent); }
   color: var(--accent);
 }
 
+/* ── SKILLS SECTION ── */
+.skills {
+  padding: 4rem 3rem 2rem;
+}
+
+.skills-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.skill-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1.2rem 1.4rem;
+  cursor: pointer;
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+
+.skill-card:hover {
+  border-color: rgba(201, 242, 77, 0.3);
+  background: var(--bg-card-hover);
+}
+
+.skill-card.active {
+  border-color: var(--accent);
+  background: var(--bg-card-hover);
+}
+
+.skill-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.skill-card-name {
+  font-family: var(--font-display);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.skill-card-toggle {
+  font-size: 1.2rem;
+  color: var(--accent-dim);
+  transition: transform 0.3s;
+  line-height: 1;
+}
+
+.skill-card.active .skill-card-toggle {
+  transform: rotate(45deg);
+}
+
+.skill-card-detail {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease, margin-top 0.3s ease, opacity 0.3s ease;
+  opacity: 0;
+  margin-top: 0;
+}
+
+.skill-card.active .skill-card-detail {
+  max-height: 300px;
+  opacity: 1;
+  margin-top: 1rem;
+}
+
+.skill-card-detail p {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  line-height: 1.6;
+  border-top: 1px solid var(--border);
+  padding-top: 0.8rem;
+}
+
 .about-details { display: flex; flex-direction: column; gap: 1.5rem; }
 
 .detail-block h4 {
@@ -618,6 +696,8 @@ footer {
   .case-content { padding-left: 1.5rem; padding-right: 1.5rem; }
   .case-image-full { padding: 0 1.5rem; }
   .case-hero h1 { font-size: clamp(1.6rem, 8vw, 3.8rem); overflow-wrap: break-word; }
+  .skills { padding-left: 1.5rem; padding-right: 1.5rem; }
+  .skills-grid { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
 }
 </style>
 </head>
@@ -650,6 +730,95 @@ footer {
     <div class="hero-links">
       <a href="#projects" class="btn-primary" data-i18n="hero-btn-projects">Projekte ansehen ↓</a>
       <a href="#contact" class="btn-outline" data-i18n="hero-btn-contact">Kontakt</a>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section class="skills" id="skills">
+    <p class="section-label" data-i18n="skills-label">Kompetenzen</p>
+    <h2 class="section-title" data-i18n="skills-title">Skills</h2>
+    <div class="skills-grid">
+
+      <div class="skill-card" onclick="toggleSkill(this)">
+        <div class="skill-card-header">
+          <span class="skill-card-name" data-i18n="skill-gd-name">Game Design</span>
+          <span class="skill-card-toggle">+</span>
+        </div>
+        <div class="skill-card-detail">
+          <p data-i18n="skill-gd-detail">Konzeption von Spielmechaniken, Regelsystemen und Spielerfahrungen. Erfahrung mit kooperativen und kompetitiven Designansätzen, Szenario-Design und Kampagnenstrukturen.</p>
+        </div>
+      </div>
+
+      <div class="skill-card" onclick="toggleSkill(this)">
+        <div class="skill-card-header">
+          <span class="skill-card-name" data-i18n="skill-balance-name">Balancing</span>
+          <span class="skill-card-toggle">+</span>
+        </div>
+        <div class="skill-card-detail">
+          <p data-i18n="skill-balance-detail">Analytisches Balancing über Kennzahlen, Skalierung für verschiedene Spieleranzahlen, Persona-basierte Spaß- und Frustanalyse. Erkennen und Vermeiden von Doppelskalierung.</p>
+        </div>
+      </div>
+
+      <div class="skill-card" onclick="toggleSkill(this)">
+        <div class="skill-card-header">
+          <span class="skill-card-name" data-i18n="skill-proto-name">Prototyping</span>
+          <span class="skill-card-toggle">+</span>
+        </div>
+        <div class="skill-card-detail">
+          <p data-i18n="skill-proto-detail">Erstellung analoger und digitaler Prototypen. Erfahrung mit Tabletop Simulator, Steam Workshop und physischem Prototypenbau für iteratives Testen.</p>
+        </div>
+      </div>
+
+      <div class="skill-card" onclick="toggleSkill(this)">
+        <div class="skill-card-header">
+          <span class="skill-card-name" data-i18n="skill-unity-name">Unity</span>
+          <span class="skill-card-toggle">+</span>
+        </div>
+        <div class="skill-card-detail">
+          <p data-i18n="skill-unity-detail">Spielprototypen und interaktive Walkthroughs in Unity (URP). Erfahrung mit C#-Scripting, Post-Processing, Lighting und Audio-Integration.</p>
+        </div>
+      </div>
+
+      <div class="skill-card" onclick="toggleSkill(this)">
+        <div class="skill-card-header">
+          <span class="skill-card-name" data-i18n="skill-blender-name">Blender</span>
+          <span class="skill-card-toggle">+</span>
+        </div>
+        <div class="skill-card-detail">
+          <p data-i18n="skill-blender-detail">3D-Modellierung, prozedurale Texturen und Rendering in Cycles. Erfahrung mit Hard-Surface-Modeling, Environment Art und Export-Workflows für Unity.</p>
+        </div>
+      </div>
+
+      <div class="skill-card" onclick="toggleSkill(this)">
+        <div class="skill-card-header">
+          <span class="skill-card-name" data-i18n="skill-analysis-name">Spielanalyse</span>
+          <span class="skill-card-toggle">+</span>
+        </div>
+        <div class="skill-card-detail">
+          <p data-i18n="skill-analysis-detail">Systematische Analyse von Spielmechaniken, Genre-Verortung und Wettbewerbsanalyse. Ableitung von Design-Prinzipien aus bestehenden Titeln.</p>
+        </div>
+      </div>
+
+      <div class="skill-card" onclick="toggleSkill(this)">
+        <div class="skill-card-header">
+          <span class="skill-card-name" data-i18n="skill-ai-name">KI-Tools</span>
+          <span class="skill-card-toggle">+</span>
+        </div>
+        <div class="skill-card-detail">
+          <p data-i18n="skill-ai-detail">Erfahrener Umgang mit KI-gestützten Workflows: Konzeptentwicklung, Textgenerierung, Bildgenerierung und Coding-Unterstützung durch LLMs wie Claude und ChatGPT.</p>
+        </div>
+      </div>
+
+      <div class="skill-card" onclick="toggleSkill(this)">
+        <div class="skill-card-header">
+          <span class="skill-card-name" data-i18n="skill-gimp-name">Bildbearbeitung (GIMP)</span>
+          <span class="skill-card-toggle">+</span>
+        </div>
+        <div class="skill-card-detail">
+          <p data-i18n="skill-gimp-detail">Bildbearbeitung, Asset-Aufbereitung und Texturanpassungen für Spiel- und Präsentationsmaterialien.</p>
+        </div>
+      </div>
+
     </div>
   </section>
 
@@ -718,17 +887,6 @@ footer {
           analytisch in der Umsetzung, aber immer mit dem Ziel, dass sich jede Entscheidung am Tisch oder am Bildschirm bedeutsam anfühlt. 
           Besonders reizen mich Spiele mit strategischer Tiefe, ob im Wettstreit gegeneinander oder im kooperativen Zusammenspiel, wo taktisches Denken über Erfolg und Niederlage entscheidet.
         </p>
-        <div class="skill-tags">
-          <span class="skill-tag">Game Design</span>
-          <span class="skill-tag">Kooperative Spiele</span>
-          <span class="skill-tag">Balancing</span>
-          <span class="skill-tag">Brettspieldesign</span>
-          <span class="skill-tag">Prototyping</span>
-          <span class="skill-tag">Blender</span>
-          <span class="skill-tag">Unity</span>
-          <span class="skill-tag">Spielanalyse</span>
-          <span class="skill-tag">Bildbearbeitung (GIMP)</span>
-        </div>
       </div>
       <div class="about-details">
         <div class="detail-block">
@@ -959,6 +1117,15 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     }
   });
 });
+</script>
+
+<!-- ═══ SKILL TOGGLE ═══ -->
+<script>
+function toggleSkill(card) {
+  const wasActive = card.classList.contains('active');
+  document.querySelectorAll('.skill-card').forEach(c => c.classList.remove('active'));
+  if (!wasActive) card.classList.add('active');
+}
 </script>
 
 <!-- ═══ LIGHTBOX ═══ -->
