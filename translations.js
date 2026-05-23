@@ -231,6 +231,37 @@ const translations = {
   "reign-honest-text": "Reign is a university project and as such a prototype with limited scope: eight months of play time, a manageable number of events. The visual assets are partially AI-generated, which I explicitly view as a compromise in the prototype context. In a further development, only hand-crafted graphics would be used. What Reign does show: that mechanics, narrative, and atmosphere can merge into a coherent experience even in a small project, when they are aligned from the start.",
 
   "reign-download": "↓ Play Reign on itch.io",
+
+  // ── ENERGIEKERN CASE STUDY ──
+  "ek-back": "← Back to Overview",
+  "ek-label": "Case Study · 3D Art",
+  "ek-title": "Futuristic Energy Core",
+  "ek-sub": "A Sci-Fi environment built in Blender with an interactive walkthrough in Unity. Octagonal engine room with central energy core, volumetric lighting, and modular props.",
+  "ek-meta-period-label": "Period",
+  "ek-meta-period-value": "2025 – 2026",
+  "ek-meta-role-label": "Role",
+  "ek-meta-role-value": "Solo Developer",
+  "ek-meta-tools-label": "Tools",
+  "ek-meta-tools-value": "Blender 4.5.3 · Unity URP",
+  "ek-meta-type-label": "Type",
+  "ek-meta-type-value": "Sci-Fi Environment",
+
+  "ek-overview-title": "Overview",
+  "ek-overview-text": "The Futuristic Energy Core is a Sci-Fi environment created as a university 3D project. The task was to conceive a science fiction environment, model and texture it in Blender, and subsequently integrate it into Unity. The result is an octagonal engine room with a central energy core, surrounded by cables, crates, railings, and atmospheric lighting.",
+
+  "ek-concept-title": "Concept and Design Decisions",
+  "ek-concept-text1": "The central idea was a spaceship interior revolving around a glowing energy core as its focal point. I wanted to create a space that feels both functional and atmospheric, as if you were actually entering a spaceship's engine room.",
+  "ek-concept-text2": "The octagonal floor plan was a deliberate decision: it breaks the monotony of rectangular rooms and creates more interesting sightlines from every perspective. All props (crates, cables, railings, doors) are built modularly, allowing flexible placement throughout the space.",
+
+  "ek-workflow-title": "Technical Workflow",
+  "ek-workflow-text1": "For modeling, I used Blender 4.5.3. For texturing, I chose a middle ground between traditional image textures and procedurally generated textures, which have the advantage of remaining resolution-independent and allowing faster iteration. The final renders were created in Cycles, with volumetric lighting and particle systems for the gas and energy beam effects of the core.",
+  "ek-workflow-text2": "Exporting to Unity (URP, 2022.3) required several adjustments: NormalGL maps from Blender had to be converted to NormalDX for Unity, and Smoothness values had to be transferred as inverted Roughness values (1 minus Roughness). I also discovered that all texturing done in Blender was lost during the export from Blender and subsequent import into Unity. In Unity, I set up post-processing with Bloom, Vignette, and ACES Tonemapping, and integrated spatial audio to enhance the engine room atmosphere.",
+
+  "ek-learnings-title": "Learnings",
+  "ek-learnings-text1": "Technically, I learned how important it is to consider the export workflow from the start. The differences between Blender and Unity were initially frustrating, but they are a standard pipeline problem that you solve once and then know.",
+  "ek-learnings-text2": "On the visual side, I experienced how dramatically post-processing and lighting change the overall image. The same model looks completely different in Unity with Bloom and Volumetric Lighting than as a bare mesh export. The last 20% of the work accounts for 80% of the visual impact.",
+
+  "ek-download": "↓ View on ArtStation",
 };
 
 // ══════════════════════════════════
