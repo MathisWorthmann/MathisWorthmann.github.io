@@ -5,6 +5,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="Game Design Portfolio von Mathis Worthmann. Core Game Designer mit Fokus auf kooperative Spielmechaniken, Balancing und durchdachte Spielerfahrungen.">
 <meta name="author" content="Mathis Worthmann">
+  <meta property="og:title" content="Mathis Worthmann – Game Designer Portfolio">
+<meta property="og:description" content="Core Game Designer mit Fokus auf kooperative Spielmechaniken, Balancing und durchdachte Spielerfahrungen.">
+<meta property="og:image" content="https://mathisworthmann.github.io/images/Wettermaschine_Cover.jpg">
+<meta property="og:url" content="https://mathisworthmann.github.io/">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Mathis Worthmann – Game Designer Portfolio">
+<meta name="twitter:description" content="Core Game Designer mit Fokus auf kooperative Spielmechaniken, Balancing und durchdachte Spielerfahrungen.">
+<meta name="twitter:image" content="https://mathisworthmann.github.io/images/Wettermaschine_Cover.jpg">
+<link rel="icon" type="image/png" href="images/favicon.png">
 <title>Mathis – Game Designer</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;1,400&display=swap" rel="stylesheet">
 <style>
@@ -708,12 +718,12 @@ footer {
 
 <!-- ═══ NAVIGATION ═══ -->
 <nav>
-  <a href="#" class="logo" onclick="showPage('home')">MATHIS</a>
+  <span class="logo" onclick="showPage('home')">MATHIS</span>
   <div class="nav-links">
     <a href="#projects" onclick="showPage('home')" data-i18n="nav-projects">Projekte</a>
     <a href="#about" onclick="showPage('home')" data-i18n="nav-about">Über mich</a>
     <a href="#contact" onclick="showPage('home')" data-i18n="nav-contact">Kontakt</a>
-    <a href="#" id="lang-toggle" style="color:var(--accent);font-weight:600;">EN</a>
+    <span id="lang-toggle" style="color:var(--accent);font-weight:600;cursor:pointer;font-size:0.9rem;letter-spacing:0.04em;text-transform:uppercase;">EN</span>
   </div>
 </nav>
 
@@ -804,11 +814,11 @@ footer {
 
       <div class="skill-card" onclick="toggleSkill(this)">
         <div class="skill-card-header">
-          <span class="skill-card-name" data-i18n="skill-ai-name">KI-Tools</span>
+          <span class="skill-card-name" data-i18n="skill-ai-name">KI-gestützte Workflows</span>
           <span class="skill-card-toggle">+</span>
         </div>
         <div class="skill-card-detail">
-          <p data-i18n="skill-ai-detail">Erfahrener Umgang mit KI-gestützten Workflows: Konzeptentwicklung, Textgenerierung, Bildgenerierung und Coding-Unterstützung durch LLMs wie Claude und ChatGPT.</p>
+          <p data-i18n="skill-ai-detail">KI-gestützte Konzeptentwicklung, Balancing-Exploration und Prototyping-Beschleunigung. Effiziente Integration von LLM-Tools in bestehende Design- und Entwicklungsprozesse. KI nutze ich bewusst als Werkzeug im Arbeitsprozess, nicht zur Erstellung finaler Spielinhalte.</p>
         </div>
       </div>
 
@@ -834,7 +844,7 @@ footer {
       <!-- Card 1: Brettspiel -->
       <a class="project-card" onclick="showPage('boardgame')">
         <div class="project-thumb">
-          <img src="images/Wettermaschine_Cover.jpg" alt="Mein Brettspiel" style="width:100%; height:100%; object-fit:cover;">
+          <img src="images/Wettermaschine_Cover.jpg" alt="Cover Die Wettermaschine - kooperatives Brettspiel mit zentralem Würfelturm" style="width:100%; height:100%; object-fit:cover;">
         </div>
         <div class="project-info">
           <p class="project-tag" data-i18n="project1-tag">Brettspiel · Game Design</p>
@@ -847,7 +857,7 @@ footer {
       <!-- Card 2: Spielprototyp -->
       <a class="project-card" href="https://mathisworthmann.itch.io/reign" target="_blank">
         <div class="project-thumb">
-          <img src="images/Reign_Cover.jpg" alt="Mein digitaler Prototyp" style="width:100%; height:100%; object-fit:cover;">
+          <img src="images/Reign_Cover.jpg" alt="Reign - mittelalterliches Ressourcenverwaltungsspiel in Unity" loading="lazy" style="width:100%; height:100%; object-fit:cover;">
         </div>
         <div class="project-info">
           <p class="project-tag" data-i18n="project2-tag">Digitaler Prototyp · Unity</p>
@@ -860,7 +870,7 @@ footer {
       <!-- Card 3: 3D-Modell -->
       <a class="project-card" href="https://www.artstation.com/artwork/y415x5" target="_blank">
         <div class="project-thumb">
-          <img src="images/Energiekern_Cover.png" alt="Mein 3D-Render" style="width:100%; height:100%; object-fit:cover;">
+          <img src="images/Energiekern_Cover.png" alt="Futuristischer Energiekern - Sci-Fi Environment in Blender" loading="lazy" style="width:100%; height:100%; object-fit:cover;">
         </div>
         <div class="project-info">
           <p class="project-tag" data-i18n="project3-tag">3D Art · Blender</p>
@@ -920,7 +930,7 @@ footer {
       <a href="https://www.linkedin.com/in/mathis-worthmann-648772352/" target="_blank">LinkedIn</a>
       <a href="https://mathisworthmann.itch.io/" target="_blank">itch.io</a>
       <a href="https://www.artstation.com/mathisworthmann" target="_blank">ArtStation</a>
-      <a href="https://mathisworthmann.github.io/filmblog/" target="_blank">Filmblog</a>
+      <a href="https://mathisworthmann.github.io/filmblog/" target="_blank">Filmtagebuch</a>
     </div>
   </section>
 
@@ -964,7 +974,7 @@ footer {
   </section>
 
   <div class="case-image-full">
-    <img src="images/Wettermaschine_Cover1zu1.jpg" alt="Cover Die Wettermaschine" style="width:100%; border-radius:6px;">
+    <img src="images/Wettermaschine_Cover1zu1.jpg" alt="Cover Die Wettermaschine" loading="lazy" style="width:100%; border-radius:6px;">
   </div>
 
   <div class="case-content">
@@ -996,8 +1006,8 @@ footer {
     </ul>
 
     <div class="case-gallery">
-      <img src="images/Beispielkarten.png" alt="Beispielkarten Die Wettermaschine" style="width:100%; border-radius:4px;">
-      <img src="images/Anleitung_Seite4.jpg" alt="Spielaufbau Die Wettermaschine" style="width:100%; border-radius:4px;">
+      <img src="images/Beispielkarten.png" alt="Beispielkarten Die Wettermaschine" loading="lazy" style="width:100%; border-radius:4px;">
+      <img src="images/Anleitung_Seite4.jpg" alt="Spielaufbau Die Wettermaschine" loading="lazy" style="width:100%; border-radius:4px;">
     </div>
 
     <h2 data-i18n="cs-process-title">Design-Prozess</h2>
@@ -1043,8 +1053,8 @@ footer {
     </div>
 
     <div class="case-gallery">
-      <img src="images/Playtest_Digital.png" alt="Digitaler Playtest in TTS" style="width:100%; border-radius:4px;">
-      <img src="images/Playtest_Analog.jpg" alt="Analoger Playtest" style="width:100%; border-radius:4px;">
+      <img src="images/Playtest_Digital.png" alt="Digitaler Playtest in TTS" loading="lazy" style="width:100%; border-radius:4px;">
+      <img src="images/Playtest_Analog.jpg" alt="Analoger Playtest" loading="lazy" style="width:100%; border-radius:4px;">
     </div>
 
     <h2 data-i18n="cs-scaling-title">Skalierung & Balance</h2>
