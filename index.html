@@ -868,7 +868,7 @@ footer {
       </a>
 
       <!-- Card 3: 3D-Modell -->
-      <a class="project-card" href="https://www.artstation.com/artwork/y415x5" target="_blank">
+      <a class="project-card" onclick="showPage('energiekern')">
         <div class="project-thumb">
           <img src="images/Energiekern_Cover.png" alt="Futuristischer Energiekern - Sci-Fi Environment in Blender" loading="lazy" style="width:100%; height:100%; object-fit:cover;">
         </div>
@@ -876,7 +876,7 @@ footer {
           <p class="project-tag" data-i18n="project3-tag">3D Art · Blender</p>
           <h3 data-i18n="project3-name">Futuristischer Energiekern</h3>
           <p data-i18n="project3-desc">Entwicklung einer interaktiven Sci-Fi Szene in Unity mit selbst modellierten und texturierten Assets in Blender.</p>
-          <div class="project-arrow" data-i18n="project3-arrow">Auf ArtStation ansehen →</div>
+          <div class="project-arrow" data-i18n="project3-arrow">Case Study lesen →</div>
         </div>
       </a>
 
@@ -1213,6 +1213,84 @@ footer {
     </p>
 
     <a href="https://mathisworthmann.itch.io/reign" class="download-link" target="_blank" data-i18n="reign-download">↓ Reign auf itch.io spielen</a>
+
+  </div>
+
+  <footer>
+    <span>© 2026 Mathis Worthmann</span>
+    <span data-i18n="footer-right">Game Designer</span>
+  </footer>
+
+</div>
+
+  <!-- ═════════════════════════════════
+     ENERGIEKERN CASE STUDY PAGE
+     ═════════════════════════════════ -->
+<div id="page-energiekern" class="page">
+
+  <section class="case-hero">
+    <a class="case-back" onclick="showPage('home')" data-i18n="ek-back">← Zurück zur Übersicht</a>
+    <p class="section-label" data-i18n="ek-label">Case Study · 3D Art</p>
+    <h1 data-i18n="ek-title">Futuristischer Energiekern</h1>
+    <p class="hero-sub" data-i18n="ek-sub">
+      Ein Sci-Fi Environment in Blender mit interaktivem Walkthrough in Unity. Achteckiger Maschinenraum mit zentralem Energiekern, volumetrischer Beleuchtung und modularen Props.
+    </p>
+    <div class="case-meta">
+      <div class="meta-item">
+        <span class="meta-label" data-i18n="ek-meta-period-label">Zeitraum</span>
+        <span class="meta-value" data-i18n="ek-meta-period-value">2025 – 2026</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label" data-i18n="ek-meta-role-label">Rolle</span>
+        <span class="meta-value" data-i18n="ek-meta-role-value">Solo-Entwickler</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label" data-i18n="ek-meta-tools-label">Tools</span>
+        <span class="meta-value" data-i18n="ek-meta-tools-value">Blender 4.5.3 · Unity URP</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label" data-i18n="ek-meta-type-label">Typ</span>
+        <span class="meta-value" data-i18n="ek-meta-type-value">Sci-Fi Environment</span>
+      </div>
+    </div>
+  </section>
+
+  <div class="case-image-full">
+    <img src="images/Energiekern_Hero.webp" alt="Futuristischer Energiekern – Cycles Render des achteckigen Maschinenraums mit glühendem Kern" loading="lazy" style="width:100%; border-radius:6px;">
+  </div>
+
+  <div class="case-content">
+
+    <h2 data-i18n="ek-overview-title">Überblick</h2>
+    <p data-i18n="ek-overview-text">Der Futuristische Energiekern ist ein Sci-Fi Environment, das im Rahmen meines Studiums als 3D-Projekt entstanden ist. Die Aufgabe war es, ein Science-Fiction-Environment zu konzipieren, in Blender zu modellieren und texturieren, und anschließend in Unity zu integrieren. Das Ergebnis ist ein achteckiger Maschinenraum mit einem zentralen Energiekern, umgeben von Kabeln, Kisten, Geländern und atmosphärischer Beleuchtung.</p>
+
+    <div class="case-gallery">
+      <img src="images/Energiekern_Render1.webp" alt="Energiekern – Gesamtansicht des achteckigen Raums mit volumetrischem Licht" loading="lazy" style="width:100%; border-radius:4px;">
+      <img src="images/Energiekern_Render2.webp" alt="Energiekern – Detailansicht des glühenden Kerns mit Partikeleffekten" loading="lazy" style="width:100%; border-radius:4px;">
+    </div>
+
+    <h2 data-i18n="ek-concept-title">Konzept und Designentscheidungen</h2>
+    <p data-i18n="ek-concept-text1">Die zentrale Idee war ein Raumschiff-Interieur, das sich um einen glühenden Energiekern als Mittelpunkt dreht. Ich wollte einen Raum schaffen, der sich gleichzeitig funktional und atmosphärisch anfühlt, als würde man tatsächlich den Maschinenraum eines Raumschiffs betreten.</p>
+    <p data-i18n="ek-concept-text2">Die achteckige Grundform des Raums war eine bewusste Entscheidung: Sie bricht die Monotonie rechteckiger Räume und erzeugt interessantere Blickwinkel aus jeder Perspektive. Alle Props (Kisten, Kabel, Geländer, Türen) sind modular aufgebaut, sodass sie sich flexibel im Raum platzieren lassen.</p>
+
+    <div class="case-gallery">
+      <img src="images/Energiekern_Wireframe1.webp" alt="Energiekern – Wireframe-Render der Gesamtszene" loading="lazy" style="width:100%; border-radius:4px;">
+      <img src="images/Energiekern_Wireframe2.webp" alt="Energiekern – Wireframe-Detailansicht der Props und Kabelführung" loading="lazy" style="width:100%; border-radius:4px;">
+    </div>
+
+    <h2 data-i18n="ek-workflow-title">Technischer Workflow</h2>
+    <p data-i18n="ek-workflow-text1">Für die Modellierung habe ich Blender 4.5.3 verwendet. Bei der Texturierung habe ich einen Mittelweg zwischen klassischen Bildtexturen und prozedural generierten Texturen gewählt, welche den Vorteil haben, dass Materialien auflösungsunabhängig bleiben und schneller iteriert werden können. Die finalen Renders sind in Cycles erstellt, mit volumetrischem Licht und Partikelsystemen für die Gas- und Energiestrahl-Effekte des Kerns.</p>
+    <p data-i18n="ek-workflow-text2">Der Export nach Unity (URP, 2022.3) erforderte einige Anpassungen: NormalGL-Maps aus Blender mussten in NormalDX für Unity konvertiert werden, und Smoothness-Werte mussten als invertierte Roughness-Werte (1 minus Roughness) übertragen werden. Auch musste ich feststellen, dass jegliche Texturierung, die ich in Blender vorgenommen hatte, bei dem Export aus Blender und dem anschließenden Import in Unity verloren ging. In Unity habe ich Post-Processing mit Bloom, Vignette und ACES Tonemapping eingerichtet sowie räumliches Audio integriert, um die Atmosphäre des Maschinenraums zu verstärken.</p>
+
+    <div class="case-gallery">
+      <img src="images/Energiekern_Unity1.webp" alt="Energiekern – Unity Walkthrough mit Post-Processing und Bloom-Effekt" loading="lazy" style="width:100%; border-radius:4px;">
+    </div>
+
+    <h2 data-i18n="ek-learnings-title">Learnings</h2>
+    <p data-i18n="ek-learnings-text1">Technisch habe ich gelernt, wie wichtig es ist, den Export-Workflow von Anfang an mitzudenken. Die Unterschiede zwischen Blender und Unity waren zunächst frustrierend, sind aber ein Standardproblem in der Pipeline, das man einmal löst und dann weiß.</p>
+    <p data-i18n="ek-learnings-text2">Gestalterisch habe ich erfahren, wie sehr Post-Processing und Beleuchtung das Gesamtbild verändern. Das gleiche Modell wirkt in Unity mit Bloom und Volumetric Lighting völlig anders als ein nackter Mesh-Export. Die letzten 20% der Arbeit machen 80% des visuellen Eindrucks aus.</p>
+
+    <a href="https://www.artstation.com/artwork/y415x5" class="download-link" target="_blank" data-i18n="ek-download">↓ Auf ArtStation ansehen</a>
 
   </div>
 
