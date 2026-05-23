@@ -188,6 +188,49 @@ const translations = {
   "cs-highlight-outlook": "The next major step is a structured, independent testing program to empirically validate the analytically derived values of the co-op and campaign modes and guide the game layer by layer toward a well-rounded overall experience.",
 
   "cs-download": "↓ Download Rules as PDF"
+
+  // ── REIGN CASE STUDY ──
+  "reign-back": "← Back to Overview",
+  "reign-label": "Case Study · Digital Prototype",
+  "reign-title": "Reign",
+  "reign-sub": "An event-based management game in a medieval setting. Guide your realm through eight months of political intrigue, moral dilemmas, and scarce resources.",
+  "reign-meta-period-label": "Period",
+  "reign-meta-period-value": "2026",
+  "reign-meta-role-label": "Role",
+  "reign-meta-role-value": "Solo Developer",
+  "reign-meta-engine-label": "Engine",
+  "reign-meta-engine-value": "Unity 2022.3 LTS",
+  "reign-meta-duration-label": "Play Time",
+  "reign-meta-duration-value": "30–45 min.",
+
+  "reign-overview-title": "Overview",
+  "reign-overview-text": "Reign is an event-based management game set in a medieval world, developed as a solo project in Unity. The player takes on the role of a young ruler who inherits a third of a crumbling kingdom after being banished by his father. Over eight in-game months, he must steer his realm through political intrigue, moral dilemmas, and scarce resources. A single playthrough takes 30–45 minutes.",
+
+  "reign-idea-title": "The Idea and Its Inspiration",
+  "reign-idea-text1": "The concept for Reign originated as a university project for the course \"Game Prototype.\" The requirements were clear: genre \"Strategy\" and the design rule \"Choose-A-Path.\" Within this framework, I wanted to create a game that feels like a genuine experience, not just an exercise.",
+  "reign-idea-text2": "The narrative premise is loosely inspired by Shakespeare's King Lear and Akira Kurosawa's Ran: an aging king divides his realm among his sons and banishes the youngest for questioning his decision. The theme of \"Forgiveness\" carries the entire narrative arc and only unfolds in the epilogue. My reference titles were Reigns for its reduced decision logic, Suzerain for political complexity, Papers, Please for moral ambivalence, and Disco Elysium for thematic and textual depth.",
+
+  "reign-gunst-title": "The Favor System as the Design Core",
+  "reign-gunst-text1": "The conceptual heart of Reign is the Favor system. It represents the ruler's political alignment on a scale between Nobility and Common Folk. Every decision shifts this balance and carries concrete consequences: high noble favor increases tax revenue, high popular favor grows the army. This system ensures there is no \"right\" decision, only trade-offs with consequences.",
+  "reign-gunst-text2": "Additionally, the player manages three other resources: Gold, Troops, and Reputation. If Reputation drops to zero, the reign ends in uprising. All four values are independent of each other but indirectly linked through the Favor mechanic, creating a dynamic field of tension.",
+
+  "reign-coreloop-title": "Core Loop and Game Structure",
+  "reign-coreloop-text": "The gameplay follows a clear rhythm: a time system drives the action forward. Every few days, petitioners appear in the throne room, presenting the player with decisions offering two options each. Once a month, a letter arrives that advances the overarching narrative and is linked to a quest. If the player fails a quest, the game ends. Additionally, laws can be passed, mercenaries hired, and taxes levied, always with the awareness that every action shifts the balance of resources.",
+
+  "reign-tech-title": "Technical Implementation",
+  "reign-tech-text1": "The game was developed in Unity 2022.3 LTS with C#. The architecture follows a component-based approach: each game system (time, resources, events, laws, quests) is an independent MonoBehaviour that communicates with others via C# Events. Event data is defined as ScriptableObjects, allowing new audience events or letters to be added without code changes.",
+  "reign-tech-text2": "For the tutorial, I wrote a custom HLSL shader that darkens the screen and cuts out the UI element being explained, since Unity offers no native spotlight effect for UI.",
+
+  "reign-challenges-title": "Challenges and Learnings",
+  "reign-challenges-text1": "The biggest technical challenge was the save system, which I only integrated retroactively. Race conditions occurred during loading because the TimeSystem was already firing events before the game state was fully loaded. The solution was a flag system via PlayerPrefs that signals the loading state before the scene transition. Learning: the save system belongs in the architecture from the start, not as an afterthought.",
+  "reign-challenges-text2": "On the design side, the most important insight was how much polish matters. Atmospheric sounds, character animations, tooltips, and the tutorial fundamentally changed how the game feels. A game that works technically is not yet a game that feels good.",
+
+  "reign-highlight": "Looking back, I'm satisfied with the result. Reign is not a big game, but it is a coherent one. And that was the goal from the start.",
+
+  "reign-honest-title": "Honest Assessment",
+  "reign-honest-text": "Reign is a university project and as such a prototype with limited scope: eight months of play time, a manageable number of events. The visual assets are partially AI-generated, which I explicitly view as a compromise in the prototype context. In a further development, only hand-crafted graphics would be used. What Reign does show: that mechanics, narrative, and atmosphere can merge into a coherent experience even in a small project, when they are aligned from the start.",
+
+  "reign-download": "↓ Play Reign on itch.io",
 };
 
 // ══════════════════════════════════
