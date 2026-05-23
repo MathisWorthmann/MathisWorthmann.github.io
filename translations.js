@@ -187,7 +187,7 @@ const translations = {
 
   "cs-highlight-outlook": "The next major step is a structured, independent testing program to empirically validate the analytically derived values of the co-op and campaign modes and guide the game layer by layer toward a well-rounded overall experience.",
 
-  "cs-download": "↓ Download Rules as PDF"
+  "cs-download": "↓ Download Rules as PDF",
 
   // ── REIGN CASE STUDY ──
   "reign-back": "← Back to Overview",
