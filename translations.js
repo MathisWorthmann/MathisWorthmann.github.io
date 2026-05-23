@@ -46,7 +46,7 @@ const translations = {
   "project2-tag": "Digital Prototype · Unity",
   "project2-name": "Reign",
   "project2-desc": "Medieval resource management game – balance the estates, manage your power. Your realm stands and falls with your decisions.",
-  "project2-arrow": "Play on itch.io →",
+  "project2-arrow": "Read Case Study →",
   "project3-tag": "3D Art · Blender",
   "project3-name": "Futuristic Energy Core",
   "project3-desc": "Development of an interactive Sci-Fi scene in Unity with self-modeled and textured assets in Blender.",
