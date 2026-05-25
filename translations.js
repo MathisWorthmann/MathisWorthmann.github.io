@@ -50,7 +50,7 @@ const translations = {
   "project3-tag": "3D Art · Blender",
   "project3-name": "Futuristic Energy Core",
   "project3-desc": "Development of an interactive Sci-Fi scene in Unity with self-modeled and textured assets in Blender.",
-  "project3-arrow": "View on ArtStation →",
+  "project3-arrow": "Read Case Study →",
 
   // ── HOME: ABOUT ──
   "about-label": "About Me",
