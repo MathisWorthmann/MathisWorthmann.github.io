@@ -18,6 +18,7 @@
 <link rel="icon" type="image/png" href="images/favicon.png">
 <title>Mathis – Game Designer</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;1,400&display=swap" rel="stylesheet">
+<link href="images/Waypoint_Opening.css" rel="stylesheet">
 <style>
 *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -692,6 +693,112 @@ footer {
   transform: translateY(-2px);
 }
 
+/* ═══════════════════════════════════
+   RÄTSELJAGD CASE STUDY PAGE
+   ═══════════════════════════════════ */
+
+/* Schriften der Opening-Sequenz, aus dem Demo-Ordner */
+@font-face { font-family: "Barlow Condensed"; font-weight: 500; font-display: swap; src: url("portfolio-demo/fonts/BarlowCondensed-500.woff2") format("woff2"); }
+@font-face { font-family: "Barlow Condensed"; font-weight: 600; font-display: swap; src: url("portfolio-demo/fonts/BarlowCondensed-600.woff2") format("woff2"); }
+@font-face { font-family: "Barlow Condensed"; font-weight: 700; font-display: swap; src: url("portfolio-demo/fonts/BarlowCondensed-700.woff2") format("woff2"); }
+@font-face { font-family: "IBM Plex Mono"; font-weight: 400; font-display: swap; src: url("portfolio-demo/fonts/IBMPlexMono-400.woff2") format("woff2"); }
+@font-face { font-family: "IBM Plex Mono"; font-weight: 500; font-display: swap; src: url("portfolio-demo/fonts/IBMPlexMono-500.woff2") format("woff2"); }
+@font-face { font-family: "IBM Plex Mono"; font-weight: 700; font-display: swap; src: url("portfolio-demo/fonts/IBMPlexMono-700.woff2") format("woff2"); }
+
+/* Projektkarte: Header-GIF (2,5:1) unten bündig, darüber in seiner Grundfarbe aufgefüllt */
+.project-thumb.thumb-gif { background: linear-gradient(to bottom, #0a1324, #0d1829 60%); }
+
+/* Smartphone-Rahmen für Opening und Demo */
+.phone-frame {
+  width: 100%;
+  max-width: 390px;
+  margin: 0 auto;
+  padding: 10px;
+  background: #05070c;
+  border: 1px solid var(--border);
+  border-radius: 40px;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.5);
+}
+
+.phone-screen {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 390 / 844;
+  border-radius: 30px;
+  overflow: hidden;
+  background: #0b1526;
+}
+
+.phone-screen iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+/* Im Portfolio läuft das Opening als Schleife, Überspringen ergibt dort keinen Sinn */
+.phone-screen .hw-skip { display: none; }
+
+.case-hero-media {
+  max-width: 960px;
+  margin: 1rem auto 3rem;
+  padding: 0 3rem;
+  text-align: center;
+}
+
+.case-hero-media .phone-frame { max-width: 340px; }
+
+.media-controls {
+  display: flex;
+  justify-content: center;
+  margin-top: 1.5rem;
+}
+
+.btn-sound {
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  padding: 0.7rem 1.5rem;
+  border-radius: 3px;
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text);
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.btn-sound:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+/* Hochformat-Screens: zwei nebeneinander, auch auf dem Handy */
+.case-gallery.screens {
+  max-width: 560px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.case-gallery.screens.single {
+  grid-template-columns: 1fr;
+  max-width: 280px;
+}
+
+.demo-embed { margin: 2rem 0; }
+
+.demo-embed .phone-frame { max-width: 410px; }
+
+.demo-embed .phone-screen { aspect-ratio: auto; height: min(844px, calc(100vh - 8rem)); }
+
+.demo-mobile { display: none; }
+
+.case-content .demo-note {
+  font-size: 0.85rem;
+  text-align: center;
+  margin-top: 1rem;
+}
+
 /* ── ANIMATIONS ── */
 @keyframes fadeInUp {
   from { opacity: 0; transform: translateY(24px); }
@@ -712,6 +819,11 @@ footer {
   .case-hero h1 { font-size: clamp(1.6rem, 8vw, 3.8rem); overflow-wrap: break-word; }
   .skills { padding-left: 1.5rem; padding-right: 1.5rem; }
   .skills-grid { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
+  .case-hero-media { padding: 0 1.5rem; }
+  .case-gallery.screens { grid-template-columns: 1fr 1fr; }
+  .case-gallery.screens.single { grid-template-columns: 1fr; }
+  .demo-embed { display: none; }
+  .demo-mobile { display: block; text-align: center; }
 }
 </style>
 </head>
@@ -833,6 +945,19 @@ footer {
     <p class="section-label" data-i18n="projects-label">Ausgewählte Arbeiten</p>
     <h2 class="section-title" data-i18n="projects-title">Projekte</h2>
     <div class="project-grid">
+
+      <!-- Card 0: Rätseljagd -->
+      <a class="project-card" onclick="showPage('raetseljagd')">
+        <div class="project-thumb thumb-gif">
+          <img src="images/Header_Raetseljagd_600x240.gif" alt="Animierter Header der Rätseljagd: Schriftzug über der Braunschweiger Skyline" loading="lazy" style="width:100%; height:100%; object-fit:contain; object-position:center bottom;">
+        </div>
+        <div class="project-info">
+          <p class="project-tag" data-i18n="project4-tag">Outdoor-Rätsel · Web-App</p>
+          <h3 data-i18n="project4-name">Rätseljagd Braunschweig</h3>
+          <p data-i18n="project4-desc">Eine Rätseljagd durch Braunschweig, entwickelt für Hidden Games. Die Ermittlungs-App ist gehackt, nur die Stadt sagt die Wahrheit.</p>
+          <div class="project-arrow" data-i18n="project4-arrow">Case Study lesen →</div>
+        </div>
+      </a>
 
       <!-- Card 1: Brettspiel -->
       <a class="project-card" onclick="showPage('boardgame')">
@@ -1292,12 +1417,139 @@ footer {
   </footer>
 
 </div>
+
+<!-- ═════════════════════════════════
+     RÄTSELJAGD CASE STUDY PAGE
+     ═════════════════════════════════ -->
+<div id="page-raetseljagd" class="page">
+
+  <section class="case-hero">
+    <a class="case-back" onclick="showPage('home')" data-i18n="rj-back">← Zurück zur Übersicht</a>
+    <p class="section-label" data-i18n="rj-label">Case Study · Outdoor-Rätsel</p>
+    <h1 data-i18n="rj-title">Rätseljagd Braun&shy;schweig</h1>
+    <p class="hero-sub" data-i18n="rj-sub">
+      Eine Rätseljagd durch die Braunschweiger Innenstadt. Ein Schurke hat die Ermittlungs-App der Polizei gehackt, und nur wer genau hinsieht, kommt der Wahrheit auf die Spur.
+    </p>
+    <div class="case-meta">
+      <div class="meta-item">
+        <span class="meta-label" data-i18n="rj-meta-period-label">Zeitraum</span>
+        <span class="meta-value" data-i18n="rj-meta-period-value">2026</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label" data-i18n="rj-meta-role-label">Rolle</span>
+        <span class="meta-value" data-i18n="rj-meta-role-value">Game Design &amp; Narrative (Werkstudent bei Hidden Games)</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label" data-i18n="rj-meta-scope-label">Umfang</span>
+        <span class="meta-value" data-i18n="rj-meta-scope-value">9 Stationen · ca. 2,5 km</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label" data-i18n="rj-meta-tools-label">Tools</span>
+        <span class="meta-value" data-i18n="rj-meta-tools-value">React · GitHub · Claude Code</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Opening-Sequenz der App, live gerendert (images/Waypoint_Opening.js) -->
+  <div class="case-hero-media">
+    <div class="phone-frame">
+      <div class="phone-screen" id="rj-opening"></div>
+    </div>
+    <div class="media-controls">
+      <button type="button" class="btn-sound" id="rj-sound">
+        <span data-i18n="rj-sound-on">🔊 Opening mit Ton abspielen</span>
+        <span data-i18n="rj-sound-off" hidden>🔇 Ton aus</span>
+      </button>
+    </div>
+    <audio id="rj-opening-audio" src="portfolio-demo/uploads/Erzaehler_Intro_Opening.mp3" preload="none"></audio>
+  </div>
+
+  <div class="case-content">
+
+    <h2 data-i18n="rj-overview-title">Überblick</h2>
+    <p data-i18n="rj-overview-text">Die Rätseljagd ist ein kommerzielles Outdoor-Spiel, das ich als Werkstudent bei Hidden Games in Braunschweig entwickle. Teams laufen eine rund 2,5 Kilometer lange Route durch die Innenstadt ab und lösen an neun Stationen Rätsel, die sich nur vor Ort beantworten lassen. Begleitet werden sie von einer Web-App auf dem eigenen Smartphone, die zugleich Spielleitung, Erzählstimme und Teil des Rätsels ist. Das Finale findet an der Volkswagenhalle statt: eine zweistufige Bombenentschärfung mit zwei möglichen Enden.</p>
+
+    <h2 data-i18n="rj-case-title">Vom Koffer zur App</h2>
+    <p data-i18n="rj-case-text1">Ausgangspunkt war eine physische Rätseljagd, bei der die Spieler einen Koffer mit Requisiten durch die Stadt trugen. Mit dem Wechsel aufs Smartphone stellte sich eine grundsätzliche Frage: Welche Rolle spielt die App in der Geschichte?</p>
+    <p data-i18n="rj-case-text2">Die Antwort wurde zum erzählerischen Kern des Projekts. Der Schurke Dr. Danger hat die offizielle Ermittlungs-App der Polizei gehackt, und damit wird die App zum unzuverlässigen Erzähler. Wer seine Manipulationen durchschauen will, muss den Blick vom Bildschirm heben und die echte Umgebung befragen. So wurde aus dem Wegfall des Koffers das zentrale Motiv: Das Medium selbst ist der Gegenspieler.</p>
+
+    <h2 data-i18n="rj-voices-title">Zwei Stimmen in einer App</h2>
+    <p data-i18n="rj-voices-text1">In der App sprechen zwei Figuren, und die Spieler müssen ständig abwägen, wem sie glauben. Dr. Danger mischt sich ein, streut falsche Fährten und behauptet, alles zu sehen. Seine Lügen wirken am stärksten, wenn sie sich im Nachhinein als bedeutsam erweisen: Manche Bemerkung aus einer frühen Station ergibt erst im Finale ihren eigentlichen Sinn.</p>
+    <p data-i18n="rj-voices-text2">Kommissar Riley ist der Gegenpol, die ruhige und verlässliche Stimme der Ermittlung. Riley rahmt einzelne Stationen ein, bestätigt Fortschritte und hält die Spieler auf Kurs. Wie unterschiedlich beide in der App auftreten, zeigt die Gegenüberstellung.</p>
+
+    <div class="case-gallery screens">
+      <img src="images/Waypoint_Danger.png" alt="App-Screen mit Dr. Danger: gekaperter Kanal, Sprachnachricht und rekonstruiertes Transkript in Pink" loading="lazy" style="width:100%; border-radius:16px;">
+      <img src="images/Waypoint_Riley.png" alt="App-Screen mit Kommissar Riley: sichere Leitung, Sprachnachricht und Transkript in Blau" loading="lazy" style="width:100%; border-radius:16px;">
+    </div>
+
+    <div class="highlight-box">
+      <p data-i18n="rj-highlight">„Nichts darf allein vom Bildschirm aus lösbar sein.“</p>
+    </div>
+
+    <h2 data-i18n="rj-principles-title">Design-Prinzipien</h2>
+    <p data-i18n="rj-principles-intro">Bevor ich die einzelnen Stationen ausgearbeitet habe, habe ich Regeln festgelegt, an denen sich jedes Rätsel messen lassen muss.</p>
+    <ul>
+      <li><strong data-i18n="rj-pr1-title">Die Umgebung trägt das Rätsel.</strong> <span data-i18n="rj-pr1-text">Jede Lösung braucht eine Information, die es nur vor Ort gibt: durch Zählen, Beobachten oder das Lesen von Infotafeln. So bekommt jeder Ort einen echten Grund, besucht zu werden.</span></li>
+      <li><strong data-i18n="rj-pr2-title">Aha-Moment plus Mechanik.</strong> <span data-i18n="rj-pr2-text">Ein Erkennungsmoment allein trägt kein Rätsel. Jede Station verbindet die Beobachtung mit einer konkreten Interaktion in der App.</span></li>
+      <li><strong data-i18n="rj-pr3-title">Robust gegen Wetter und Ausprobieren.</strong> <span data-i18n="rj-pr3-text">Rätsel müssen auch bei Regen funktionieren und dürfen sich nicht durch wahlloses Tippen lösen lassen. Wo das drohte, habe ich die Eingabe umgebaut, etwa mit einer Sortierung nach Entfernung oder einem Entschärfen-Knopf, der erst aktiv wird, wenn alle Drähte gekappt sind.</span></li>
+      <li><strong data-i18n="rj-pr4-title">Schlank und bewusst mehrdeutig.</strong> <span data-i18n="rj-pr4-text">Rätsel bleiben knapp. Wo eine Unklarheit erzählerisch etwas bedeutet, bleibt sie stehen.</span></li>
+      <li><strong data-i18n="rj-pr5-title">Niemand bleibt hängen.</strong> <span data-i18n="rj-pr5-text">Jede Station bietet drei gestufte Tipps.</span></li>
+    </ul>
+
+    <h2 data-i18n="rj-decisions-title">Die wichtigsten Design-Entscheidungen</h2>
+    <p data-i18n="rj-decision1">Die erste war der <strong>Verzicht auf GPS</strong>. Statt einer Ortung, die zwischen Gebäuden schnell ungenau wird, bestätigen die Spieler ihre Ankunft per Knopfdruck. Ob sie wirklich am richtigen Ort sind, zeigt sich ohnehin am Rätsel, denn ohne Beobachtung vor Ort gibt es keine Lösung.</p>
+    <p data-i18n="rj-decision2">Die zweite war, <strong>Requisiten weitgehend durch App-Interaktionen zu ersetzen</strong>. Einzelne physische Installationen habe ich bewusst behalten, wo das haptische Erlebnis den Unterschied macht.</p>
+    <p data-i18n="rj-decision3">Die dritte betraf den <strong>Zugang</strong>. Die Spieler aktivieren ihr Spiel mit einem Code, den sie beim Kauf erhalten. Geprüft wird er nur beim Start und nie während des Spiels, denn ein Team mitten in der Stadt darf unter keinen Umständen ausgesperrt werden.</p>
+    <p data-i18n="rj-decision4">Die vierte waren die <strong>zwei Enden</strong>. Die Bombe wird entweder entschärft oder hat eine Fehlzündung. Beide Ausgänge haben eine eigene animierte Abschlusssequenz, sodass auch Teams, die an der Entschärfung scheitern, einen runden Abschluss erleben.</p>
+
+    <div class="case-gallery screens single">
+      <img src="images/Waypoint_Raetsel.png" alt="Rätselansicht einer Station: vierstelliger Sicherungscode mit Ziffernfeld und Hinweis-Knopf" loading="lazy" style="width:100%; border-radius:16px;">
+    </div>
+
+    <h2 data-i18n="rj-tech-title">Technische Umsetzung</h2>
+    <p data-i18n="rj-tech-text1">Die App läuft ohne Installation im Browser und lässt sich wie eine App auf den Homescreen legen. Gearbeitet habe ich in einem GitHub-Repository, den Code habe ich mit Claude Code umgesetzt. Jede Änderung habe ich als klar umrissene Aufgabe mit Akzeptanzkriterien formuliert und das Ergebnis anschließend selbst geprüft.</p>
+    <p data-i18n="rj-tech-text2">Über GitHub Pages lief jeder neue Stand sofort auf dem Smartphone. So konnte ich direkt an den Stationen testen, also dort, wo das Spiel später stattfindet. Jede Station zeigt außerdem ein 360-Grad-Foto, das ich vor Ort aufgenommen habe und in dem sich die Spieler frei umsehen können.</p>
+
+    <h2 data-i18n="rj-demo-title">Selbst ausprobieren</h2>
+    <p data-i18n="rj-demo-text">Die Demo zeigt eine einzelne Station aus dem Spiel: den schiefen Turm. Weil ihr dabei nicht vor dem echten Turm steht, übernimmt das 360-Grad-Foto den Blick in die Umgebung. Das Prinzip bleibt dasselbe: Die App allein reicht nie, erst der Blick auf den Ort löst das Rätsel. Die übrigen acht Stationen bleiben geheim.</p>
+
+    <div class="demo-embed">
+      <div class="phone-frame">
+        <div class="phone-screen">
+          <iframe id="rj-demo" data-src="portfolio-demo/" title="Rätseljagd – spielbare Demo" allow="autoplay"></iframe>
+        </div>
+      </div>
+    </div>
+    <div class="demo-mobile">
+      <a href="portfolio-demo/" class="download-link" target="_blank" rel="noopener" data-i18n="rj-demo-open">▶ Demo öffnen</a>
+    </div>
+    <p class="demo-note" data-i18n="rj-demo-note">Am besten mit Ton spielen.</p>
+
+    <h2 data-i18n="rj-learnings-title">Learnings</h2>
+    <p data-i18n="rj-learning1">Das wichtigste Learning: <strong>Das Medium gehört zur Fiktion</strong>. Sobald die App selbst eine Rolle in der Geschichte bekam, ergaben sich viele Designfragen fast von allein, von der Rätselstruktur bis zur Rollenverteilung zwischen Dr. Danger und Riley.</p>
+    <p data-i18n="rj-learning2">Außerdem habe ich gelernt, die Stadt als Plattform mit eigenen Bedingungen zu behandeln. Wetter, Laufwege und die Eigenheiten verschiedener Smartphones sind genauso Designvorgaben wie die Regeln auf einem Spielbrett.</p>
+    <p data-i18n="rj-learning3">Bei der Arbeit mit Claude Code habe ich gelernt, Aufgaben so präzise zu beschreiben, dass sich das Ergebnis eindeutig prüfen lässt. Je klarer die Akzeptanzkriterien, desto verlässlicher das Ergebnis.</p>
+    <p data-i18n="rj-learning4">Und das laufende Playtesting hat mir gezeigt, wie unverzichtbar es ist, das Spiel von anderen spielen zu lassen. Die Einsichten, die dabei entstehen, lassen sich am Schreibtisch nicht vorwegnehmen.</p>
+
+    <h2 data-i18n="rj-status-title">Aktueller Stand und ehrliche Einordnung</h2>
+    <p data-i18n="rj-status-text1">Stand Oktober 2026 steckt die Rätseljagd mitten im Playtesting. Das Spiel ist spielbar, offen sind noch die finale Abnahme und die Anbindung an das Buchungssystem von Hidden.</p>
+    <p data-i18n="rj-status-text2">Zur Arbeitsweise: Den Code hat Claude Code nach meinen Vorgaben geschrieben, Konzepte und Texte habe ich im Austausch mit Claude entwickelt und überarbeitet. Bei mir lagen das Rätsel- und Spieldesign, die Dramaturgie, die Designentscheidungen und die Tests vor Ort. Viele der Assets im Spiel hat meine Kollegin Lena bei Hidden Games erstellt, und die Zusammenarbeit mit ihr hat mir viel Spaß gemacht.</p>
+
+  </div>
+
+  <footer>
+    <span>© 2026 Mathis Worthmann</span>
+    <span data-i18n="footer-right">Game Designer</span>
+  </footer>
+
+</div>
 <!-- ═══ PAGE ROUTING ═══ -->
 <script>
 function showPage(page) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.getElementById('page-' + page).classList.add('active');
   window.scrollTo({ top: 0, behavior: 'smooth' });
+  raetseljagdPage(page === 'raetseljagd');
 }
 
 // Smooth scroll for anchor links on home page
@@ -1336,6 +1588,73 @@ document.querySelectorAll('.case-gallery img, .case-image-full img').forEach(img
     document.body.appendChild(overlay);
   });
 });
+</script>
+
+<!-- ═══ RÄTSELJAGD: OPENING & DEMO ═══ -->
+<script src="images/Waypoint_Opening.js"></script>
+<script>
+(function() {
+  // Opening-Sequenz: läuft stumm in Schleife, solange sie sichtbar ist.
+  // Mit Ton startet sie neu und folgt der Aufnahme.
+  const box = document.getElementById('rj-opening');
+  const audio = document.getElementById('rj-opening-audio');
+  const btn = document.getElementById('rj-sound');
+  const [labelOn, labelOff] = btn.querySelectorAll('span');
+  const SCHLEIFE = 66; // Sekunden: Aufnahme (ca. 61 s) plus Schlussbild
+  let seq = null, mitTon = false, uhr = 0;
+
+  function setTon(an) {
+    mitTon = an;
+    labelOn.hidden = an;
+    labelOff.hidden = !an;
+  }
+
+  function stop() {
+    if (seq) { seq.stopp(); seq = null; }
+    clearInterval(uhr);
+    audio.pause();
+    setTon(false);
+  }
+
+  function start(ton) {
+    stop();
+    const opt = { safeArea: false, onFertig: () => start(false) };
+    if (ton) {
+      setTon(true);
+      audio.currentTime = 0;
+      audio.play().catch(() => start(false));
+      opt.zeitQuelle = () => audio.currentTime;
+    }
+    seq = HWOpening.starte(box, opt);
+    uhr = setInterval(() => { if (seq && seq.zeit() > SCHLEIFE) start(false); }, 1000);
+  }
+
+  btn.addEventListener('click', () => start(!mitTon));
+
+  new IntersectionObserver(entries => {
+    const sichtbar = entries[entries.length - 1].isIntersecting;
+    if (sichtbar && !seq) start(false);
+    else if (!sichtbar) stop();
+  }).observe(box);
+
+  // Demo: nur am Desktop eingebettet und erst geladen, wenn die Seite offen ist.
+  // Beim Verlassen wird sie entladen, damit kein Ton weiterläuft; den Fortschritt
+  // speichert die Demo selbst.
+  const demo = document.getElementById('rj-demo');
+  const breit = window.matchMedia('(min-width: 769px)');
+  let aktiv = false;
+
+  function demoLaden() {
+    const soll = aktiv && breit.matches ? demo.dataset.src : 'about:blank';
+    if (demo.getAttribute('src') !== soll) demo.src = soll;
+  }
+
+  window.raetseljagdPage = function(istAktiv) {
+    aktiv = istAktiv;
+    demoLaden();
+  };
+  breit.addEventListener('change', demoLaden);
+})();
 </script>
 
 <!-- ═══ LANGUAGE SWITCHER ═══ -->

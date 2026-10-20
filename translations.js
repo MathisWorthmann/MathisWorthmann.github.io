@@ -51,6 +51,10 @@ const translations = {
   "project3-name": "Futuristic Energy Core",
   "project3-desc": "Development of an interactive Sci-Fi scene in Unity with self-modeled and textured assets in Blender.",
   "project3-arrow": "Read Case Study →",
+  "project4-tag": "Outdoor Puzzle · Web App",
+  "project4-name": "Puzzle Hunt Braunschweig",
+  "project4-desc": "A puzzle hunt through Braunschweig, developed for Hidden Games. The investigation app has been hacked, only the city tells the truth.",
+  "project4-arrow": "Read Case Study →",
 
   // ── HOME: ABOUT ──
   "about-label": "About Me",
@@ -262,6 +266,73 @@ const translations = {
   "ek-learnings-text2": "On the visual side, I experienced how dramatically post-processing and lighting change the overall image. The same model looks completely different in Unity with Bloom and Volumetric Lighting than as a bare mesh export. The last 20% of the work accounts for 80% of the visual impact.",
 
   "ek-download": "↓ View on ArtStation",
+
+  // ── RÄTSELJAGD CASE STUDY ──
+  "rj-back": "← Back to Overview",
+  "rj-label": "Case Study · Outdoor Puzzle",
+  "rj-title": "Puzzle Hunt Braun&shy;schweig",
+  "rj-sub": "A puzzle hunt through the city centre of Braunschweig. A villain has hacked the police's investigation app, and only those who look closely will uncover the truth.",
+  "rj-meta-period-label": "Period",
+  "rj-meta-period-value": "2026",
+  "rj-meta-role-label": "Role",
+  "rj-meta-role-value": "Game Design &amp; Narrative (Working Student at Hidden Games)",
+  "rj-meta-scope-label": "Scope",
+  "rj-meta-scope-value": "9 stations · approx. 2.5 km",
+  "rj-meta-tools-label": "Tools",
+  "rj-meta-tools-value": "React · GitHub · Claude Code",
+  "rj-sound-on": "🔊 Play opening with sound",
+  "rj-sound-off": "🔇 Sound off",
+
+  "rj-overview-title": "Overview",
+  "rj-overview-text": "The puzzle hunt is a commercial outdoor game that I am developing as a working student at Hidden Games in Braunschweig. Teams walk a route of about 2.5 kilometres through the city centre and solve puzzles at nine stations that can only be answered on site. They are accompanied by a web app on their own smartphone, which acts as game master, narrator and part of the puzzle all at once. The finale takes place at the Volkswagen Halle: a two-stage bomb defusal with two possible endings.",
+
+  "rj-case-title": "From Suitcase to App",
+  "rj-case-text1": "The starting point was a physical puzzle hunt in which players carried a suitcase full of props through the city. Moving to the smartphone raised a fundamental question: What role does the app play in the story?",
+  "rj-case-text2": "The answer became the narrative core of the project. The villain Dr. Danger has hacked the police's official investigation app, which turns the app into an unreliable narrator. Anyone who wants to see through his manipulations has to look up from the screen and question the real surroundings. Losing the suitcase thus became the central motif: the medium itself is the antagonist.",
+
+  "rj-voices-title": "Two Voices in One App",
+  "rj-voices-text1": "Two characters speak in the app, and players constantly have to weigh whom to believe. Dr. Danger interferes, lays false trails and claims to see everything. His lies are most effective when they turn out to be meaningful in hindsight: some remarks from an early station only reveal their true meaning in the finale.",
+  "rj-voices-text2": "Inspector Riley is the counterweight, the calm and reliable voice of the investigation. Riley frames individual stations, confirms progress and keeps players on track. The side-by-side comparison shows how differently the two appear in the app.",
+
+  "rj-highlight": "“Nothing may be solvable from the screen alone.”",
+
+  "rj-principles-title": "Design Principles",
+  "rj-principles-intro": "Before working out the individual stations, I set rules that every puzzle has to measure up to.",
+  "rj-pr1-title": "The environment carries the puzzle.",
+  "rj-pr1-text": "Every solution needs a piece of information that only exists on site: by counting, observing or reading information boards. This gives every location a real reason to be visited.",
+  "rj-pr2-title": "Aha moment plus mechanic.",
+  "rj-pr2-text": "A moment of recognition alone does not make a puzzle. Every station combines the observation with a concrete interaction in the app.",
+  "rj-pr3-title": "Robust against weather and trial and error.",
+  "rj-pr3-text": "Puzzles have to work in the rain and must not be solvable by random tapping. Where that was a risk, I rebuilt the input, for example with sorting by distance or a defuse button that only becomes active once all wires have been cut.",
+  "rj-pr4-title": "Lean and deliberately ambiguous.",
+  "rj-pr4-text": "Puzzles stay concise. Where an ambiguity means something narratively, it stays.",
+  "rj-pr5-title": "Nobody gets stuck.",
+  "rj-pr5-text": "Every station offers three tiered hints.",
+
+  "rj-decisions-title": "Key Design Decisions",
+  "rj-decision1": "The first was <strong>doing without GPS</strong>. Instead of location tracking, which quickly becomes inaccurate between buildings, players confirm their arrival at the push of a button. Whether they are really in the right place shows in the puzzle anyway, because without on-site observation there is no solution.",
+  "rj-decision2": "The second was <strong>largely replacing props with app interactions</strong>. I deliberately kept a few physical installations where the tactile experience makes the difference.",
+  "rj-decision3": "The third concerned <strong>access</strong>. Players activate their game with a code they receive when they buy it. It is only checked at the start and never during the game, because a team in the middle of the city must never be locked out under any circumstances.",
+  "rj-decision4": "The fourth was the <strong>two endings</strong>. The bomb is either defused or misfires. Both outcomes have their own animated closing sequence, so even teams that fail the defusal get a satisfying conclusion.",
+
+  "rj-tech-title": "Technical Implementation",
+  "rj-tech-text1": "The app runs in the browser without installation and can be added to the home screen like an app. I worked in a GitHub repository and implemented the code with Claude Code. I phrased every change as a clearly defined task with acceptance criteria and then reviewed the result myself.",
+  "rj-tech-text2": "Through GitHub Pages, every new build was immediately available on my smartphone. This let me test directly at the stations, right where the game will later be played. Each station also shows a 360-degree photo that I took on site, in which players can look around freely.",
+
+  "rj-demo-title": "Try It Yourself",
+  "rj-demo-text": "The demo shows a single station from the game: the leaning tower. Since you are not standing in front of the real tower, the 360-degree photo takes over the view of the surroundings. The principle stays the same: the app alone is never enough, only looking at the place solves the puzzle. The other eight stations remain a secret.",
+  "rj-demo-open": "▶ Open demo",
+  "rj-demo-note": "Best played with sound. The demo is in German.",
+
+  "rj-learnings-title": "Learnings",
+  "rj-learning1": "The most important learning: <strong>the medium is part of the fiction</strong>. As soon as the app itself was given a role in the story, many design questions almost answered themselves, from the puzzle structure to the division of roles between Dr. Danger and Riley.",
+  "rj-learning2": "I also learned to treat the city as a platform with its own conditions. Weather, walking routes and the quirks of different smartphones are design constraints just as much as the rules on a game board.",
+  "rj-learning3": "Working with Claude Code taught me to describe tasks so precisely that the result can be checked unambiguously. The clearer the acceptance criteria, the more reliable the result.",
+  "rj-learning4": "And the ongoing playtesting has shown me how indispensable it is to let other people play the game. The insights it produces cannot be anticipated at the desk.",
+
+  "rj-status-title": "Current Status and Honest Assessment",
+  "rj-status-text1": "As of October 2026, the puzzle hunt is in the middle of playtesting. The game is playable; the final acceptance and the connection to Hidden's booking system are still open.",
+  "rj-status-text2": "On how I worked: Claude Code wrote the code according to my specifications, and I developed and revised concepts and texts in dialogue with Claude. The puzzle and game design, the dramaturgy, the design decisions and the on-site testing were my responsibility. Many of the game's assets were created by my colleague Lena at Hidden Games, and working with her was a real pleasure.",
 };
 
 // ══════════════════════════════════

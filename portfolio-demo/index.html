@@ -1,0 +1,1686 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Waypoint Demo">
+<meta name="theme-color" content="#05070C">
+<title>Hidden Waypoint – Demo</title>
+<!-- Leeres Favicon: spart den 404, die Demo laeuft meist im iframe. -->
+<link rel="icon" href="data:,">
+<!--
+  Spielbare Portfolio-Demo der Raetseljagd: genau eine Station (der Turm zum
+  Zusammenschieben), sonst nichts aus dem Spiel. Gebaut aus den Bausteinen der
+  Spielerversion (Sprechermodi, Anruf-Einblendung, 360-Grad-Betrachter,
+  Fragmentpuzzle, gestaffelte Hinweise) - kopiert, nicht nachgebaut.
+
+  Vor der Einleitung laeuft die Opening-Sequenz der App (opening/, Kopie).
+
+  Bewusst NICHT enthalten: Zugangspruefung, Booking-Tool, Multiplayer
+  (Gateway), Abschluss-Sequenzen, Karten, Funkarchiv, Optionen.
+  Der Fortschritt liegt unter eigenen Schluesseln (hw_demo_*), die App selbst
+  wird nie beruehrt.
+
+  Asset-Regeln wie in der App: jedes Asset als ext-resource-dependency, Pfade
+  nur als String-Literale (PROTOTYP.md "Assets and the standalone export").
+-->
+<meta name="ext-resource-dependency" content="uploads/Logo.png" data-resource-id="logo" />
+<meta name="ext-resource-dependency" content="uploads/Station8_360.webp" data-resource-id="station8" />
+<meta name="ext-resource-dependency" content="uploads/Wasserturm_1_Sockel.png" data-resource-id="wasserturm1" />
+<meta name="ext-resource-dependency" content="uploads/Wasserturm_2.png" data-resource-id="wasserturm2" />
+<meta name="ext-resource-dependency" content="uploads/Wasserturm_3.png" data-resource-id="wasserturm3" />
+<meta name="ext-resource-dependency" content="uploads/Wasserturm_4.png" data-resource-id="wasserturm4" />
+<meta name="ext-resource-dependency" content="uploads/Wasserturm_5.png" data-resource-id="wasserturm5" />
+<meta name="ext-resource-dependency" content="uploads/Wasserturm_6.png" data-resource-id="wasserturm6" />
+<meta name="ext-resource-dependency" content="uploads/Audios/Anruf_Riley.mp3" data-resource-id="anrufriley" />
+<meta name="ext-resource-dependency" content="uploads/Audios/Anruf_Danger.mp3" data-resource-id="anrufdanger" />
+<meta name="ext-resource-dependency" content="uploads/Audios/Riley_Intro.mp3" data-resource-id="auIntroRiley" />
+<meta name="ext-resource-dependency" content="uploads/Audios/Dr_Danger_Intro_Uebernahme.mp3" data-resource-id="auIntroDanger" />
+<meta name="ext-resource-dependency" content="uploads/Audios/Riley_Steigenberger_Turm_Datei.mp3" data-resource-id="auSt8Riley" />
+<meta name="ext-resource-dependency" content="uploads/Erzaehler_Intro_Opening.mp3" data-resource-id="auIntroOpening" />
+<meta name="ext-resource-dependency" content="uploads/Audios/Korrekte_Antwort.mp3" data-resource-id="sfxOk" />
+<meta name="ext-resource-dependency" content="uploads/Audios/Falsche_Antwort.mp3" data-resource-id="sfxFail" />
+<!-- React/ReactDOM lokal aus vendor/ statt von unpkg.com, wie in der App:
+     support.js liest window.__resources in cdnScriptFor(). Die Schluessel
+     muessen zeichengenau den Konstanten in support.js entsprechen. -->
+<script>
+window.__resources = {
+  "https://unpkg.com/react@18.3.1/umd/react.production.min.js": "vendor/react.production.min.js",
+  "https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js": "vendor/react-dom.production.min.js"
+};
+</script>
+<!-- Opening-Sequenz der App, unveraenderte Kopie (PROTOTYP.md "Opening-Sequenz").
+     Ausser den Tokens SCHRIFT und FARBE nicht anfassen. -->
+<link rel="stylesheet" href="opening/hw-opening.css">
+<script src="opening/hw-opening.js"></script>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<!-- Schriften lokal unter fonts/, nur die Schnitte, die die Demo braucht. -->
+<style>
+  @font-face { font-family:"Barlow Condensed"; font-style:normal; font-weight:500; font-display:swap;
+    src:url("fonts/BarlowCondensed-500.woff2") format("woff2");
+    unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+  @font-face { font-family:"Barlow Condensed"; font-style:normal; font-weight:600; font-display:swap;
+    src:url("fonts/BarlowCondensed-600.woff2") format("woff2");
+    unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+  @font-face { font-family:"Barlow Condensed"; font-style:normal; font-weight:700; font-display:swap;
+    src:url("fonts/BarlowCondensed-700.woff2") format("woff2");
+    unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+  @font-face { font-family:"IBM Plex Mono"; font-style:normal; font-weight:400; font-display:swap;
+    src:url("fonts/IBMPlexMono-400.woff2") format("woff2");
+    unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+  @font-face { font-family:"IBM Plex Mono"; font-style:normal; font-weight:500; font-display:swap;
+    src:url("fonts/IBMPlexMono-500.woff2") format("woff2");
+    unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+  @font-face { font-family:"IBM Plex Mono"; font-style:normal; font-weight:700; font-display:swap;
+    src:url("fonts/IBMPlexMono-700.woff2") format("woff2");
+    unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+</style>
+<style>
+  body { margin:0; background:#05070C; }
+  a { color:#5CC8FF; } a:hover { color:#8FDCFF; }
+  /* iOS / Touch wie in der Spielerversion: Safe-Areas, kein Overscroll,
+     kein Doppeltipp-Zoom, Zieh- und Zoomflaechen mit touch-action:none
+     auch fuer alle Kinder (touch-action wird nicht vererbt). */
+  body {
+    padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+  }
+  html, body { overscroll-behavior-y: none; }
+  * { touch-action: manipulation; }
+  [data-wp-gesture], [data-wp-gesture] * { touch-action: none; }
+  /* Kopfleiste: nie umbrechen, die Statusspalte gibt nach. */
+  [data-wp-hdr] { white-space: nowrap; gap: 6px; }
+  [data-wp-hdr] > span { flex: 0 0 auto; }
+  [data-wp-hdr] > span:nth-child(2) { flex: 0 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+  * {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+  }
+  input, textarea {
+    -webkit-user-select: text;
+    user-select: text;
+  }
+  /* Schmaler Viewport (Handy, und das iframe mit 390 px im Portfolio): die
+     Desktop-Buehne faellt weg, der Rahmen ist genau eine Bildschirmhoehe hoch.
+     Jeder Screen scrollt in seinem eigenen Inhaltsbereich. */
+  @media (max-width: 520px) {
+    #wp-outer { padding: 0 !important; min-height: 100dvh !important; }
+    #wp-col { position: static !important; gap: 0 !important; width: 100%; }
+    #wp-frame {
+      width: 100% !important;
+      height: 100dvh !important;
+      border-radius: 0 !important;
+      border: none !important;
+      box-shadow: none !important;
+    }
+  }
+  @keyframes wpFlicker { 0%,100%{opacity:1} 91%{opacity:1} 92%{opacity:.35} 93%{opacity:1} 96%{opacity:.7} 97%{opacity:1} }
+  @keyframes wpFlicker2 { 0%,100%{opacity:1} 43%{opacity:1} 44%{opacity:.2} 46%{opacity:1} 81%{opacity:.6} 82%{opacity:1} }
+  @keyframes wpScan { 0%{transform:translateY(-120px)} 100%{transform:translateY(900px)} }
+  @keyframes wpSolvedIn { from{opacity:0} to{opacity:1} }
+  @keyframes wpSolvedPop { 0%{transform:scale(.6);opacity:0} 60%{transform:scale(1.08)} 100%{transform:scale(1);opacity:1} }
+  @keyframes wpIncomingIn { 0%{opacity:0} 12%{opacity:1} 78%{opacity:1} 100%{opacity:0} }
+  @keyframes wpSolvedBar { from{width:100%} to{width:0} }
+  /* Fehler-Ruettler: zwei gleiche Keyframes, damit ein zweiter Fehler die
+     Animation neu startet (siehe fehlerRuettelt). */
+  @keyframes wpShakeA {
+    0%   { transform:translate3d(0,0,0) }
+    15%  { transform:translate3d(-6px,0,0) }
+    30%  { transform:translate3d(5px,0,0) }
+    45%  { transform:translate3d(-4px,0,0) }
+    60%  { transform:translate3d(3px,0,0) }
+    75%  { transform:translate3d(-2px,0,0) }
+    100% { transform:translate3d(0,0,0) }
+  }
+  @keyframes wpShakeB {
+    0%   { transform:translate3d(0,0,0) }
+    15%  { transform:translate3d(-6px,0,0) }
+    30%  { transform:translate3d(5px,0,0) }
+    45%  { transform:translate3d(-4px,0,0) }
+    60%  { transform:translate3d(3px,0,0) }
+    75%  { transform:translate3d(-2px,0,0) }
+    100% { transform:translate3d(0,0,0) }
+  }
+</style>
+</helmet>
+
+<div id="wp-outer" style="min-height:100vh; display:flex; align-items:flex-start; justify-content:center; gap:36px; padding:32px; background:#05070C; font-family:'IBM Plex Mono',monospace;">
+
+  <!-- ══════════ TELEFON ══════════ -->
+  <div id="wp-col" style="display:flex; flex-direction:column; gap:16px; align-items:center; position:sticky; top:32px;">
+  <div id="wp-frame" style="width:390px; height:844px; flex:none; background:#0B1526; border-radius:34px; border:1px solid rgba(140,170,210,.35); box-shadow:0 30px 80px rgba(0,0,0,.65); position:relative; overflow:hidden; display:flex; flex-direction:column; animation:{{ shakeAnim }};">
+
+    <!-- ══════════ DEMO-START ══════════
+         Aufbau wie der Zugangs-Screen der App, aber ohne Pruefung: der Code
+         steht schon im Feld, jeder Text wird angenommen. "Jetzt aktivieren"
+         ist die erste Geste der Sitzung und gibt dabei den Ton frei. -->
+    <sc-if value="{{ gateShow }}">
+      <div style="position:absolute; inset:0; z-index:70; background:#0B1526; color:#E9F0F8; overflow-y:auto; overflow-x:hidden; touch-action:pan-y;">
+        <div style="box-sizing:border-box; width:100%; padding:26px 18px 30px; display:flex; flex-direction:column; gap:20px;">
+
+          <div style="display:flex; flex-direction:column; align-items:center; gap:12px; text-align:center;">
+            <img src="uploads/Logo.png" alt="Hidden in Braunschweig" style="width:200px; height:auto; max-width:100%; opacity:.95;">
+            <div style="font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:30px; letter-spacing:.06em; line-height:1.1;">Hidden Waypoint</div>
+            <div style="font-family:'IBM Plex Mono',monospace; font-size:12px; color:#8FA6C4; letter-spacing:.04em;">Eine Rätseljagd durch Braunschweig</div>
+          </div>
+
+          <div style="height:1px; background:rgba(140,170,210,.22);"></div>
+
+          <div style="font-family:'IBM Plex Mono',monospace; font-size:13px; line-height:1.65; color:#C9D7E8;">Spielbare Demo mit einer Station. In der echten Jagd löst ihr jedes Rätsel nur vor Ort – hier ersetzt ein Rundumfoto den Blick auf die Umgebung.</div>
+
+          <div style="background:#101E33; border:1px solid rgba(140,170,210,.22); border-radius:8px; padding:16px 14px; display:flex; flex-direction:column; gap:11px;">
+            <sc-for list="{{ gateFakten }}" as="f">
+              <div style="display:flex; flex-direction:column; gap:3px;">
+                <div style="font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:13px; letter-spacing:.12em; color:#5CC8FF; text-transform:uppercase;">{{ f.label }}</div>
+                <div style="font-family:'IBM Plex Mono',monospace; font-size:12.5px; line-height:1.55; color:#C9D7E8;">{{ f.wert }}</div>
+              </div>
+            </sc-for>
+          </div>
+
+          <div style="display:flex; flex-direction:column; gap:10px;">
+            <label for="wp-demo-code" style="font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:14px; letter-spacing:.14em; color:#5CC8FF; text-transform:uppercase;">Zugangscode</label>
+            <input id="wp-demo-code" value="{{ demoCode }}" onChange="{{ demoCodeSetzen }}" onKeyDown="{{ demoKey }}"
+                   autocapitalize="off" autocorrect="off" autocomplete="off"
+                   spellcheck="false" inputmode="text" enterkeyhint="go"
+                   style="box-sizing:border-box; width:100%; min-height:52px; background:#06121F; border:2px solid rgba(140,170,210,.4); border-radius:6px; padding:14px 14px; color:#E9F0F8; font-family:'IBM Plex Mono',monospace; font-size:17px; letter-spacing:.10em; outline:none;">
+            <button onClick="{{ aktivieren }}"
+                    style="min-height:54px; background:#5CC8FF; color:#05121F; border:none; border-radius:6px; font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:19px; letter-spacing:.1em; cursor:pointer;"
+                    style-hover="background:#8FDCFF;">JETZT AKTIVIEREN</button>
+            <sc-if value="{{ gateFortsetzen }}">
+              <div style="font-family:'IBM Plex Mono',monospace; font-size:11.5px; line-height:1.6; color:#8FA6C4;">Ihr steigt dort wieder ein, wo ihr aufgehört habt.</div>
+            </sc-if>
+          </div>
+
+        </div>
+      </div>
+    </sc-if>
+
+    <!-- ═══ STAGE ═══ -->
+    <div style="flex:1; position:relative; overflow:hidden;">
+
+    <!-- ── GENERISCHER AUDIO-SCREEN ──
+         Wie in der App. Neu ist nur auMitTon: Nachrichten ohne Aufnahme
+         (Einleitung, Aufloesung) zeigen keinen Player, nur das Transkript. -->
+    <sc-if value="{{ tAudio }}" hint-placeholder-val="{{ true }}">
+      <div data-screen-label="{{ auScreenLabel }}" style="position:absolute; inset:0; background:{{ pgBg }}; color:{{ pgFg }}; display:flex; flex-direction:column;">
+        <div data-wp-hdr style="display:flex; justify-content:space-between; padding:14px 12px; font-size:10px; letter-spacing:.08em; color:{{ hdrC }}; border-bottom:1px solid {{ hdrLine }}; animation:{{ hdrAnim }};">
+          <span style="{{ hdrLeftStyle }}">{{ hdrLeft }}</span><span style="color:{{ hdrMidC }};">{{ hdrMid }}</span><span>{{ hdrRight }}</span>
+        </div>
+        <div style="padding:20px 22px; display:flex; flex-direction:column; gap:16px; flex:1; min-height:0; position:relative; overflow-y:auto;">
+          <div style="position:relative; flex:none;">
+            <div style="font-size:11px; letter-spacing:.2em; color:{{ auKicker }};">{{ auKickerText }}</div>
+            <sc-if value="{{ auBadge }}" hint-placeholder-val="{{ false }}">
+              <div style="position:absolute; top:-8px; left:-6px; background:#FF2E63; color:#150711; font-weight:700; font-size:11px; letter-spacing:.16em; padding:6px 12px; transform:rotate(-3deg); box-shadow:0 4px 14px rgba(255,46,99,.4);">{{ auBadgeText }}</div>
+            </sc-if>
+          </div>
+          <div style="background:{{ cardBg }}; border:1px solid {{ cardBorder }}; border-radius:10px; padding:20px; display:flex; flex-direction:column; gap:16px; flex:none; margin-top:{{ auCardMt }};">
+            <div style="display:flex; align-items:center; gap:14px;">
+              <sc-if value="{{ auKlein }}" hint-placeholder-val="{{ true }}">
+                <div style="width:60px; height:60px; flex:none; border-radius:50%; background:{{ avBg }}; border:2px solid {{ accent }}; display:flex; align-items:center; justify-content:center; font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:22px; color:{{ accent }}; animation:{{ avAnim }};">{{ auInitials }}</div>
+              </sc-if>
+              <sc-if value="{{ trGrossAn }}" hint-placeholder-val="{{ false }}">
+                <button onClick="{{ togglePlay }}" style="width:60px; height:60px; flex:none; border-radius:50%; background:{{ accent }}; color:{{ onAccent }}; border:none; font-size:20px; cursor:pointer;">{{ playIcon }}</button>
+              </sc-if>
+              <div style="display:flex; flex-direction:column; gap:3px;">
+                <div style="font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:24px; letter-spacing:.04em; color:{{ auNameC }}; text-shadow:{{ auNameShadow }};">{{ auName }}</div>
+                <div style="font-size:10px; letter-spacing:.16em; color:{{ subC }};">{{ auSub }}</div>
+              </div>
+            </div>
+            <sc-if value="{{ auMitTon }}" hint-placeholder-val="{{ true }}">
+            <sc-if value="{{ auKlein }}" hint-placeholder-val="{{ true }}">
+              <div onPointerDown="{{ seekDown }}" onPointerMove="{{ seekMove }}" onPointerUp="{{ seekUp }}" onPointerCancel="{{ seekUp }}" style="display:flex; align-items:flex-end; justify-content:space-between; gap:3px; height:52px; cursor:pointer; touch-action:none;">
+                <sc-for list="{{ auBars }}" as="b" hint-placeholder-count="28">
+                  <div style="width:7px; height:{{ b.h }}px; background:{{ b.c }}; border-radius:2px;"></div>
+                </sc-for>
+              </div>
+            </sc-if>
+            <div style="display:flex; flex-direction:column; gap:6px;">
+              <div onPointerDown="{{ seekDown }}" onPointerMove="{{ seekMove }}" onPointerUp="{{ seekUp }}" onPointerCancel="{{ seekUp }}" style="height:14px; display:flex; align-items:center; cursor:pointer; padding:6px 0; touch-action:none;">
+                <div style="width:100%; height:3px; background:{{ progBg }}; border-radius:2px; overflow:hidden;">
+                  <div style="height:100%; background:{{ accent }}; width:{{ progPct }};"></div>
+                </div>
+              </div>
+              <div style="display:flex; justify-content:space-between; font-size:10px; letter-spacing:.14em; color:{{ subC }};">
+                <span>{{ auElapsed }}</span><span>{{ auTotal }}</span>
+              </div>
+            </div>
+            <sc-if value="{{ auKlein }}" hint-placeholder-val="{{ true }}">
+              <div style="display:flex; gap:12px; align-items:center;">
+                <button onClick="{{ togglePlay }}" style="width:60px; height:60px; flex:none; border-radius:50%; background:{{ accent }}; color:{{ onAccent }}; border:none; font-size:20px; cursor:pointer;">{{ playIcon }}</button>
+                <button onClick="{{ toggleTr }}" style="flex:1; min-height:52px; background:transparent; border:1px solid {{ cardBorder }}; border-radius:6px; color:{{ trBtnC }}; font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:.14em; cursor:pointer;">{{ trLabel }}</button>
+              </div>
+            </sc-if>
+            </sc-if>
+
+          </div>
+          <sc-if value="{{ trOpen }}" hint-placeholder-val="{{ true }}">
+            <div style="background:{{ cardBg }}; border-left:3px solid {{ accent }}; border-radius:0 8px 8px 0; padding:14px 18px; flex:{{ auTrFlex }}; min-height:{{ auTrMin }}; display:flex; flex-direction:column; gap:10px;">
+              <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; flex:none;">
+                <div style="font-size:10px; letter-spacing:.18em; color:{{ subC }};">{{ auTrTitle }}</div>
+                <sc-if value="{{ auMitTon }}" hint-placeholder-val="{{ true }}">
+                <button onClick="{{ toggleTrGross }}" aria-expanded="{{ trGrossAn }}" style="display:flex; align-items:center; gap:6px; flex:none; min-height:32px; padding:6px 8px; margin:-6px -8px -6px 0; background:transparent; border:none; color:{{ trBtnC }}; font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:.14em; cursor:pointer;">
+                  <span style="font-size:12px; line-height:1;">{{ trGrossIcon }}</span>{{ trGrossLabel }}
+                </button>
+                </sc-if>
+              </div>
+              <div style="flex:1; min-height:0; overflow-y:auto;">
+                <sc-for list="{{ auLines }}" as="ln" hint-placeholder-count="1">
+                  <div style="font-size:13px; line-height:1.7; color:{{ trTextC }}; margin-bottom:8px; font-style:{{ ln.fs }};">{{ ln.t }}</div>
+                </sc-for>
+              </div>
+            </div>
+          </sc-if>
+          <div style="flex:{{ auSpacer }}; min-height:8px;"></div>
+          <button onClick="{{ next }}" style="min-height:60px; flex:none; background:{{ ctaBg }}; color:{{ ctaC }}; border:{{ ctaBorder }}; border-radius:6px; font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:20px; letter-spacing:.12em; cursor:pointer;">{{ auCta }}</button>
+        </div>
+        <sc-if value="{{ hkScan }}" hint-placeholder-val="{{ false }}">
+          <div style="position:absolute; inset:0; pointer-events:none; background:repeating-linear-gradient(0deg, rgba(255,46,99,.05) 0px, rgba(255,46,99,.05) 2px, transparent 2px, transparent 5px);"></div>
+          <div style="position:absolute; left:0; right:0; height:90px; pointer-events:none; background:linear-gradient(180deg, transparent, rgba(255,43,214,.08), transparent); animation:{{ scanAnim }};"></div>
+        </sc-if>
+      </div>
+    </sc-if>
+
+    <!-- ── DEMO-HINWEIS ── Ausserhalb der Fiktion, sachlich wie der Start:
+         keine Glitch-Effekte. Sagt, warum nach Dr. Dangers Ankuendigung
+         nur eine Station kommt. -->
+    <sc-if value="{{ tHinweis }}" hint-placeholder-val="{{ false }}">
+      <div data-screen-label="Demo Hinweis" style="position:absolute; inset:0; background:#0B1526; color:#E9F0F8; display:flex; flex-direction:column;">
+        <div style="flex:1; min-height:0; overflow-y:auto; display:flex; flex-direction:column; justify-content:center; padding:26px 18px 30px; gap:20px;">
+          <div style="background:#06121F; border:1px solid rgba(92,200,255,.45); border-left:4px solid #5CC8FF; border-radius:8px; padding:20px 16px; display:flex; flex-direction:column; gap:12px; flex:none;">
+            <div style="font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:13px; letter-spacing:.14em; color:#5CC8FF; text-transform:uppercase;">Hinweis zur Demo</div>
+            <div style="font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:28px; line-height:1.1; letter-spacing:.03em;">Ihr spielt eine Station</div>
+            <div style="font-family:'IBM Plex Mono',monospace; font-size:13px; line-height:1.65; color:#C9D7E8;">In der echten Rätseljagd beginnt jetzt Dr. Dangers Spur: neun Stationen, zu Fuß quer durch Braunschweig, jede mit eigenem Rätsel.</div>
+            <div style="font-family:'IBM Plex Mono',monospace; font-size:13px; line-height:1.65; color:#C9D7E8;">Diese Demo zeigt nur eins davon und springt direkt zum schiefen Turm. Die übrigen Rätsel bleiben geheim, bis ihr selbst losgeht.</div>
+          </div>
+          <button onClick="{{ next }}" style="min-height:58px; flex:none; background:#5CC8FF; color:#06121F; border:none; border-radius:6px; font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:19px; letter-spacing:.1em; cursor:pointer;" style-hover="background:#8FDCFF;">ZUR DEMO-STATION →</button>
+        </div>
+      </div>
+    </sc-if>
+
+    <!-- ── FRAGMENTPUZZLE ── wie in der App; dazu der Weg zurueck in den
+         Rundumblick, weil Demo-Spieler nicht vor dem echten Turm stehen. -->
+    <sc-if value="{{ tFrags }}" hint-placeholder-val="{{ false }}">
+      <div data-screen-label="Fragmentpuzzle Turm" style="position:absolute; inset:0; background:#0B1526; color:#E9F0F8; display:flex; flex-direction:column;">
+        <div data-wp-hdr style="display:flex; justify-content:space-between; padding:14px 12px; font-size:10px; letter-spacing:.08em; color:#8FA6C4; border-bottom:1px solid rgba(140,170,210,.2);">
+          <span>{{ hdrLeft }}</span><span>FRAGMENTPUZZLE</span><span>{{ hdrRight }}</span>
+        </div>
+        <div style="flex:1; display:flex; flex-direction:column; padding:16px 18px; gap:10px; min-height:0;">
+          <div style="font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:24px;">TURM REKONSTRUIEREN</div>
+          <div style="font-size:10px; letter-spacing:.1em; color:#8FA6C4;">SCHNIPSEL AN DIE RICHTIGE STELLE ZIEHEN ({{ fragFilledCount }} VON 6)</div>
+          <div data-wp-gesture="" onPointerMove="{{ fragMove }}" onPointerUp="{{ fragUp }}" onPointerCancel="{{ fragUp }}" style="flex:1; display:flex; justify-content:center; gap:16px; min-height:0; touch-action:none;">
+            <div style="flex:none; height:100%; aspect-ratio:2923/8899; display:flex; flex-direction:column-reverse;">
+              <sc-for list="{{ fragSlotView }}" as="sl" hint-placeholder-count="6">
+                <div data-frag-slot="{{ sl.i }}" onPointerDown="{{ sl.down }}" style="box-sizing:border-box; flex:none; height:{{ sl.h }}; border:{{ sl.border }}; border-radius:2px; background-color:{{ sl.bg }}; background-image:{{ sl.img }}; background-size:100% 100%; background-origin:border-box; opacity:{{ sl.opacity }}; cursor:{{ sl.cursor }};"></div>
+              </sc-for>
+            </div>
+            <div style="flex:none; width:92px; position:relative; background:#0E1A2D; border:1px solid rgba(140,170,210,.25); border-radius:8px; padding:8px 0; display:flex; flex-direction:column; align-items:center; gap:8px; overflow-y:auto;">
+              <sc-for list="{{ fragPoolView }}" as="p" hint-placeholder-count="6">
+                <div onPointerDown="{{ p.down }}" style="flex:none; width:{{ p.w }}; height:{{ p.h }}; background-image:{{ p.src }}; background-size:{{ p.bgSize }}; background-repeat:no-repeat; background-position:{{ p.bgPos }}; transform:rotate({{ p.rot }}); opacity:{{ p.opacity }}; cursor:grab; filter:drop-shadow(0 3px 8px rgba(0,0,0,.45));"></div>
+              </sc-for>
+              <sc-if value="{{ fragPoolEmpty }}" hint-placeholder-val="{{ false }}">
+                <div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:10px; letter-spacing:.12em; color:#7BE0A3; text-align:center; padding:0 8px;">✓ ALLE EINGESETZT</div>
+              </sc-if>
+            </div>
+          </div>
+          <sc-if value="{{ fragErrShow }}" hint-placeholder-val="{{ false }}">
+            <div style="font-size:11px; letter-spacing:.1em; color:#FF5C5C;">▲ FALSCHE REIHENFOLGE. VERGLEICHT DIE KANTEN NOCH EINMAL MIT DEM ECHTEN TURM.</div>
+          </sc-if>
+          <div style="display:flex; justify-content:center; gap:18px; flex:none;">
+            <button onClick="{{ turmAnsehen }}" style="background:transparent; border:none; color:#5CC8FF; font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:.14em; cursor:pointer; padding:10px 4px; text-decoration:underline;">TURM ANSEHEN</button>
+            <sc-if value="{{ hasHints }}" hint-placeholder-val="{{ false }}">
+              <button onClick="{{ openHints }}" style="background:transparent; border:none; color:#FFB454; font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:.14em; cursor:pointer; padding:10px 4px; text-decoration:underline;">HINWEIS ANFORDERN</button>
+            </sc-if>
+          </div>
+          <button onClick="{{ fragConfirm }}" style="min-height:54px; flex:none; background:{{ fragBtnBg }}; color:{{ fragBtnFg }}; border:none; border-radius:6px; font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:20px; letter-spacing:.12em; cursor:pointer;">REKONSTRUKTION PRÜFEN</button>
+        </div>
+        <sc-if value="{{ fragDragging }}" hint-placeholder-val="{{ false }}">
+          <div style="position:fixed; left:{{ fragGhostLeft }}; top:{{ fragGhostTop }}; width:{{ fragGhostW }}; height:{{ fragGhostH }}; background-image:{{ fragGhostSrc }}; background-size:cover; background-position:center; border:2px solid #8FDCFF; border-radius:4px; pointer-events:none; z-index:80; box-shadow:0 10px 28px rgba(0,0,0,.55);"></div>
+        </sc-if>
+      </div>
+    </sc-if>
+
+    <!-- ── STATIONSÜBERSICHT / ANKUNFT ── wie in der App, aber nur das Foto:
+         eine Route zur Station gibt es in der Demo nicht. -->
+    <sc-if value="{{ tArrive }}" hint-placeholder-val="{{ false }}">
+      <div data-screen-label="{{ arScreenLabel }}" style="position:absolute; inset:0; background:#0B1526; color:#E9F0F8; display:flex; flex-direction:column;">
+        <div data-wp-hdr style="display:flex; justify-content:space-between; padding:14px 12px; font-size:10px; letter-spacing:.08em; color:#8FA6C4; border-bottom:1px solid rgba(140,170,210,.2);">
+          <span>HIDDEN WAYPOINT</span><span style="color:#5CC8FF;">◈ NAVIGATION AKTIV</span><span>{{ arTime }}</span>
+        </div>
+        <div style="flex:1; display:flex; flex-direction:column; padding:20px 22px; gap:14px; min-height:0; overflow-y:auto;">
+          <div style="display:flex; flex-direction:column; gap:2px; flex:none;">
+            <div style="font-size:11px; letter-spacing:.2em; color:#5CC8FF;">{{ arSt }}</div>
+            <div style="font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:28px; line-height:1;">{{ arName }}</div>
+          </div>
+          <div data-wp-gesture="" data-wp-drehsperre="1" onWheel="{{ arWheel }}" onPointerDown="{{ zoomDown }}" onPointerMove="{{ arMove }}" onPointerUp="{{ zoomUp }}" onPointerCancel="{{ zoomUp }}" onDoubleClick="{{ zoomDbl }}" style="flex:1; min-height:240px; border:1px solid rgba(140,170,210,.3); border-radius:8px; overflow:hidden; background:#08101E; position:relative; touch-action:none; cursor:grab; user-select:none;">
+            <div data-wp-zoomziel="" style="position:absolute; inset:0; transform:{{ zoomTransform }};">
+              <div style="position:absolute; inset:0; background-image:linear-gradient(rgba(92,200,255,.06) 1px, transparent 1px), linear-gradient(90deg, rgba(92,200,255,.06) 1px, transparent 1px); background-size:28px 28px;"></div>
+              <!-- Flacher Rueckfall, wenn der Rundumblick nicht zeichnen kann. -->
+              <sc-if value="{{ arPanoFlach }}" hint-placeholder-val="{{ false }}">
+                <div style="position:absolute; inset:0; background-image:{{ arFotoUrl }}; background-size:cover; background-repeat:no-repeat; background-position:{{ arFlachPos }};"></div>
+              </sc-if>
+            </div>
+            <sc-if value="{{ arPano }}" hint-placeholder-val="{{ false }}">
+              <canvas data-wp-pano="{{ arPanoSrc }}" data-wp-pano-blick="{{ arPanoBlick }}" style="position:absolute; inset:0; width:100%; height:100%; display:block;"></canvas>
+            </sc-if>
+            <sc-if value="{{ arPanoLaedt }}" hint-placeholder-val="{{ false }}">
+              <div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; pointer-events:none; font-size:10px; letter-spacing:.18em; color:#5CC8FF;">RUNDUMBLICK WIRD GELADEN …</div>
+            </sc-if>
+            <div style="position:absolute; right:8px; bottom:8px; pointer-events:none; background:rgba(4,8,14,.72); border:1px solid rgba(92,200,255,.35); border-radius:4px; padding:5px 8px; font-size:9px; letter-spacing:.14em; color:#5CC8FF;">{{ arUmschalt }}</div>
+          </div>
+          <div style="font-size:11px; line-height:1.6; color:#8FA6C4; flex:none;">{{ arText }}</div>
+          <button onClick="{{ arWeiter }}" style="min-height:58px; flex:none; background:#5CC8FF; color:#06121F; border:none; border-radius:6px; font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:17px; letter-spacing:.1em; cursor:pointer;" style-hover="background:#8FDCFF;">{{ arCta }}</button>
+        </div>
+      </div>
+    </sc-if>
+
+    <!-- ── ENDE DER DEMO ── Aufbau wie der Missionsbericht der App. -->
+    <sc-if value="{{ tEnde }}" hint-placeholder-val="{{ false }}">
+      <div data-screen-label="Ende der Demo" style="position:absolute; inset:0; background:#0B1526; color:#E9F0F8; display:flex; flex-direction:column;">
+        <div data-wp-hdr style="display:flex; justify-content:space-between; padding:14px 12px; font-size:10px; letter-spacing:.08em; color:#8FA6C4; border-bottom:1px solid rgba(140,170,210,.2);">
+          <span>HIDDEN WAYPOINT</span><span style="color:#7BE0A3;">● LEITUNG SICHER</span><span>{{ hdrRight }}</span>
+        </div>
+        <div style="flex:1; min-height:0; display:flex; flex-direction:column; padding:24px 22px; gap:16px; overflow-y:auto;">
+          <div style="display:flex; justify-content:center; flex:none;">
+            <div style="width:220px; height:78px; background-image:url('uploads/Logo.png'); background-size:contain; background-repeat:no-repeat; background-position:center;"></div>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:6px; flex:none;">
+            <div style="font-size:11px; letter-spacing:.2em; color:#5CC8FF;">HIDDEN IN BRAUNSCHWEIG · DEZERNAT 7</div>
+            <div style="font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:38px; line-height:1;">ENDE DER DEMO</div>
+          </div>
+          <div style="background:#101E33; border:1px solid rgba(140,170,210,.25); border-radius:8px; padding:18px; display:flex; flex-direction:column; gap:12px; flex:none;">
+            <div style="display:flex; justify-content:space-between; border-bottom:1px solid rgba(140,170,210,.2); padding-bottom:10px;">
+              <span style="font-size:11px; letter-spacing:.14em; color:#8FA6C4;">STATION</span>
+              <span style="font-size:14px; font-weight:700; color:#7BE0A3;">✓ GELÖST</span>
+            </div>
+            <div style="display:flex; justify-content:space-between;">
+              <span style="font-size:11px; letter-spacing:.14em; color:#8FA6C4;">GENUTZTE HINWEISE</span>
+              <span style="font-size:14px; font-weight:700; color:#FFB454;">{{ hintsTotal }}</span>
+            </div>
+          </div>
+          <div style="background:#0E1A2D; border-left:3px solid #5CC8FF; border-radius:0 8px 8px 0; padding:14px 18px; font-size:12.5px; line-height:1.65; color:#C9D7E8; flex:none;">Das war eine Station. In der echten Rätseljagd folgt ihr Dr. Dangers Spur zu Fuß quer durch Braunschweig – und jedes Rätsel löst ihr nur mit dem, was ihr vor Ort seht.</div>
+          <div style="flex:1;"></div>
+          <a href="https://www.hidden.games/escape-room-braunschweig/" target="_blank" rel="noopener noreferrer" style="min-height:58px; flex:none; display:flex; align-items:center; justify-content:center; background:#5CC8FF; color:#06121F; border-radius:6px; font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:20px; letter-spacing:.12em; text-decoration:none; cursor:pointer;" style-hover="background:#8FDCFF; color:#06121F;">RÄTSELJAGD BUCHEN →</a>
+          <button onClick="{{ neustart }}" style="min-height:58px; flex:none; background:transparent; color:#5CC8FF; border:2px solid #5CC8FF; border-radius:6px; font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:20px; letter-spacing:.12em; cursor:pointer;" style-hover="background:rgba(92,200,255,.1);">DEMO NEU STARTEN</button>
+        </div>
+      </div>
+    </sc-if>
+
+    </div>
+    <!-- ═══ /STAGE ═══ -->
+
+    <!-- ── HINWEIS-OVERLAY ── Ohne untere Leiste reicht es bis zum Rand. -->
+    <sc-if value="{{ hintsOpen }}" hint-placeholder-val="{{ false }}">
+      <div style="position:absolute; inset:0; background:rgba(4,8,14,.82); display:flex; flex-direction:column; justify-content:flex-end; z-index:10;">
+        <div style="background:#0E1A2D; border-top:1px solid rgba(255,180,84,.5); border-radius:20px 20px 0 0; padding:20px 20px 26px; display:flex; flex-direction:column; gap:12px; max-height:88%; overflow:auto;">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <div style="display:flex; flex-direction:column; gap:2px;">
+              <div style="font-size:11px; letter-spacing:.2em; color:#FFB454;">HINWEISSYSTEM</div>
+              <div style="font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:24px; color:#E9F0F8;">GESTAFFELTE HINWEISE</div>
+            </div>
+            <button onClick="{{ closeHints }}" style="width:44px; height:44px; background:transparent; border:1px solid rgba(140,170,210,.4); border-radius:6px; color:#C9D7E8; font-size:16px; cursor:pointer;">✕</button>
+          </div>
+          <div style="font-size:11px; line-height:1.6; color:#8FA6C4;">Der letzte Hinweis verrät die Lösung.</div>
+          <sc-for list="{{ hintCards }}" as="h" hint-placeholder-count="3">
+            <div style="flex:none; background:#101E33; border:1px solid {{ h.border }}; border-radius:8px; padding:14px 16px; display:flex; flex-direction:column; gap:10px;">
+              <span style="font-size:11px; letter-spacing:.16em; color:{{ h.titleColor }};">{{ h.title }}</span>
+              <sc-if value="{{ h.revealed }}" hint-placeholder-val="{{ false }}">
+                <div style="font-size:13px; line-height:1.6; color:#E9F0F8;">{{ h.text }}</div>
+              </sc-if>
+              <sc-if value="{{ h.hidden }}" hint-placeholder-val="{{ true }}">
+                <button onClick="{{ h.reveal }}" style="min-height:50px; background:{{ h.btnBg }}; border:1px dashed rgba(255,180,84,.6); border-radius:6px; color:{{ h.btnColor }}; font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:.14em; cursor:{{ h.cursor }};">{{ h.btnLabel }}</button>
+              </sc-if>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+    </sc-if>
+
+    <!-- ── ERFOLGS-EINBLENDUNG (RÄTSEL GELÖST) ── -->
+    <sc-if value="{{ solvedShow }}" hint-placeholder-val="{{ false }}">
+      <div onClick="{{ solvedSkip }}" style="position:absolute; inset:0; z-index:30; background:rgba(4,10,18,.9); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:20px; cursor:pointer; animation:wpSolvedIn .25s ease-out;">
+        <div style="width:96px; height:96px; border-radius:50%; border:3px solid #7BE0A3; background:rgba(123,224,163,.08); display:flex; align-items:center; justify-content:center; font-size:44px; color:#7BE0A3; animation:wpSolvedPop .45s cubic-bezier(.2,1.4,.4,1);">✓</div>
+        <div style="display:flex; flex-direction:column; align-items:center; gap:6px;">
+          <div style="font-size:11px; letter-spacing:.24em; color:#7BE0A3;">RÄTSEL GELÖST</div>
+          <div style="font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:32px; letter-spacing:.06em; color:#E9F0F8; text-align:center; padding:0 24px;">{{ solvedMsg }}</div>
+        </div>
+        <div style="width:150px; height:3px; background:rgba(123,224,163,.2); border-radius:2px; overflow:hidden;">
+          <div style="height:100%; background:#7BE0A3; animation:wpSolvedBar 2.5s linear forwards;"></div>
+        </div>
+        <div style="font-size:10px; letter-spacing:.18em; color:#5A7091;">TIPPEN ZUM FORTFAHREN</div>
+      </div>
+    </sc-if>
+
+    <!-- ── EINBLENDUNG: EINGEHENDE SPRACHNACHRICHT (unter dem solved-Overlay) ── -->
+    <sc-if value="{{ incomingShow }}" hint-placeholder-val="{{ false }}">
+      <div onClick="{{ incomingSkip }}" style="position:absolute; inset:0; z-index:28; background:rgba(4,10,18,.88); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:18px; cursor:pointer; animation:{{ incomingAnim }};">
+        <div style="width:84px; height:84px; border-radius:50%; border:3px solid {{ incomingColor }}; background:{{ incomingIconBg }}; display:flex; align-items:center; justify-content:center; font-size:36px; color:{{ incomingColor }}; animation:{{ incomingIconAnim }};">{{ incomingIcon }}</div>
+        <div style="display:flex; flex-direction:column; align-items:center; gap:6px; animation:{{ incomingFlicker }};">
+          <div style="font-size:11px; letter-spacing:.24em; color:{{ incomingColor }};">{{ incomingLabel }}</div>
+          <div style="font-family:'Barlow Condensed',sans-serif; font-weight:700; font-size:28px; letter-spacing:.06em; color:#E9F0F8; text-align:center; padding:0 24px;">{{ incomingTitle }}</div>
+        </div>
+      </div>
+    </sc-if>
+
+  </div>
+
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{
+  &quot;glitchMotion&quot;: { &quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Hacker-Effekte&quot; },
+  &quot;transcriptsOpen&quot;: { &quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Audio&quot; },
+  &quot;autoplayAudio&quot;: { &quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Audio&quot; },
+  &quot;signaltoene&quot;: { &quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Audio&quot; }
+}">
+// ══════════════════════════════════════════════════════════════════════
+// PORTFOLIO-DEMO
+// Eine Station, kein Backend. Alles, was hier steht, stammt aus der
+// Spielerversion oder ist eigens fuer die Demo geschrieben; die Logik der
+// uebernommenen Bausteine ist unveraendert, gekuerzt wurde nur um
+// Mehrspieler, Zugang und alles, was andere Stationen betrifft.
+// ══════════════════════════════════════════════════════════════════════
+
+// Eigene Schluessel mit Praefix hw_demo_: Zugang und Fortschritt der App
+// liest oder schreibt die Demo nie, auch wenn beide auf derselben Domain laufen.
+const SCHLUESSEL_FORTSCHRITT = "hw_demo_fortschritt";
+
+// Was den Neustart der Seite uebersteht. Nur bekannte Felder werden aus dem
+// Speicher uebernommen, siehe startZustand().
+const FORTSCHRITT_FELDER = ["screen", "maxScreen", "hintsUsed", "fragSlots", "fragOrder", "solvedScreens", "turmBlick"];
+
+// localStorage kann fehlen oder werfen (privater Modus, gesperrte
+// Site-Daten, iframe mit Speichersperre) - dann laeuft die Demo ohne
+// Persistenz weiter.
+function lsLesen(schluessel) {
+  try {
+    const roh = window.localStorage.getItem(schluessel);
+    return roh ? JSON.parse(roh) : null;
+  } catch (e) { return null; }
+}
+function lsSchreiben(schluessel, wert) {
+  try { window.localStorage.setItem(schluessel, JSON.stringify(wert)); return true; }
+  catch (e) { return false; }
+}
+function lsEntfernen(schluessel) {
+  try { window.localStorage.removeItem(schluessel); return true; }
+  catch (e) { return false; }
+}
+
+// Frischer Kartenzoom, jedes Mal ein neues Objekt.
+function zoomFrisch() { return { scale: 1, x: 0, y: 0, rot: 0 }; }
+
+// 360-Grad-Stationsfoto (PROTOTYP.md "360-Grad-Stationsfotos").
+const PANO_FOV_START = 80;
+const PANO_FOV_MIN = 30;
+const PANO_FOV_MAX = 100;
+const PANO_VS = 'attribute vec2 p; varying vec2 v; void main() { v = p; gl_Position = vec4(p, 0.0, 1.0); }';
+const PANO_FS = [
+  '#ifdef GL_FRAGMENT_PRECISION_HIGH',
+  'precision highp float;',
+  '#else',
+  'precision mediump float;',
+  '#endif',
+  'uniform sampler2D t; uniform vec2 s; uniform float yw; uniform float pt; varying vec2 v;',
+  'void main() {',
+  '  vec3 d = normalize(vec3(v.x * s.x, v.y * s.y, -1.0));',
+  '  float cp = cos(pt), sp = sin(pt);',
+  '  d = vec3(d.x, d.y * cp - d.z * sp, d.y * sp + d.z * cp);',
+  '  float cy = cos(yw), sy = sin(yw);',
+  '  d = vec3(d.x * cy - d.z * sy, d.y, d.x * sy + d.z * cy);',
+  '  float lon = atan(d.x, -d.z);',
+  '  float lat = asin(clamp(d.y, -1.0, 1.0));',
+  '  gl_FragColor = texture2D(t, vec2(lon / 6.2831853 + 0.5, 0.5 - lat / 3.1415927));',
+  '}'
+].join('\n');
+
+class Component extends DCLogic {
+  initialState() {
+    return {
+      screen: 0, tr: {}, trG: {}, panoStand: {}, hintsOpen: false, hintsUsed: {}, maxScreen: 0,
+      fragSlots: [null, null, null, null, null, null], fragOrder: this.shuffle([1, 2, 3, 4, 5, 6]), fragDrag: null, fragErr: {},
+      zoom: zoomFrisch(),
+      // Wiedergabestand des einen Audio-Elements, siehe audioEl().
+      auIdx: null, auPlaying: false, auPct: 0, auCur: 0, auDur: 0, auErr: false,
+      solved: null, solvedScreens: {}, incoming: false, clockMin: null, shakeN: 0,
+      // FLOW-Index des Puzzles, wenn der Spieler von dort in den Rundumblick
+      // gewechselt ist; der Knopf dort fuehrt dann zurueck statt weiter.
+      turmBlick: null,
+      // Demo-Start. Steht nach jedem Laden wieder da: erst der Tipp auf
+      // "Jetzt aktivieren" gibt auf iOS den Ton frei.
+      gate: 'demo', demoCode: 'DEMO'
+    };
+  }
+
+  startZustand() {
+    const basis = this.initialState();
+    const f = lsLesen(SCHLUESSEL_FORTSCHRITT);
+    if (!f || typeof f !== 'object') return basis;
+    const raus = {};
+    for (let i = 0; i < FORTSCHRITT_FELDER.length; i++) {
+      const k = FORTSCHRITT_FELDER[i];
+      if (f[k] !== undefined) raus[k] = f[k];
+    }
+    // Ein Stand ausserhalb des FLOW (aeltere Demo-Fassung) faengt von vorn an.
+    if (typeof raus.screen !== 'number' || raus.screen < 0 || raus.screen >= this.FLOW.length) return basis;
+    return Object.assign(basis, raus);
+  }
+
+  // Schreibt den Fortschritt, sobald sich ein Feld geaendert hat. Vergleich
+  // ueber eine Signatur, weil DCLogic componentDidUpdate kein prevState gibt.
+  fortschrittSichern() {
+    const s = this.state;
+    const nutzlast = {};
+    for (let i = 0; i < FORTSCHRITT_FELDER.length; i++) nutzlast[FORTSCHRITT_FELDER[i]] = s[FORTSCHRITT_FELDER[i]];
+    const sig = JSON.stringify(nutzlast);
+    if (this._resetFrisch) { this._resetFrisch = false; this._fortschrittSig = sig; return; }
+    if (sig === this._fortschrittSig) return;
+    this._fortschrittSig = sig;
+    lsSchreiben(SCHLUESSEL_FORTSCHRITT, nutzlast);
+  }
+
+  // Gibt die Tonwiedergabe fuer iOS frei: stummer play()/pause()-Griff in
+  // der Aufrufkette des Tipps auf "Jetzt aktivieren" (wie in der App).
+  audioFreigeben() {
+    try {
+      const a = this.audioEl();
+      const p = a.play();
+      if (p && p.catch) p.catch(() => {});
+      a.pause();
+    } catch (e) { /* Freigabe misslungen: der Play-Knopf bleibt der Rueckfallweg */ }
+  }
+
+  // Ersetzt die Zugangspruefung der App: keine Pruefung, kein Backend.
+  // Bei einem frischen Start laeuft zuerst die Opening-Sequenz; der erste
+  // Screen wird erst an ihrem Ende betreten. Wer mitten in der Demo neu
+  // laedt, steigt ohne Opening direkt wieder ein.
+  //
+  // Der Screen wird hier von Hand "betreten", weil sich beim Wegnehmen des
+  // Starts der Screen-Index nicht aendert und componentDidUpdate ihn
+  // deshalb nicht als neu erkennt.
+  aktivieren() {
+    const n = this.state.screen;
+    const frisch = n === 0 && this.state.maxScreen === 0;
+    this.setState({ gate: null });
+    // openingStarten() spielt die Aufnahme selbst im Tap an und gibt damit
+    // den Ton frei; nur ohne Opening braucht es den stummen Griff.
+    if (frisch && this.openingStarten()) return;
+    this.audioFreigeben();
+    this.screenBetreten(n);
+  }
+
+  // ── Opening-Sequenz ── wie in der App (openingStarten/-Abbauen/-Beenden),
+  // ohne Testmodus und Mehrspieler.
+  openingVorladen() {
+    if (this._openingVorlader) return;
+    try {
+      const a = new Audio();
+      a.preload = 'auto';
+      a.src = 'uploads/Erzaehler_Intro_Opening.mp3';
+      this._openingVorlader = a;
+    } catch (e) { /* Vorladen ist Komfort, kein Muss */ }
+  }
+
+  // Gibt false zurueck, wenn das Opening nicht starten konnte.
+  openingStarten() {
+    if (this._opening || !window.HWOpening) return false;
+    this.stopAudio();
+    this.stopRing();
+    // Ohne automatische Wiedergabe laeuft die Sequenz stumm im selben Takt.
+    const mitTon = this.props.autoplayAudio ?? true;
+    const a = this.audioEl();
+    if (mitTon) {
+      // Dasselbe Element wie die Sprachnachrichten, ohne await und Timer
+      // davor - sonst blockiert iOS den Ton.
+      a.pause();
+      a.src = 'uploads/Erzaehler_Intro_Opening.mp3';
+      a.load();
+      const p = a.play();
+      if (p && p.catch) p.catch(() => {});   // ohne Ton laeuft die Sequenz auf eigener Uhr
+    }
+    const ebene = document.createElement('div');
+    ebene.setAttribute('data-wp-opening', '');
+    ebene.style.cssText = 'position:fixed; top:0; right:0; bottom:0; left:0; z-index:10000; background:#0B1526;';
+    document.body.appendChild(ebene);
+    const taste = (e) => { if (e.key === 'Escape') this.openingBeenden(); };
+    window.addEventListener('keydown', taste);
+    let seq = null;
+    try {
+      seq = window.HWOpening.starte(ebene, {
+        zeitQuelle: mitTon ? () => a.currentTime : undefined,
+        onFertig: () => this.openingBeenden(),
+        stoerung: this.props.glitchMotion ?? true
+      });
+    } catch (e) {
+      ebene.remove();
+      window.removeEventListener('keydown', taste);
+      if (mitTon) { a.pause(); a.currentTime = 0; }
+      return false;
+    }
+    this._opening = { seq, ebene, taste, mitTon };
+    return true;
+  }
+
+  // Raeumt Ebene, Tastatur-Haken und Ton ab, ohne weiterzuschalten.
+  openingAbbauen() {
+    const o = this._opening;
+    if (!o) return null;
+    this._opening = null;
+    window.removeEventListener('keydown', o.taste);
+    try { if (o.seq) o.seq.stopp(); } catch (e) { /* schon abgeraeumt */ }
+    o.ebene.remove();
+    if (o.mitTon && this._au) {
+      this._au.pause();
+      try { this._au.currentTime = 0; } catch (e) { /* noch keine Daten */ }
+    }
+    return o;
+  }
+
+  // "Zum Dienst melden", "Ueberspringen" oder Escape: weiter zu Riley.
+  openingBeenden() {
+    const o = this.openingAbbauen();
+    if (!o) return;
+    this.stopAudio();
+    this.screenBetreten(this.state.screen);
+  }
+
+  // Fisher-Yates, wie in der App.
+  shuffle(arr) {
+    const a = [...arr];
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+
+  // Turmschnipsel, 1-basiert; Pfade als String-Literale (Bundler).
+  WT_FRAGS = ['', 'uploads/Wasserturm_1_Sockel.png', 'uploads/Wasserturm_2.png', 'uploads/Wasserturm_3.png',
+    'uploads/Wasserturm_4.png', 'uploads/Wasserturm_5.png', 'uploads/Wasserturm_6.png'];
+
+  // Inhaltsboxen der Turmschnipsel (Anteil der Bilddimension), aus der App.
+  WT_FRAG_BOX = {
+    1: { x: 0.0185, w: 0.9648, y: 0,      h: 0.9979 },
+    2: { x: 0.3106, w: 0.3797, y: 0,      h: 1 },
+    3: { x: 0.3223, w: 0.3575, y: 0,      h: 1 },
+    4: { x: 0.3332, w: 0.3353, y: 0,      h: 1 },
+    5: { x: 0.3038, w: 0.3941, y: 0,      h: 1 },
+    6: { x: 0.3325, w: 0.3370, y: 0.0296, h: 0.9704 }
+  };
+
+  // Klingeltoene der Einblendung je Absender; ms gemessen (siehe App).
+  RING = {
+    R: { src: 'uploads/Audios/Anruf_Riley.mp3', ms: 2000 },   // Datei 1,830 s
+    D: { src: 'uploads/Audios/Anruf_Danger.mp3', ms: 2600 }   // Datei 2,400 s
+  };
+  RING_MAX_WARTE = 2500;
+
+  // Drehgeste der Zoomflaechen (nur fuer den flachen Rueckfall des Fotos;
+  // die Flaeche traegt ohnehin data-wp-drehsperre).
+  ROT_SCHWELLE = 5;
+  ROT_WEICH = 12;
+  ROT_RASTER = 5;
+  rotRasten(rot) {
+    const gerade = Math.round(rot / 90) * 90;
+    return Math.abs(rot - gerade) <= this.ROT_RASTER ? gerade : rot;
+  }
+
+  SFX = {
+    ok:   { src: 'uploads/Audios/Korrekte_Antwort.mp3' },
+    fail: { src: 'uploads/Audios/Falsche_Antwort.mp3' }
+  };
+
+  ringEl(who) {
+    const def = this.RING[who];
+    if (!def) return null;
+    this._rings = this._rings || {};
+    if (this._rings[who]) return this._rings[who];
+    const a = new Audio(def.src);
+    a.preload = 'auto';
+    this._rings[who] = a;
+    return a;
+  }
+
+  playRing(who) {
+    const a = this.ringEl(who);
+    if (!a) return;
+    try { a.currentTime = 0; } catch (e) { /* noch keine Daten geladen */ }
+    a.play().catch(() => {});
+  }
+
+  stopRing() {
+    if (!this._rings) return;
+    for (const k in this._rings) {
+      const a = this._rings[k];
+      a.pause();
+      try { a.currentTime = 0; } catch (e) { /* siehe oben */ }
+    }
+  }
+
+  sfxEl(k) {
+    const def = this.SFX[k];
+    if (!def || !def.src) return null;
+    this._sfx = this._sfx || {};
+    if (this._sfx[k]) return this._sfx[k];
+    const a = new Audio(def.src);
+    a.preload = 'auto';
+    this._sfx[k] = a;
+    return a;
+  }
+
+  // Kurz ruetteln bei falscher Antwort; nicht bei reduzierter Bewegung.
+  fehlerRuettelt() {
+    try {
+      if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    } catch (e) { /* kein matchMedia: dann eben ruetteln */ }
+    this.setState((st) => ({ shakeN: (st.shakeN | 0) + 1 }));
+  }
+
+  playSfx(k) {
+    if (!(this.props.signaltoene ?? true)) return;
+    const a = this.sfxEl(k);
+    if (!a) return;
+    try { a.currentTime = 0; } catch (e) { /* noch keine Daten geladen */ }
+    a.play().catch(() => {});
+  }
+
+  // Ein einziges Audio-Element fuer alle Sprachnachrichten, wie in der App.
+  audioEl() {
+    if (this._au) return this._au;
+    const a = new Audio();
+    // 'metadata' statt 'none': mit 'none' laedt Chrome nicht zuverlaessig.
+    a.preload = 'metadata';
+    const sync = () => this.setState({
+      auPlaying: !a.paused && !a.ended,
+      auCur: a.currentTime || 0,
+      auDur: isFinite(a.duration) ? a.duration : 0,
+      auPct: a.duration && isFinite(a.duration) ? Math.min(100, (a.currentTime / a.duration) * 100) : 0
+    });
+    ['timeupdate', 'play', 'pause', 'ended', 'loadedmetadata', 'seeked'].forEach(ev => a.addEventListener(ev, sync));
+    a.addEventListener('error', () => { if (a.getAttribute('src')) this.setState({ auPlaying: false, auErr: true }); });
+    this._au = a;
+    return a;
+  }
+
+  playAudio(idx) {
+    const f = this.FLOW[idx];
+    if (!f || !f.au) return;
+    const a = this.audioEl();
+    a.pause();
+    a.src = f.au;
+    a.load();
+    this.setState({ auIdx: idx, auPlaying: false, auPct: 0, auCur: 0, auDur: 0, auErr: false });
+    a.play().catch(() => {});
+  }
+
+  // Vormerken in der Geste, hoerbar nach delay ms (iOS-Freigabe, siehe App).
+  armAudio(idx, delay) {
+    const f = this.FLOW[idx];
+    if (!f || !f.au) return;
+    const a = this.audioEl();
+    a.pause();
+    a.src = f.au;
+    a.load();
+    this.setState({ auIdx: idx, auPlaying: false, auPct: 0, auCur: 0, auDur: 0, auErr: false });
+    const p = a.play();
+    if (p && p.catch) p.catch(() => {});
+    a.pause();
+    this.clearArmedAudio();
+    this._auArm = idx;
+    this._auT = setTimeout(() => { this._auT = null; this.fireArmedAudio(); }, delay);
+  }
+
+  fireArmedAudio() {
+    if (this._auT) { clearTimeout(this._auT); this._auT = null; }
+    const idx = this._auArm;
+    this._auArm = null;
+    if (idx === null || idx === undefined) return;
+    if (this.state.auIdx !== idx) return;
+    this.audioEl().play().catch(() => {});
+  }
+
+  clearArmedAudio() {
+    if (this._auT) { clearTimeout(this._auT); this._auT = null; }
+    this._auArm = null;
+  }
+
+  toggleAudio(idx) {
+    const f = this.FLOW[idx];
+    if (!f || !f.au) return;
+    const a = this.audioEl();
+    if (this.state.auIdx === idx) {
+      if (a.paused) a.play().catch(() => {}); else a.pause();
+      return;
+    }
+    this.playAudio(idx);
+  }
+
+  stopAudio() {
+    this.clearArmedAudio();
+    if (this._au) { this._au.pause(); this._au.currentTime = 0; }
+    this.setState({ auIdx: null, auPlaying: false, auPct: 0, auCur: 0, auDur: 0, auErr: false });
+  }
+
+  seekAudio(idx, e) {
+    const a = this._au;
+    if (this.state.auIdx !== idx || !a || !isFinite(a.duration) || !a.duration) return;
+    const r = e.currentTarget.getBoundingClientRect();
+    const frac = Math.min(1, Math.max(0, (e.clientX - r.left) / r.width));
+    a.currentTime = frac * a.duration;
+  }
+
+  seekDown(idx, e) {
+    const a = this._au;
+    if (this.state.auIdx !== idx || !a || !isFinite(a.duration) || !a.duration) return;
+    try { e.currentTarget.setPointerCapture(e.pointerId); } catch (err) { /* ohne Fang geht es auch */ }
+    this._seekId = e.pointerId;
+    this.seekAudio(idx, e);
+  }
+
+  seekMove(idx, e) {
+    if (this._seekId !== e.pointerId) return;
+    this.seekAudio(idx, e);
+  }
+
+  seekUp(idx, e) {
+    if (this._seekId !== e.pointerId) return;
+    this._seekId = null;
+    this.seekAudio(idx, e);
+  }
+
+  fmtTime(sec) {
+    const s = Math.max(0, Math.round(sec || 0));
+    return Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0');
+  }
+
+  // Ablauf der Demo. Die beiden Intro-Nachrichten, Rileys Nachricht an der
+  // Station, das Puzzle und die drei Hinweise sind die aus dem Spiel (mit
+  // Aufnahme). Der Demo-Hinweis und Rileys Aufloesung sind eigens
+  // geschrieben; die Aufloesung hat keine Aufnahme (kein au:).
+  FLOW = [
+    { t: 'audio', label: 'Audio: Riley (Intro)', who: 'R', hk: 0, dur: '1:03', au: 'uploads/Audios/Riley_Intro.mp3', hdr: ['HIDDEN WAYPOINT', '● LEITUNG SICHER', '09:42'], sl: 'Intro Audio Riley', lines: [
+      'Hallo Spezialeinheit, hier spricht Kommissar Riley. Ich bin der Einsatzleiter. Die Dringlichkeit der Mission sollte allen klar sein. Wir haben euch daher mit unserer neuesten technischen Errungenschaft ausgestattet: einer eigens entwickelten Ermittlungs-App, die euch helfen soll, Dr. Danger endlich das Handwerk zu legen. Sie stammt direkt aus unserem Forschungslabor und bündelt alle Werkzeuge, die ihr unterwegs braucht.',
+      'Als hätte er die Gefahr gewittert, ist er doch tatsächlich letzte Nacht in unser Labor eingebrochen und konnte sich kurzzeitig Zugriff auf das System verschaffen. Zum Glück haben wir schnell reagiert und ihn in die Flucht geschlagen. Auf den ersten Blick sieht alles normal aus. Dr. Danger scheint aber gerade in der Stadt unterwegs zu sein. Wir bündeln alle Sichtungen und schicken euch seine Route. Euer Auftrag bei der Mission: Verfolgt ihn und stellt sicher, dass er auf seiner Route keine bösen Überraschungen versteckt hat.'
+    ] },
+    { t: 'audio', label: 'Audio: Dr. Danger (Übernahme)', who: 'D', hk: 1, dur: '0:49', au: 'uploads/Audios/Dr_Danger_Intro_Uebernahme.mp3', hdr: ['HIDDEN WAYPOINT', '▓ ÜBERNOMMEN ▓', '√9:4?'], sl: 'Intro Audio Dr Danger', lines: [
+      '[dreckiges Lachen] Kommissar Riley. Eure nagelneue Wunder-App, und ihr habt sie tatsächlich für sicher gehalten? Wie niedlich. Während ihr geschlafen habt, habe ich mir genau dieses Spielzeug zu eigen gemacht. Jede Karte, jeder Hinweis, jede Stimme, die ab jetzt aus diesem Gerät kommt, gehört mir. Willkommen in meinem Spiel.',
+      'Ich habe euch eine kleine Jagd durch die Stadt vorbereitet. Löst brav meine Rätsel, folgt schön meiner Spur, und am Ende werdet ihr begreifen, wozu das alles gut war. Aber keine Sekunde früher. [dreckiges Lachen] Und vergesst nicht: Ich sehe alles, was ihr seht.'
+    ] },
+    // Ausserhalb der Fiktion: Dr. Danger kuendigt eine ganze Jagd an, die
+    // Demo zeigt eine Station. Das muss gesagt sein, bevor sie anfaengt.
+    { t: 'hinweis', label: 'Demo-Hinweis', sl: 'Demo Hinweis' },
+    { t: 'arrive', foto: 'uploads/Station8_360.webp', blick: 0.46, label: 'Stationsübersicht', name: 'DER SCHIEFE ZEUGE', sl: 'Demo Ankunft' },
+    { t: 'audio', label: 'Audio: Riley (Datei)', who: 'R', hk: 0, dur: '0:24', au: 'uploads/Audios/Riley_Steigenberger_Turm_Datei.mp3', hdr: ['WP 08 · STEIGENBERGER TURM', '● LEITUNG SICHER', '13:08'], sl: 'Demo Audio Riley', lines: [
+      'Riley hier. Mir ist gerade eine Datei zugespielt worden. Anonym, aber ich habe eine sehr konkrete Vermutung, von wem. Lauter Bildschnipsel, alles durcheinander, kein Zusammenhang. Für mich ergibt das nichts. Aber ihr seid vor Ort. Seht euch um. Wenn etwas davon zu dem passt, was ihr vor euch habt, dann setzt es zusammen.'
+    ] },
+    { t: 'frags', label: 'Fragmentpuzzle Turm', hdr: ['WP 08 · STEIGENBERGER TURM', 'FRAGMENTPUZZLE', '13:10'], hints: [
+      { c: 10, x: 'Ihr habt das Original direkt vor euch. Schaut nach oben und geht den Turm von unten nach oben durch.' },
+      { c: 15, x: 'Beginnt mit den eindeutigen Enden. Der Sockel ist am breitesten, ganz oben sitzt der Zinnenkranz. Der Schaft verjüngt sich nach oben, und die Fensterformen wechseln zwischen den Geschossen.' },
+      { c: 25, x: 'Von unten nach oben: Sockel, Geschoss 2, Geschoss 3, Geschoss 4, Geschoss 5, Zinnenkranz. Die Kanten der Schnipsel passen nur in dieser Reihenfolge zusammen.', sol: true }
+    ] },
+    { t: 'audio', label: 'Auflösung: Riley', who: 'R', hk: 0, hdr: ['WP 08 · STEIGENBERGER TURM', '● ÜBERTRAGUNG OK', '13:14'], sl: 'Demo Aufloesung Riley', lines: [
+      'Riley hier. Das ist er, der schiefe Turm, Stück für Stück so, wie er vor euch steht. Dr. Danger hat uns ein Bild geschickt, das nur vor Ort einen Sinn ergibt. Genau so funktioniert diese Jagd: Die App allein reicht nie, ihr müsst hinsehen.',
+      'Gute Arbeit, Ermittler. Für heute endet die Spur hier.'
+    ] },
+    { t: 'ende', label: 'Ende der Demo', sl: 'Ende der Demo' }
+  ];
+
+  // Nach FLOW: Klassenfelder werden der Reihe nach angelegt, und
+  // startZustand() prueft den gespeicherten Screen gegen FLOW.length.
+  state = this.startZustand();
+
+  // Geste zu Ende: Livewert des Zooms in den Zustand (siehe App).
+  zoomFest = (el) => {
+    if (this._zoomRaf) { cancelAnimationFrame(this._zoomRaf); this._zoomRaf = 0; }
+    const ziel = el && el.querySelector && el.querySelector('[data-wp-zoomziel]');
+    if (ziel) ziel.style.willChange = '';
+    const z = this._zoomLive;
+    this._zoomLive = null;
+    if (z) this.setState({ zoom: z });
+  };
+
+  // Gibt einen Finger frei, egal wo er hochgeht (Freigabe am Dokument).
+  zeigerFrei = (e) => {
+    const eintrag = this._ptrs && this._ptrs[e.pointerId];
+    if (!eintrag) return;
+    const el = eintrag.el;
+    delete this._ptrs[e.pointerId];
+    if (Object.keys(this._ptrs).length < 2) { this._rotAkk = 0; this._rotAn = false; this._rotRoh = null; }
+    let nochDa = false;
+    for (const id in this._ptrs) if (this._ptrs[id].el === el) { nochDa = true; break; }
+    if (!nochDa) this.zoomFest(el);
+  };
+
+  // ── 360-Grad-Stationsfoto ── unveraendert aus der App.
+  panoSync() {
+    let cv = null;
+    const alle = document.querySelectorAll('canvas[data-wp-pano]');
+    for (let i = 0; i < alle.length; i++) {
+      // Platzhalter der Design-Canvas tragen noch die rohe {{ }}-Bindung.
+      const src = alle[i].getAttribute('data-wp-pano') || '';
+      if (src && src.indexOf('{{') < 0 && alle[i].offsetWidth > 0) { cv = alle[i]; break; }
+    }
+    const p = this._pano;
+    if (p && (!cv || p.canvas !== cv || p.src !== cv.getAttribute('data-wp-pano'))) this.panoAbbauen();
+    if (cv && !this._pano) this.panoAufbauen(cv);
+    // Das Rundumbild schon auf der Einleitung holen, damit es an der
+    // Station sofort steht.
+    const nach = this.FLOW.find((f) => f.t === 'arrive' && f.foto);
+    if (!cv && nach) this.panoBildHolen(nach.foto);
+  }
+
+  panoBildHolen(src) {
+    const b = this._panoBild;
+    if (b && b.src === src) return b;
+    const nb = { src, img: new Image(), ok: false, fehler: false, warten: [] };
+    const fertig = () => { const w = nb.warten; nb.warten = []; w.forEach((f) => f()); };
+    nb.img.onload = () => { nb.ok = true; fertig(); };
+    nb.img.onerror = () => { nb.fehler = true; fertig(); };
+    nb.img.src = src;
+    this._panoBild = nb;
+    return nb;
+  }
+
+  panoAufbauen(cv) {
+    const src = cv.getAttribute('data-wp-pano');
+    const blick = parseFloat(cv.getAttribute('data-wp-pano-blick'));
+    const p = this._pano = {
+      canvas: cv, src, gl: null, prog: null, tex: null, bild: null, raf: 0, ro: null,
+      yaw: ((isFinite(blick) ? blick : 0.5) - 0.5) * 2 * Math.PI, pitch: 0, fov: PANO_FOV_START
+    };
+    let gl = null;
+    try { gl = cv.getContext('webgl', { alpha: true, antialias: false, depth: false }) || cv.getContext('experimental-webgl'); } catch (e) { gl = null; }
+    if (!gl || !this.panoGl(p, gl)) { this.panoStandSetzen(src, 'fehler'); return; }
+    p.weg = (e) => { e.preventDefault(); p.prog = null; p.tex = null; };
+    p.zurueck = () => { if (this._pano === p && this.panoGl(p, p.gl) && p.bild) this.panoTextur(p, p.bild); };
+    cv.addEventListener('webglcontextlost', p.weg);
+    cv.addEventListener('webglcontextrestored', p.zurueck);
+    if (window.ResizeObserver) { p.ro = new ResizeObserver(() => this.panoZeichnen()); p.ro.observe(cv); }
+    const b = this.panoBildHolen(src);
+    const los = () => {
+      if (this._pano !== p) return;
+      if (b.ok) this.panoTextur(p, b.img); else this.panoStandSetzen(src, 'fehler');
+    };
+    if (b.ok || b.fehler) los(); else b.warten.push(los);
+  }
+
+  panoGl(p, gl) {
+    const shader = (typ, text) => { const s = gl.createShader(typ); gl.shaderSource(s, text); gl.compileShader(s); return s; };
+    const prog = gl.createProgram();
+    gl.attachShader(prog, shader(gl.VERTEX_SHADER, PANO_VS));
+    gl.attachShader(prog, shader(gl.FRAGMENT_SHADER, PANO_FS));
+    gl.linkProgram(prog);
+    if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) return false;
+    gl.useProgram(prog);
+    gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer());
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]), gl.STATIC_DRAW);
+    const a = gl.getAttribLocation(prog, 'p');
+    gl.enableVertexAttribArray(a);
+    gl.vertexAttribPointer(a, 2, gl.FLOAT, false, 0, 0);
+    p.gl = gl; p.prog = prog;
+    p.uS = gl.getUniformLocation(prog, 's');
+    p.uYaw = gl.getUniformLocation(prog, 'yw');
+    p.uPitch = gl.getUniformLocation(prog, 'pt');
+    return true;
+  }
+
+  panoTextur(p, img) {
+    const gl = p.gl;
+    if (!gl || gl.isContextLost()) return;
+    // Aeltere Handys koennen keine 6144 Pixel breite Textur: vorher verkleinern.
+    const max = gl.getParameter(gl.MAX_TEXTURE_SIZE);
+    let quelle = img;
+    if (img.naturalWidth > max) {
+      quelle = document.createElement('canvas');
+      quelle.width = max; quelle.height = max / 2;
+      quelle.getContext('2d').drawImage(img, 0, 0, quelle.width, quelle.height);
+    }
+    const tex = gl.createTexture();
+    gl.bindTexture(gl.TEXTURE_2D, tex);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+    gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+    try {
+      gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, quelle);
+    } catch (e) {
+      // file:// - das Bild gilt als fremd und darf nicht in eine Textur.
+      gl.deleteTexture(tex);
+      this.panoStandSetzen(p.src, 'fehler');
+      return;
+    }
+    p.tex = tex; p.bild = img;
+    this.panoStandSetzen(p.src, 'ok');
+    this.panoZeichnen();
+  }
+
+  panoStandSetzen(src, wert) {
+    if (this.state.panoStand[src] === wert) return;
+    this.setState((st) => ({ panoStand: { ...st.panoStand, [src]: wert } }));
+  }
+
+  panoBlick(z) {
+    const p = this._pano;
+    if (!p) return;
+    if (z.fov !== undefined) p.fov = Math.min(PANO_FOV_MAX, Math.max(PANO_FOV_MIN, z.fov));
+    if (z.yaw !== undefined) p.yaw = Math.atan2(Math.sin(z.yaw), Math.cos(z.yaw));
+    const grenze = (90 - p.fov / 2) * Math.PI / 180;
+    const pitch = z.pitch !== undefined ? z.pitch : p.pitch;
+    p.pitch = Math.min(grenze, Math.max(-grenze, pitch));
+    this.panoZeichnen();
+  }
+
+  panoZeichnen() {
+    const p = this._pano;
+    if (!p || p.raf) return;
+    p.raf = requestAnimationFrame(() => {
+      p.raf = 0;
+      const gl = p.gl, cv = p.canvas;
+      if (this._pano !== p || !gl || !p.prog || !p.tex || gl.isContextLost()) return;
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const w = Math.max(1, Math.round(cv.clientWidth * dpr)), h = Math.max(1, Math.round(cv.clientHeight * dpr));
+      if (cv.width !== w || cv.height !== h) { cv.width = w; cv.height = h; }
+      gl.viewport(0, 0, w, h);
+      gl.bindTexture(gl.TEXTURE_2D, p.tex);
+      const ty = Math.tan(p.fov * Math.PI / 360);
+      gl.uniform2f(p.uS, ty * w / h, ty);
+      gl.uniform1f(p.uYaw, p.yaw);
+      gl.uniform1f(p.uPitch, p.pitch);
+      gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+    });
+  }
+
+  panoAbbauen() {
+    const p = this._pano;
+    if (!p) return;
+    this._pano = null;
+    if (p.raf) cancelAnimationFrame(p.raf);
+    if (p.ro) p.ro.disconnect();
+    if (p.weg) p.canvas.removeEventListener('webglcontextlost', p.weg);
+    if (p.zurueck) p.canvas.removeEventListener('webglcontextrestored', p.zurueck);
+    const gl = p.gl;
+    if (gl && !gl.isContextLost()) {
+      if (p.tex) gl.deleteTexture(p.tex);
+      if (!p.canvas.isConnected) {
+        const lc = gl.getExtension('WEBGL_lose_context');
+        if (lc) lc.loseContext();
+      }
+    }
+  }
+
+  // Kopfzeilenuhr: nur beim Minutenwechsel neu zeichnen.
+  startClockTick() {
+    this._clockMin = new Date().getMinutes();
+    this._clockT = setInterval(() => {
+      const m = new Date().getMinutes();
+      if (m !== this._clockMin) { this._clockMin = m; this.setState({ clockMin: m }); }
+    }, 30000);
+  }
+
+  componentDidMount() {
+    this._lastScreen = this.state.screen;
+    this.openingVorladen();
+    for (const k in this.RING) this.ringEl(k);
+    for (const k in this.SFX) this.sfxEl(k);
+    document.addEventListener('pointerup', this.zeigerFrei);
+    document.addEventListener('pointercancel', this.zeigerFrei);
+    this.startClockTick();
+    this.panoSync();
+  }
+
+  // Einblendung "Eingehende Sprachnachricht", Klingelton und vorgemerkte
+  // Nachricht beim Betreten eines Audio-Screens - die Logik aus
+  // componentDidUpdate der App, hier als eigene Methode, damit auch
+  // aktivieren() sie fuer den ersten Screen ausloesen kann.
+  screenBetreten(n) {
+    const s = this.state;
+    const cur = this.FLOW[n];
+    if (this._incT) { clearTimeout(this._incT); this._incT = null; }
+    this.stopRing();
+    this.clearArmedAudio();
+    if (cur && cur.t === 'audio') {
+      const wer = cur.who || 'R';
+      const ton = this.RING[wer];
+      const incMs = ton ? ton.ms : 1250;
+      if (ton) this.playRing(wer);
+      this.setState({ incoming: true });
+      const incSchliessen = () => {
+        this._incT = null;
+        this.setState({ incoming: false });
+        this.fireArmedAudio();
+      };
+      this._incT = setTimeout(() => {
+        // Laeuft der Klingelton noch, erst zu Ende klingen lassen,
+        // gedeckelt durch RING_MAX_WARTE.
+        const a = ton ? this.ringEl(wer) : null;
+        if (a && !a.paused && !a.ended && isFinite(a.duration)) {
+          const rest = Math.max(0, (a.duration - a.currentTime) * 1000) + 100;
+          this._incT = setTimeout(incSchliessen, Math.min(rest, this.RING_MAX_WARTE));
+          return;
+        }
+        incSchliessen();
+      }, incMs);
+      if (this.props.autoplayAudio ?? true) this.armAudio(n, incMs + this.RING_MAX_WARTE);
+    } else if (s.incoming) {
+      this.setState({ incoming: false });
+    }
+  }
+
+  componentDidUpdate() {
+    const s = this.state;
+    this.fortschrittSichern();
+    this.panoSync();
+    if (s.screen !== this._lastScreen) {
+      this._lastScreen = s.screen;
+      if (s.auIdx !== null) this.stopAudio();
+      if (s.gate === null) this.screenBetreten(s.screen);
+    }
+  }
+
+  componentWillUnmount() {
+    this.openingAbbauen();
+    if (this._zoomRaf) { cancelAnimationFrame(this._zoomRaf); this._zoomRaf = 0; }
+    this.panoAbbauen();
+    document.removeEventListener('pointerup', this.zeigerFrei);
+    document.removeEventListener('pointercancel', this.zeigerFrei);
+    if (this._clockT) { clearInterval(this._clockT); this._clockT = null; }
+    if (this._solveT) { clearTimeout(this._solveT); this._solveT = null; }
+    if (this._incT) { clearTimeout(this._incT); this._incT = null; }
+    this.clearArmedAudio();
+    if (this._au) { this._au.pause(); this._au.removeAttribute('src'); }
+    if (this._rings) {
+      for (const k in this._rings) { this._rings[k].pause(); this._rings[k].removeAttribute('src'); }
+    }
+  }
+
+  // Erfolgs-Einblendung: 2,5 s, dann weiter; ein Tipp schaltet sofort weiter.
+  solve(msg) {
+    if (this._solveT) return;
+    this.playSfx('ok');
+    this.setState(st => ({ solved: msg, hintsOpen: false, solvedScreens: { ...st.solvedScreens, [st.screen]: true } }));
+    this._solveT = setTimeout(() => { this._solveT = null; this.go(1); }, 2500);
+  }
+
+  go(d) {
+    if (this._solveT) { clearTimeout(this._solveT); this._solveT = null; }
+    this._zoomLive = null;
+    this.setState(s => {
+      const n = Math.min(this.FLOW.length - 1, Math.max(0, s.screen + d));
+      return { screen: n, solved: null, hintsOpen: false, maxScreen: Math.max(s.maxScreen, n), zoom: zoomFrisch() };
+    });
+  }
+
+  jumpTo(i) {
+    if (this._solveT) { clearTimeout(this._solveT); this._solveT = null; }
+    this._zoomLive = null;
+    this.setState(st => ({ screen: i, solved: null, hintsOpen: false, maxScreen: Math.max(st.maxScreen, i), zoom: zoomFrisch() }));
+  }
+
+  // Vom Puzzle in den Rundumblick und zurueck: Demo-Spieler stehen nicht
+  // vor dem Turm, das Foto ist ihr Blick nach oben. Die gesetzten Schnipsel
+  // bleiben dabei liegen.
+  turmAnsehen() {
+    const ziel = this.FLOW.findIndex((f) => f.t === 'arrive');
+    if (ziel < 0) return;
+    const von = this.state.screen;
+    this.setState({ turmBlick: von });
+    this.jumpTo(ziel);
+  }
+
+  arWeiter() {
+    const zurueck = this.state.turmBlick;
+    if (zurueck !== null && zurueck !== undefined) {
+      this.setState({ turmBlick: null });
+      this.jumpTo(zurueck);
+      return;
+    }
+    this.go(1);
+  }
+
+  // Zurueck zum Demo-Start, Fortschritt geloescht.
+  neustart() {
+    this.stopAudio();
+    this.stopRing();
+    if (this._solveT) { clearTimeout(this._solveT); this._solveT = null; }
+    if (this._incT) { clearTimeout(this._incT); this._incT = null; }
+    lsEntfernen(SCHLUESSEL_FORTSCHRITT);
+    // Nach dem Reset einmal NICHT schreiben, sonst laege der Schluessel sofort wieder da.
+    this._fortschrittSig = null;
+    this._resetFrisch = true;
+    this._zoomLive = null;
+    this._lastScreen = 0;
+    this.setState(this.initialState());
+  }
+
+  renderVals() {
+    const s = this.state;
+    const F = this.FLOW;
+    const cur = F[s.screen] || F[0];
+    const glitch = this.props.glitchMotion ?? true;
+    const trDefault = this.props.transcriptsOpen ?? true;
+    const hk = cur.hk || 0;
+    const hacked = hk > 0;
+
+    // ── Theme ──
+    const pgBg = hacked ? '#150711' : '#0B1526';
+    const pgFg = hacked ? '#F5E9F0' : '#E9F0F8';
+    const cardBg = hacked ? '#1D0A16' : '#101E33';
+    const cardBorder = hacked ? 'rgba(255,46,99,.45)' : 'rgba(140,170,210,.3)';
+    const accent = hacked ? '#FF2E63' : '#5CC8FF';
+    const onAccent = hacked ? '#150711' : '#06121F';
+    const subC = hacked ? '#B0688A' : '#8FA6C4';
+    const hdrLine = hacked ? 'rgba(255,46,99,.4)' : 'rgba(140,170,210,.2)';
+    const hdrC = hacked ? '#FF7DA0' : '#8FA6C4';
+
+    // ── Screen-Typ-Flags ──
+    const types = ['audio', 'hinweis', 'arrive', 'frags', 'ende'];
+    const flags = {};
+    types.forEach(t => { flags['t' + t.charAt(0).toUpperCase() + t.slice(1)] = cur.t === t; });
+
+    // ── Header ──
+    const hdr = cur.hdr || ['HIDDEN WAYPOINT', '', ''];
+    const hdrMidC = hacked ? '#FF7DA0' : (hdr[1].startsWith('▲') ? '#FFB454' : '#7BE0A3');
+
+    // ── Audio ──
+    const who = cur.who || 'R';
+    const auMitTon = !!cur.au;
+    const auName = who === 'D' ? 'DR. DANGER' : 'KOMMISSAR RILEY';
+    const auInitials = who === 'D' ? '??' : 'KR';
+    const auSub = (who === 'D' ? 'KANAL ▓▓ GEKAPERT' : 'DEZERNAT 7, KANAL 01') + ' · ' + (auMitTon ? (cur.dur || '0:30') + ' MIN' : 'TEXT');
+    const auOn = s.auIdx === s.screen;
+    const auPct = auOn ? s.auPct : 0;
+    const hs = [12, 22, 34, 46, 30, 52, 40, 24, 44, 54, 36, 20, 30, 48, 42, 26, 16, 38, 50, 32, 22, 42, 28, 14, 34, 46, 24, 12];
+    const auLit = Math.round((auPct / 100) * hs.length);
+    const auBars = hs.map((h, i) => hacked
+      ? { h: i % 5 === 0 ? Math.min(52, h + 14) : h, c: i < auLit ? (i % 3 === 0 ? '#FF2BD6' : '#FF2E63') : 'rgba(255,125,160,.3)' }
+      : { h, c: i < auLit ? '#5CC8FF' : 'rgba(140,170,210,.35)' });
+    const auLines = (cur.lines || []).map(ln => typeof ln === 'string' ? { t: ln, fs: 'normal' } : { t: ln.v, fs: 'italic' });
+    // Ohne Aufnahme ist das Transkript die Nachricht selbst: immer offen.
+    const trOpen = auMitTon ? (s.tr[s.screen] ?? trDefault) : true;
+    const trGross = auMitTon && trOpen && !!s.trG[s.screen];
+    const playing = auOn && s.auPlaying;
+    const auTotal = (auOn && s.auDur) ? this.fmtTime(s.auDur) : (cur.dur || '0:00');
+    const auElapsed = this.fmtTime(auOn ? s.auCur : 0);
+
+    // ── Ankunft (nur Foto, keine Route) ──
+    const arHatFoto = cur.t === 'arrive' && !!cur.foto;
+    const arPanoStand = arHatFoto ? s.panoStand[cur.foto] : undefined;
+    const arPano = arHatFoto && arPanoStand !== 'fehler';
+    const arZurueck = s.turmBlick !== null && s.turmBlick !== undefined;
+
+    // ── Hinweise (Overlay, pro Screen) ──
+    const hintDefs = cur.hints || null;
+    const used = s.hintsUsed[s.screen] || 0;
+    const hintCards = (hintDefs || []).map((h, i) => {
+      const revealed = used > i;
+      const canReveal = used === i;
+      return {
+        title: h.sol ? ('HINWEIS ' + (i + 1) + ' · LÖSUNG') : ('HINWEIS ' + (i + 1)),
+        text: h.x,
+        revealed, hidden: !revealed,
+        border: revealed ? (h.sol ? 'rgba(255,46,99,.5)' : 'rgba(123,224,163,.45)') : 'rgba(140,170,210,.25)',
+        titleColor: h.sol ? '#FF7DA0' : '#8FA6C4',
+        btnLabel: canReveal ? '⚠ HINWEIS AUFDECKEN' : ('🔒 ERST HINWEIS ' + i + ' AUFDECKEN'),
+        btnBg: canReveal ? 'rgba(255,180,84,.08)' : 'transparent',
+        btnColor: canReveal ? '#FFB454' : '#5A7091',
+        cursor: canReveal ? 'pointer' : 'default',
+        reveal: () => { if (canReveal) this.setState(st => ({ hintsUsed: { ...st.hintsUsed, [st.screen]: i + 1 } })); }
+      };
+    });
+    let hintsTotal = 0;
+    F.forEach((f, i) => { hintsTotal += s.hintsUsed[i] || 0; });
+
+    // ── Fragmentpuzzle (echtes Drag & Drop, 6 Turmschnipsel) ── aus der App.
+    const fragVals = {};
+    {
+      const fragImgW = 2923; // gemeinsame Bildbreite aller Schnipsel
+      const fragImgH = { 1: 3365, 2: 1015, 3: 1854, 4: 1044, 5: 946, 6: 675 }; // Höhe je Schnipsel, unten (1) nach oben (6)
+      const fragImgSrc = n => this.WT_FRAGS[n];
+      const fragRot = { 1: -4, 2: 5, 3: -3, 4: 4, 5: -5, 6: 3 };
+      const fragHSum = Object.values(fragImgH).reduce((a, b) => a + b, 0);
+      const fDrag = s.fragDrag;
+      // Leere Slots sind alle gleich hoch: die Kastenhoehe darf nicht verraten,
+      // welcher Schnipsel wohin gehoert.
+      const fragPlacedPct = s.fragSlots.reduce((a, v) => a + (v ? fragImgH[v] / fragHSum * 100 : 0), 0);
+      const fragEmptyN = s.fragSlots.filter(v => v == null).length;
+      const fragEmptyPct = fragEmptyN ? (100 - fragPlacedPct) / fragEmptyN : 0;
+
+      const fragDown = n => e => {
+        e.currentTarget.setPointerCapture(e.pointerId);
+        const r = e.currentTarget.getBoundingClientRect();
+        this.setState({ fragDrag: { n, x: e.clientX, y: e.clientY, ox: e.clientX - r.left, oy: e.clientY - r.top, w: r.width, h: r.height } });
+      };
+      const fragMove = e => {
+        if (!this.state.fragDrag) return;
+        this.setState(st => st.fragDrag ? { fragDrag: { ...st.fragDrag, x: e.clientX, y: e.clientY } } : {});
+      };
+      const fragUp = e => {
+        const d = this.state.fragDrag; if (!d) return;
+        const el = document.elementFromPoint(e.clientX, e.clientY);
+        const slotEl = el && el.closest ? el.closest('[data-frag-slot]') : null;
+        this.setState(st => {
+          const slots = st.fragSlots.slice();
+          const fromIdx = slots.indexOf(d.n);
+          if (fromIdx >= 0) slots[fromIdx] = null;
+          if (slotEl) {
+            const ti = parseInt(slotEl.getAttribute('data-frag-slot'), 10);
+            const occupant = slots[ti];
+            slots[ti] = d.n;
+            if (occupant != null && occupant !== d.n && fromIdx >= 0) slots[fromIdx] = occupant;
+          }
+          return { fragSlots: slots, fragDrag: null, fragErr: { ...st.fragErr, [st.screen]: false } };
+        });
+      };
+
+      const fragSlotView = [0, 1, 2, 3, 4, 5].map(i => {
+        const filled = s.fragSlots[i];
+        return {
+          i,
+          h: (filled ? fragImgH[filled] / fragHSum * 100 : fragEmptyPct).toFixed(3) + '%',
+          img: filled ? ("url('" + fragImgSrc(filled) + "')") : 'none',
+          bg: filled ? 'transparent' : 'rgba(92,200,255,.05)',
+          border: filled ? '1px solid rgba(92,200,255,.45)' : '1.5px dashed rgba(92,200,255,.3)',
+          opacity: (fDrag && fDrag.n === filled) ? '.15' : '1',
+          cursor: filled ? 'grab' : 'default',
+          down: filled ? fragDown(filled) : (() => {})
+        };
+      });
+      const fragPoolView = s.fragOrder.filter(n => !s.fragSlots.includes(n)).map(n => {
+        const cb = this.WT_FRAG_BOX[n];
+        const w = 74; // Inhaltsbreite jedes Chips
+        const bgW = w / cb.w;
+        const bgH = bgW * fragImgH[n] / fragImgW;
+        return {
+          n, w: w + 'px', h: Math.round(bgH * cb.h) + 'px',
+          bgSize: bgW.toFixed(1) + 'px auto',
+          bgPos: (-(cb.x * bgW)).toFixed(1) + 'px ' + (-(cb.y * bgH)).toFixed(1) + 'px',
+          src: "url('" + fragImgSrc(n) + "')", rot: fragRot[n] + 'deg',
+          opacity: (fDrag && fDrag.n === n) ? '.15' : '1',
+          down: fragDown(n)
+        };
+      });
+
+      fragVals.fragSlotView = fragSlotView;
+      fragVals.fragPoolView = fragPoolView;
+      fragVals.fragPoolEmpty = fragPoolView.length === 0;
+      fragVals.fragFilledCount = String(s.fragSlots.filter(v => v != null).length);
+      fragVals.fragMove = fragMove;
+      fragVals.fragUp = fragUp;
+      fragVals.fragDragging = !!fDrag;
+      fragVals.fragGhostLeft = fDrag ? (fDrag.x - fDrag.ox) + 'px' : '0px';
+      fragVals.fragGhostTop = fDrag ? (fDrag.y - fDrag.oy) + 'px' : '0px';
+      fragVals.fragGhostW = fDrag ? fDrag.w + 'px' : '0px';
+      fragVals.fragGhostH = fDrag ? fDrag.h + 'px' : '0px';
+      fragVals.fragGhostSrc = fDrag ? ("url('" + fragImgSrc(fDrag.n) + "')") : 'none';
+      fragVals.fragErrShow = !!s.fragErr[s.screen];
+      const fragBtnReady = s.fragSlots.every(v => v != null);
+      fragVals.fragBtnBg = fragBtnReady ? '#5CC8FF' : '#1A2C44';
+      fragVals.fragBtnFg = fragBtnReady ? '#06121F' : '#5A7091';
+      fragVals.fragConfirm = () => {
+        if (!s.fragSlots.every(v => v != null)) return;
+        if (s.fragSlots.every((v, i) => v === i + 1)) { this.solve('BILD REKONSTRUIERT'); return; }
+        this.playSfx('fail'); this.fehlerRuettelt();
+        this.setState(st => ({ fragErr: { ...st.fragErr, [st.screen]: true } }));
+      };
+    }
+
+    // ── Echtzeituhr (Header). Auf gekaperten Screens bleibt die gestoerte Zeit. ──
+    const now = new Date();
+    const liveClock = String(now.getHours()).padStart(2, '0') + ':' + String(now.getMinutes()).padStart(2, '0');
+
+    // ── Zoom (flacher Rueckfall des Fotos) und Rundumblick ── aus der App.
+    this._ptrs = this._ptrs || {};
+    const zEigene = (el) => Object.keys(this._ptrs).filter((id) => this._ptrs[id].el === el);
+    const zFremdeWeg = (el) => {
+      let weg = false;
+      for (const id in this._ptrs) if (this._ptrs[id].el !== el) { delete this._ptrs[id]; weg = true; }
+      if (weg) { this._rotAkk = 0; this._rotAn = false; this._rotRoh = null; this._tipp = null; }
+    };
+    // Lebendpruefung: liegt der Finger noch auf dem Glas?
+    const zTotWeg = (el, ausser) => {
+      if (typeof el.hasPointerCapture !== 'function') return;
+      for (const id in this._ptrs) {
+        if (id === String(ausser) || this._ptrs[id].el !== el) continue;
+        if (!el.hasPointerCapture(Number(id))) delete this._ptrs[id];
+      }
+    };
+    const zJetzt = () => this._zoomLive || this.state.zoom;
+    const zText = (z) => 'translate(' + z.x + 'px, ' + z.y + 'px) rotate(' + (z.rot || 0) + 'deg) scale(' + z.scale + ')';
+    const zLive = (el, z) => {
+      this._zoomLive = z;
+      if (this._zoomRaf) return;
+      this._zoomRaf = requestAnimationFrame(() => {
+        this._zoomRaf = 0;
+        const ziel = el.querySelector('[data-wp-zoomziel]');
+        if (ziel && this._zoomLive) ziel.style.transform = zText(this._zoomLive);
+      });
+    };
+    const zFest = this.zoomFest;
+    const zDrehSperre = (el) => !!(el && el.getAttribute && el.getAttribute('data-wp-drehsperre') === '1');
+    const zClampPan = (r, sc, x, y, rot) => {
+      const a = (rot || 0) * Math.PI / 180, co = Math.cos(a), si = Math.sin(a);
+      let cx = x * co + y * si, cy = -x * si + y * co;
+      const mx = (sc - 1) * r.width / 2, my = (sc - 1) * r.height / 2;
+      cx = Math.min(mx, Math.max(-mx, cx));
+      cy = Math.min(my, Math.max(-my, cy));
+      return { x: cx * co - cy * si, y: cx * si + cy * co };
+    };
+    const zoomWheel = (e) => {
+      const r = e.currentTarget.getBoundingClientRect();
+      const zst = zJetzt();
+      this._zoomLive = null;
+      const ns = Math.min(4, Math.max(1, zst.scale * (e.deltaY < 0 ? 1.2 : 1 / 1.2)));
+      if (ns === 1) { this.setState({ zoom: { scale: 1, x: 0, y: 0, rot: zst.rot || 0 } }); return; }
+      const px = e.clientX - r.left - r.width / 2, py = e.clientY - r.top - r.height / 2;
+      const k = ns / zst.scale;
+      const p = zClampPan(r, ns, (zst.x - px) * k + px, (zst.y - py) * k + py, zst.rot || 0);
+      this.setState({ zoom: { scale: ns, x: p.x, y: p.y, rot: zst.rot || 0 } });
+    };
+    const zGestenStart = (el) => {
+      if (zEigene(el).length === 0) { this._zoomLive = null; this._rotRoh = null; }
+      const ziel = el.querySelector('[data-wp-zoomziel]');
+      if (ziel) ziel.style.willChange = 'transform';
+    };
+    const zoomDown = (e) => {
+      zFremdeWeg(e.currentTarget);
+      zGestenStart(e.currentTarget);
+      e.currentTarget.setPointerCapture(e.pointerId);
+      this._ptrs[e.pointerId] = { x: e.clientX, y: e.clientY, el: e.currentTarget };
+    };
+    const zoomMove = (e) => {
+      const pt = this._ptrs[e.pointerId]; if (!pt) return;
+      zTotWeg(e.currentTarget, e.pointerId);
+      const ids = zEigene(e.currentTarget);
+      const r = e.currentTarget.getBoundingClientRect();
+      const zst = zJetzt();
+      if (ids.length === 2) {
+        const other = this._ptrs[ids.find(id => id !== String(e.pointerId))];
+        const d0 = Math.hypot(pt.x - other.x, pt.y - other.y);
+        this._ptrs[e.pointerId] = { x: e.clientX, y: e.clientY, el: e.currentTarget };
+        const d1 = Math.hypot(e.clientX - other.x, e.clientY - other.y);
+        const a0 = Math.atan2(pt.y - other.y, pt.x - other.x);
+        const a1 = Math.atan2(e.clientY - other.y, e.clientX - other.x);
+        let dr = (a1 - a0) * 180 / Math.PI;
+        if (dr > 180) dr -= 360; else if (dr < -180) dr += 360;
+        if (zDrehSperre(e.currentTarget)) dr = 0;
+        this._rotAkk = (this._rotAkk || 0) + dr;
+        if (!this._rotAn && Math.abs(this._rotAkk) > this.ROT_SCHWELLE) { this._rotAn = true; this._rotWeg = 0; }
+        let anteil = 0;
+        if (this._rotAn) {
+          this._rotWeg = (this._rotWeg || 0) + Math.abs(dr);
+          anteil = Math.min(1, this._rotWeg / this.ROT_WEICH);
+        }
+        const rohVorher = (this._rotRoh === null || this._rotRoh === undefined) ? (zst.rot || 0) : this._rotRoh;
+        this._rotRoh = rohVorher + dr * anteil;
+        const rot = this.rotRasten(this._rotRoh);
+        if (d0 > 0) {
+          const ns = Math.min(4, Math.max(1, zst.scale * d1 / d0));
+          // Drehen und Kneifen um die Mitte der Ansicht (siehe App).
+          const k = ns / zst.scale;
+          const dr2 = (rot - (zst.rot || 0)) * Math.PI / 180;
+          const cr = Math.cos(dr2), sr = Math.sin(dr2);
+          const tx = zst.x * k, ty = zst.y * k;
+          const p = zClampPan(r, ns, tx * cr - ty * sr, tx * sr + ty * cr, rot);
+          zLive(e.currentTarget, ns === 1 ? { scale: 1, x: 0, y: 0, rot: rot } : { scale: ns, x: p.x, y: p.y, rot: rot });
+        }
+      } else if (zst.scale > 1) {
+        const dx = e.clientX - pt.x, dy = e.clientY - pt.y;
+        this._ptrs[e.pointerId] = { x: e.clientX, y: e.clientY, el: e.currentTarget };
+        const p = zClampPan(r, zst.scale, zst.x + dx, zst.y + dy, zst.rot || 0);
+        zLive(e.currentTarget, { scale: zst.scale, x: p.x, y: p.y, rot: zst.rot || 0 });
+      } else { this._ptrs[e.pointerId] = { x: e.clientX, y: e.clientY, el: e.currentTarget }; }
+    };
+    const zoomUp = (e) => {
+      delete this._ptrs[e.pointerId];
+      const el = e.currentTarget;
+      if (zEigene(el).length < 2) { this._rotAkk = 0; this._rotAn = false; this._rotWeg = 0; this._rotRoh = null; }
+      if (zEigene(el).length === 0) zFest(el);
+    };
+    // Rundumblick: Ziehen dreht den Blick, Kneifen und Rad aendern den Bildwinkel.
+    const panoMove = (e) => {
+      const pt = this._ptrs[e.pointerId]; if (!pt) return;
+      const el = e.currentTarget;
+      zTotWeg(el, e.pointerId);
+      const p = this._pano;
+      const ids = zEigene(el);
+      if (p && ids.length >= 2) {
+        const anderer = this._ptrs[ids.find((id) => id !== String(e.pointerId))];
+        const vorher = Math.hypot(pt.x - anderer.x, pt.y - anderer.y);
+        const jetzt = Math.hypot(e.clientX - anderer.x, e.clientY - anderer.y);
+        if (vorher > 0 && jetzt > 0) this.panoBlick({ fov: p.fov * vorher / jetzt });
+      } else if (p && ids.length === 1) {
+        const k = p.fov * Math.PI / 180 / Math.max(1, el.clientHeight);
+        this.panoBlick({ yaw: p.yaw - (e.clientX - pt.x) * k, pitch: p.pitch + (e.clientY - pt.y) * k });
+      }
+      this._ptrs[e.pointerId] = { x: e.clientX, y: e.clientY, el };
+    };
+    const panoWheel = (e) => {
+      if (this._pano) this.panoBlick({ fov: this._pano.fov * (e.deltaY < 0 ? 1 / 1.15 : 1.15) });
+    };
+    const zoomDbl = () => {
+      const z = zJetzt();
+      this._zoomLive = null;
+      this.setState({
+        zoom: (z.scale > 1 || (z.rot || 0) !== 0)
+          ? { scale: 1, x: 0, y: 0, rot: 0 }
+          : { scale: 2.2, x: 0, y: 0, rot: 0 }
+      });
+    };
+
+    return {
+      ...flags, ...fragVals,
+      // ── Demo-Start ──
+      gateShow: s.gate === 'demo',
+      gateFortsetzen: s.screen > 0,
+      gateFakten: [
+        { label: 'Umfang', wert: 'Eine Station, ein paar Minuten.' },
+        { label: 'Ton', wert: 'Die Ermittler-App arbeitet mit Sprachnachrichten. Am besten mit Ton spielen.' }
+      ],
+      demoCode: s.demoCode,
+      demoCodeSetzen: (e) => this.setState({ demoCode: e.target.value }),
+      demoKey: (e) => { if (e.key === 'Enter') { e.preventDefault(); this.aktivieren(); } },
+      aktivieren: () => this.aktivieren(),
+      // ── Theme ──
+      pgBg, pgFg, cardBg, cardBorder, accent, onAccent, subC,
+      hdrLine, hdrC, hdrMidC,
+      hdrLeft: hdr[0], hdrMid: hdr[1], hdrRight: hacked ? hdr[2] : liveClock,
+      hdrLeftStyle: (hacked && who === 'D') ? 'text-decoration:line-through; color:#7A5568;' : '',
+      hdrAnim: (hacked && glitch) ? 'wpFlicker 3.4s steps(1) infinite' : 'none',
+      hkScan: hk >= 1,
+      // ── Audio ──
+      auScreenLabel: cur.sl || 'Audio', auName, auInitials, auSub, auBars, auLines, auMitTon,
+      auKicker: hacked ? '#5A7091' : '#5CC8FF',
+      auKickerText: auMitTon ? 'EINGEHENDE SPRACHNACHRICHT' : 'EINGEHENDE NACHRICHT',
+      auNameC: hacked ? '#FF2E63' : pgFg,
+      auNameShadow: hacked ? '1.5px 0 rgba(43,255,230,.5), -1.5px 0 rgba(255,43,214,.6)' : 'none',
+      auBadge: who === 'D', auBadgeText: hk >= 2 ? 'ABSENDER: ▓▓▓ ICH ▓▓▓' : 'UNBEKANNTER ABSENDER ▓▓',
+      auCardMt: who === 'D' ? '10px' : '0',
+      avBg: hacked ? '#2A0E1E' : '#16304E',
+      avAnim: (hacked && glitch) ? 'wpFlicker2 2.7s steps(1) infinite' : 'none',
+      auTrTitle: hacked ? 'TRANSKRIPT ▓ REKONSTRUIERT' : (auMitTon ? 'TRANSKRIPT' : 'NACHRICHT'),
+      trTextC: hacked ? '#E8C9D8' : '#C9D7E8',
+      trBtnC: hacked ? '#F0B8CC' : '#C9D7E8',
+      trOpen,
+      auTrMin: '62px',
+      auTrFlex: trGross ? '1 1 auto' : '0 1 auto',
+      auSpacer: trGross ? '0' : '1',
+      auKlein: !trGross,
+      trGrossAn: trGross,
+      trGrossIcon: trGross ? '▼' : '▲',
+      trGrossLabel: trGross ? 'EINKLAPPEN' : 'AUSKLAPPEN',
+      toggleTrGross: () => this.setState(st => ({ trG: { ...st.trG, [st.screen]: !st.trG[st.screen] } })),
+      trLabel: trOpen ? 'TRANSKRIPT AUSBLENDEN' : (hacked ? 'TRANSKRIPT ▓EINBLENDEN' : 'TRANSKRIPT EINBLENDEN'),
+      toggleTr: () => this.setState(st => ({ tr: { ...st.tr, [st.screen]: !(st.tr[st.screen] ?? trDefault) } })),
+      playIcon: s.auErr && auOn ? '!' : playing ? '❚❚' : '▶',
+      togglePlay: () => this.toggleAudio(s.screen),
+      progPct: auPct + '%',
+      seekDown: (e) => this.seekDown(s.screen, e),
+      seekMove: (e) => this.seekMove(s.screen, e),
+      seekUp: (e) => this.seekUp(s.screen, e),
+      auElapsed, auTotal,
+      progBg: hacked ? 'rgba(255,46,99,.25)' : 'rgba(140,170,210,.2)',
+      auCta: hacked ? 'SIGNAL SCHLIESSEN →' : 'WEITER →',
+      ctaBg: hacked ? 'transparent' : accent,
+      ctaC: hacked ? accent : onAccent,
+      ctaBorder: hacked ? ('2px solid ' + accent) : 'none',
+      // ── Ankunft ──
+      arScreenLabel: cur.sl || 'Ankunft', arName: cur.name || '', arSt: 'DEMO-STATION · STEIGENBERGER TURM',
+      arTime: liveClock,
+      arWheel: arPano ? panoWheel : zoomWheel,
+      arMove: arPano ? panoMove : zoomMove,
+      arPano,
+      arPanoSrc: cur.foto || '',
+      arPanoBlick: String(cur.blick ?? 0.5),
+      arPanoLaedt: arPano && arPanoStand !== 'ok',
+      arPanoFlach: arHatFoto && !arPano,
+      arFotoUrl: cur.foto ? ("url('" + cur.foto + "')") : 'none',
+      arFlachPos: ((cur.blick ?? 0.5) * 100) + '% center',
+      arUmschalt: arPano ? 'WISCHEN ZUM UMSEHEN' : 'KNEIFEN ZUM VERGRÖSSERN',
+      arText: arZurueck
+        ? 'Seht euch den Turm genau an: Sockel, Geschosse, Fenster, Zinnen. Dann zurück ans Puzzle.'
+        : 'In der echten Jagd gleicht ihr das Rundumfoto mit eurer Umgebung ab. In der Demo ersetzt es euren Blick: Wischt darüber und seht euch um. Den Turm braucht ihr gleich.',
+      arCta: arZurueck ? 'ZURÜCK ZUM PUZZLE →' : 'ICH BIN DA ✓',
+      arWeiter: () => this.arWeiter(),
+      turmAnsehen: () => this.turmAnsehen(),
+      zoomDown, zoomUp, zoomDbl,
+      zoomTransform: zText(zJetzt()),
+      // ── Hinweise ──
+      hasHints: !!hintDefs, hintCards,
+      hintsOpen: s.hintsOpen && !!hintDefs,
+      openHints: () => this.setState({ hintsOpen: true }),
+      closeHints: () => this.setState({ hintsOpen: false }),
+      hintsTotal: String(hintsTotal),
+      // ── Erfolgs-Einblendung ──
+      solvedShow: s.solved !== null, solvedMsg: s.solved || '',
+      solvedSkip: () => this.go(1),
+      // ── Einblendung "Eingehende Sprachnachricht" ──
+      incomingShow: s.incoming && cur.t === 'audio' && s.solved === null && s.gate === null,
+      incomingSkip: () => { if (this._incT) { clearTimeout(this._incT); this._incT = null; } this.stopRing(); this.fireArmedAudio(); this.setState({ incoming: false }); },
+      incomingAnim: glitch ? 'wpIncomingIn 1.25s ease-out forwards' : 'none',
+      incomingColor: who === 'D' ? '#FF2E63' : '#5CC8FF',
+      incomingIconBg: who === 'D' ? 'rgba(255,46,99,.08)' : 'rgba(92,200,255,.08)',
+      incomingIcon: who === 'D' ? '▓' : (auMitTon ? '♪' : '✉'),
+      incomingIconAnim: glitch ? 'wpSolvedPop .45s cubic-bezier(.2,1.4,.4,1)' : 'none',
+      incomingFlicker: (who === 'D' && glitch) ? 'wpFlicker2 1.1s steps(1) infinite' : 'none',
+      incomingLabel: who === 'D' ? '▓ ABSENDER UNBEKANNT ▓' : 'KOMMISSAR RILEY · DEZERNAT 7',
+      incomingTitle: who === 'D' ? 'EINGEHENDE ÜBERTRAGUNG' : (auMitTon ? 'EINGEHENDE SPRACHNACHRICHT' : 'EINGEHENDE NACHRICHT'),
+      // ── Diverses ──
+      next: () => this.go(1),
+      neustart: () => this.neustart(),
+      shakeAnim: (s.shakeN | 0) === 0 ? 'none'
+        : ((s.shakeN | 0) % 2 ? 'wpShakeA .4s ease-in-out' : 'wpShakeB .4s ease-in-out'),
+      scanAnim: glitch ? 'wpScan 5s linear infinite' : 'none'
+    };
+  }
+}
+</script>
+</body>
+</html>
