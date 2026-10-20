@@ -226,6 +226,14 @@ const translations = {
   "reign-meta-duration-label": "Play Time",
   "reign-meta-duration-value": "30–45 min.",
 
+  "reign-summary-game": "Event-based management game in a medieval setting. As a young ruler, the player guides the realm through eight months of petitioner decisions, letters, and quests; a playthrough takes 30–45 minutes.",
+  "reign-summary-role": "Solo developer in the university course \"Game Prototype\" (constraints: genre Strategy, design rule Choose-A-Path): game design, narrative, and implementation in Unity with C#.",
+  "reign-summary-decision1": "The favor system between nobility and common people as the design core: no right decision, only trade-offs with consequences.",
+  "reign-summary-decision2": "Event data as ScriptableObjects, so new audiences and letters can be added without code changes.",
+  "reign-summary-decision3": "Polish as part of the design: sounds, animations, tooltips, and a tutorial with a custom spotlight shader.",
+  "reign-summary-status": "Completed university prototype, playable on itch.io. Key learning: the save system belongs in the architecture from the start.",
+  "reign-summary-link": "▶ Play on itch.io",
+
   "reign-overview-title": "Overview",
   "reign-overview-text": "Reign is an event-based management game set in a medieval world, developed as a solo project in Unity. The player takes on the role of a young ruler who inherits a third of a crumbling kingdom after being banished by his father. Over eight in-game months, he must steer his realm through political intrigue, moral dilemmas, and scarce resources. A single playthrough takes 30–45 minutes.",
 
@@ -269,6 +277,16 @@ const translations = {
   "ek-meta-type-label": "Type",
   "ek-meta-type-value": "Sci-Fi Environment",
 
+  "ek-summary-project-label": "The Project",
+  "ek-summary-project": "Sci-fi environment: an octagonal engine room with a glowing energy core, modeled and textured in Blender and built in Unity as a walkable walkthrough.",
+  "ek-summary-role": "Solo as part of my studies: concept, modeling, texturing, rendering in Cycles, and integration into Unity URP with post-processing and spatial audio.",
+  "ek-summary-decision1": "An octagonal floor plan that breaks the monotony of rectangular rooms and creates interesting sightlines from every angle.",
+  "ek-summary-decision2": "Modular props (crates, cables, railings, doors) that can be placed flexibly in the room.",
+  "ek-summary-decision3": "A mix of image and procedural textures for resolution-independent materials and fast iteration.",
+  "ek-summary-result-label": "Result",
+  "ek-summary-result": "Completed, renders and walkthrough on ArtStation. Key learning: plan the export workflow between Blender and Unity from the start.",
+  "ek-summary-link": "↗ View on ArtStation",
+
   "ek-overview-title": "Overview",
   "ek-overview-text": "The Futuristic Energy Core is a Sci-Fi environment created as a university 3D project. The task was to conceive a science fiction environment, model and texture it in Blender, and subsequently integrate it into Unity. The result is an octagonal engine room with a central energy core, surrounded by cables, crates, railings, and atmospheric lighting.",
 
@@ -301,6 +319,14 @@ const translations = {
   "rj-meta-tools-value": "React · GitHub · Claude Code",
   "rj-sound-on": "🔊 Play opening with sound",
   "rj-sound-off": "🔇 Sound off",
+
+  "rj-summary-game": "Commercial outdoor puzzle hunt for Hidden Games: nine stations along roughly 2.5 km through Braunschweig's city center, accompanied by a hacked investigation app that becomes an unreliable narrator itself.",
+  "rj-summary-role": "Game design and narrative as a working student: puzzle and game design, dramaturgy, design decisions, and on-site testing. Claude Code implemented the code according to my specifications.",
+  "rj-summary-decision1": "The medium as the antagonist: the app lies, only the real surroundings tell the truth.",
+  "rj-summary-decision2": "No puzzle can be solved from the screen alone; every solution needs an on-site observation.",
+  "rj-summary-decision3": "No GPS: players confirm their arrival with a button, and the puzzle shows whether they're in the right place.",
+  "rj-summary-status": "Playable and in the middle of playtesting (October 2026). Final acceptance and the connection to the booking system are still open.",
+  "rj-summary-link": "▶ Open demo in new tab",
 
   "rj-overview-title": "Overview",
   "rj-overview-text": "The puzzle hunt is a commercial outdoor game that I am developing as a working student at Hidden Games in Braunschweig. Teams walk a route of about 2.5 kilometres through the city centre and solve puzzles at nine stations that can only be answered on site. They are accompanied by a web app on their own smartphone, which acts as game master, narrator and part of the puzzle all at once. The finale takes place at the Volkswagen Halle: a two-stage bomb defusal with two possible endings.",
