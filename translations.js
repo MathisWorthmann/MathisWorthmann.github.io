@@ -15,8 +15,8 @@ const translations = {
   "hero-sub": "Core Game Designer focused on cooperative game mechanics, game balance, and thoughtful player experiences – from board games to digital prototypes.",
 
   // ── HOME: SKILLS ──
-  "skills-label": "Competencies",
   "skills-title": "Skills",
+  "skills-tools-label": "Tools",
   "skill-gd-name": "Game Design",
   "skill-gd-detail": "Conception of game mechanics, rule systems, and player experiences. Experience with cooperative and competitive design approaches, scenario design, and campaign structures.",
   "skill-balance-name": "Balancing",
@@ -31,8 +31,6 @@ const translations = {
   "skill-analysis-detail": "Systematic analysis of game mechanics, genre positioning, and competitive analysis. Deriving design principles from existing titles.",
   "skill-ai-name": "AI Tools",
   "skill-ai-detail": "Experienced with AI-powered workflows: concept development, text generation, image generation, and coding assistance through LLMs like Claude and ChatGPT.",
-  "skill-gimp-name": "Image Editing (GIMP)",
-  "skill-gimp-detail": "Image editing, asset preparation, and texture adjustments for game and presentation materials.",
   "hero-btn-projects": "View Projects ↓",
   "hero-btn-contact": "Contact",
 
@@ -54,6 +52,9 @@ const translations = {
   "project4-tag": "Outdoor Puzzle · Web App",
   "project4-name": "Puzzle Hunt Braunschweig",
   "project4-desc": "A puzzle hunt through Braunschweig, developed for Hidden Games. The investigation app has been hacked, only the city tells the truth.",
+  "project4-fact1": "▶ Playable Demo",
+  "project4-fact2": "9 Stations · approx. 2.5 km",
+  "project4-fact3": "Working Student at Hidden Games",
   "project4-arrow": "Read Case Study →",
 
   // ── HOME: ABOUT ──
@@ -64,7 +65,7 @@ const translations = {
   "about-education-title": "Education",
   "about-education-text": "B.A. Game Design – IU International University<br>Specialization: Core Game Designer",
   "about-experience-title": "Work Experience",
-  "about-experience-text": "Working Student at Hidden Games",
+  "about-experience-text": "Working Student at Hidden Games<br>Contributing to the development of mystery and crime games",
   "about-languages-title": "Languages",
   "about-languages-text": "German (native), English",
 
@@ -90,15 +91,33 @@ const translations = {
   "meta-players-label": "Player Count",
   "meta-players-value": "1 – 4",
 
+  // ── CASE STUDY: SUMMARY ──
+  "cs-summary-label": "At a Glance",
+  "cs-summary-game-label": "The Game",
+  "cs-summary-game": "Cooperative survival-strategy expert game for 1–4 players. Each round, players align the weather machine toward one of four locations, and that alignment determines which effect of the weather card takes hold.",
+  "cs-summary-role-label": "My Role",
+  "cs-summary-role": "Solo developer: concept, rulebook, balancing, campaign, analog and digital prototype (Tabletop Simulator, Steam Workshop), and a self-built physical prototype.",
+  "cs-summary-decisions-label": "Key Decisions",
+  "cs-summary-decision1": "The alignable machine as the immovable core: every round a real decision with immediate consequences.",
+  "cs-summary-decision2": "Co-op mode cut for now, to balance the solo foundation cleanly first.",
+  "cs-summary-decision3": "Scaling derived analytically, with double scaling deliberately avoided.",
+  "cs-summary-status-label": "Status",
+  "cs-summary-status": "Solo mode playable with rulebook and nine campaign scenarios. Co-op mode and campaign system in progress; next up is a structured, independent testing program.",
+  "cs-summary-pdf": "↓ Rules as PDF",
+
   // ── CASE STUDY: CONTENT ──
   "cs-overview-title": "Overview",
   "cs-overview-text": "\"Die Wettermaschine\" is a mechanics-focused, cooperative survival-strategy expert game for 1–4 players, in which players must tame a weather machine that has gone haywire on the remote island of Tristan da Cunha in the year 1605. They gather resources, rebuild the town, and must carry out repairs before the catastrophe track destroys the island. The game spans a campaign of nine escalating scenarios with unlockable upgrades and achievements.",
 
   "cs-idea-title": "Where the Idea Came From",
-  "cs-idea-text": "The origin of Die Wettermaschine wasn't a methodical design process, but a spontaneous creative moment. I was asleep in bed when I jolted awake at 6 in the morning, and the idea for my own board game was simply there. It kept me awake, and the game kept assembling itself in my mind's eye. It sounds made up and cliché, but that's exactly how it happened. The core of that first vision was immediately clear: a weather machine has gone out of control and must be repaired before it triggers a catastrophe. The crucial detail that carried the idea from the start was the ability to align the machine in different directions and thereby influence its effects. This one mechanic has remained the heart of the game to this day.",
+  "cs-idea-text": "The origin of Die Wettermaschine wasn't a methodical design process, but a spontaneous creative moment. I was asleep in bed when I jolted awake at 6 in the morning, and the idea for my own board game was simply there. It kept me awake, and the game kept assembling itself in my mind's eye. It sounds made up and cliché, but that's exactly how it happened.",
+  "cs-idea-text2": "The core of that first vision was immediately clear: a weather machine has gone out of control and must be repaired before it triggers a catastrophe. The crucial detail that carried the idea from the start was the ability to align the machine in different directions and thereby influence its effects. This one mechanic has remained the heart of the game to this day.",
 
   "cs-experience-title": "The Experience I Wanted to Create",
-  "cs-experience-text": "My initial vision was less about solving a specific problem and more about creating a particular feeling. In retrospect, three motivations drove me. First, the fascination of playing against the game itself. I'm a devoted board game enthusiast, and expert-level games captivate me most. I love games where you take on the system and try to beat it, alone or as a team. This almost inevitably led to my genre decision: a cooperative survival-strategy expert game. Second, I wanted to anchor challenge with planability as the core experience. The feeling I was aiming for was a mix of threat, tension, and the satisfaction of ultimately conquering overwhelming forces of nature. Third, I was drawn to the effect of a physical object that excites during setup. Early in my first mind map, I noted that the weather machine should function as a dice tower. Inspired by the game Wingspan, I wanted to capture the moment when a tactile element produces a tangible \"wow.\" The machine was meant to be not just the theme, but also a tangible game object.",
+  "cs-experience-text": "My initial vision was less about solving a specific problem and more about creating a particular feeling. In retrospect, three motivations drove me.",
+  "cs-experience-text2": "<strong>First, the fascination of playing against the game itself.</strong> I'm a devoted board game enthusiast, and expert-level games captivate me most. I love games where you take on the system and try to beat it, alone or as a team. This almost inevitably led to my genre decision: a cooperative survival-strategy expert game.",
+  "cs-experience-text3": "<strong>Second, I wanted to anchor challenge with planability as the core experience.</strong> The feeling I was aiming for was a mix of threat, tension, and the satisfaction of ultimately conquering overwhelming forces of nature.",
+  "cs-experience-text4": "<strong>Third, I was drawn to the effect of a physical object that excites during setup.</strong> Early in my first mind map, I noted that the weather machine should function as a dice tower. Inspired by the game Wingspan, I wanted to capture the moment when a tactile element produces a tangible \"wow.\" The machine was meant to be not just the theme, but also a tangible game object.",
 
   "cs-anchoring-title": "How I Anchored the Vision",
   "cs-anchoring-text1": "Unlike many projects, my setting arrived together with the game idea, making it actually difficult to search for alternatives. Nevertheless, I methodically explored three options: a contemporary island setting, a post-apocalyptic wasteland, and a mythical fantasy scenario. I chose the remote island of Tristan da Cunha in 1605: an eccentric inventor who must tame his own machine, originally built to make the island safer and more habitable.",

@@ -16,7 +16,7 @@
 <meta name="twitter:image" content="https://mathisworthmann.de/images/Wettermaschine_Cover.jpg">
 <link rel="canonical" href="https://mathisworthmann.de/">
 <link rel="icon" type="image/png" href="images/favicon.png">
-<title>Mathis – Game Designer</title>
+<title>Mathis Worthmann – Game Designer</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Source+Sans+3:ital,wght@0,300;0,400;0,600;1,400&display=swap" rel="stylesheet">
 <link href="images/Waypoint_Opening.css" rel="stylesheet">
 <style>
@@ -28,6 +28,7 @@
   --bg-card-hover: #1a1a26;
   --text: #e8e6e3;
   --text-muted: #8a8a9a;
+  --text-soft: #c2c0c8;
   --accent: #c9f24d;
   --accent-dim: #a3c43e;
   --border: #2a2a3a;
@@ -69,9 +70,10 @@ nav .logo {
   text-decoration: none;
 }
 
-nav .nav-links { display: flex; gap: 2rem; }
+nav .nav-links { display: flex; align-items: center; gap: 2rem; }
 
 nav .nav-links a {
+  white-space: nowrap;
   color: var(--text-muted);
   text-decoration: none;
   font-size: 0.9rem;
@@ -83,17 +85,29 @@ nav .nav-links a {
 
 nav .nav-links a:hover { color: var(--accent); }
 
+#lang-toggle {
+  color: var(--accent);
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 0.9rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* Anker-Ziele nicht unter der fixen Navigation verschwinden lassen */
+section[id] { scroll-margin-top: 2rem; }
+
 /* ── PAGES ── */
 .page { display: none; min-height: 100vh; }
 .page.active { display: block; }
 
 /* ── HERO ── */
+/* Bewusst nicht bildschirmfüllend: Die Projekte sollen schon im ersten Viewport anschneiden */
 .hero {
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 8rem 3rem 4rem;
+  padding: 8.5rem 3rem 2rem;
   position: relative;
   overflow: hidden;
 }
@@ -189,7 +203,7 @@ nav .nav-links a:hover { color: var(--accent); }
 
 /* ── PROJECTS SECTION ── */
 .projects {
-  padding: 6rem 3rem 8rem;
+  padding: 3rem 3rem 8rem;
 }
 
 .section-label {
@@ -210,9 +224,11 @@ nav .nav-links a:hover { color: var(--accent); }
   margin-bottom: 3.5rem;
 }
 
+.projects .section-title { margin-bottom: 2.2rem; }
+
 .project-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: 1.5rem;
 }
 
@@ -297,6 +313,53 @@ nav .nav-links a:hover { color: var(--accent); }
 
 .project-card:hover .project-arrow { color: var(--accent); }
 
+/* Hervorgehobenes Projekt: volle Breite, Bild links, Text rechts */
+.project-card.featured {
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.project-card.featured .project-thumb {
+  border-bottom: 0;
+  border-right: 1px solid var(--border);
+}
+
+.project-card.featured .project-info {
+  padding: 2.5rem 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.project-card.featured h3 { font-size: 1.8rem; }
+
+.project-card.featured .project-info p { font-size: 1rem; }
+
+.project-facts {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 1.2rem;
+}
+
+.project-facts li {
+  font-family: var(--font-display);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  padding: 0.35rem 0.8rem;
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  color: var(--text-soft);
+}
+
+.project-facts li.highlight {
+  border-color: rgba(201, 242, 77, 0.4);
+  color: var(--accent);
+}
+
 /* ── ABOUT ── */
 .about {
   padding: 6rem 3rem 8rem;
@@ -311,113 +374,68 @@ nav .nav-links a:hover { color: var(--accent); }
 }
 
 .about-text p {
-  color: var(--text-muted);
+  color: var(--text-soft);
   font-size: 1.05rem;
   line-height: 1.8;
   margin-bottom: 1.2rem;
 }
 
-.skill-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.6rem;
-  margin-top: 2rem;
-}
+/* ── SKILLS (Teil von „Über mich") ── */
+.skills { margin-top: 4.5rem; }
 
-.skill-tag {
+.skills-heading {
   font-family: var(--font-display);
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.05em;
-  padding: 0.4rem 0.9rem;
-  border: 1px solid var(--border);
-  border-radius: 2px;
-  color: var(--text-muted);
-  transition: all 0.3s;
-}
-
-.skill-tag:hover {
-  border-color: var(--accent);
-  color: var(--accent);
-}
-
-/* ── SKILLS SECTION ── */
-.skills {
-  padding: 4rem 3rem 2rem;
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 1.8rem;
 }
 
 .skills-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 1rem;
-  align-items: start;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem 2.5rem;
 }
 
-.skill-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  padding: 1.2rem 1.4rem;
-  cursor: pointer;
-  transition: all 0.3s;
-  position: relative;
-  overflow: hidden;
+.skill-item {
+  border-top: 1px solid var(--border);
+  padding-top: 1.1rem;
 }
 
-.skill-card:hover {
-  border-color: rgba(201, 242, 77, 0.3);
-  background: var(--bg-card-hover);
-}
-
-.skill-card.active {
-  border-color: var(--accent);
-  background: var(--bg-card-hover);
-}
-
-.skill-card-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.skill-card-name {
+.skill-item h4 {
   font-family: var(--font-display);
   font-size: 0.95rem;
   font-weight: 700;
-  color: var(--text);
+  margin-bottom: 0.4rem;
 }
 
-.skill-card-toggle {
-  font-size: 1.2rem;
-  color: var(--accent-dim);
-  transition: transform 0.3s;
-  line-height: 1;
+.skill-item h4::before {
+  content: '';
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  margin-right: 0.6rem;
+  vertical-align: middle;
+  background: var(--accent);
+  border-radius: 1px;
 }
 
-.skill-card.active .skill-card-toggle {
-  transform: rotate(45deg);
-}
-
-.skill-card-detail {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.4s ease, margin-top 0.3s ease, opacity 0.3s ease;
-  opacity: 0;
-  margin-top: 0;
-}
-
-.skill-card.active .skill-card-detail {
-  max-height: 300px;
-  opacity: 1;
-  margin-top: 1rem;
-}
-
-.skill-card-detail p {
+.skill-item p {
   color: var(--text-muted);
-  font-size: 0.85rem;
+  font-size: 0.9rem;
   line-height: 1.6;
-  border-top: 1px solid var(--border);
-  padding-top: 0.8rem;
+}
+
+.skills-tools {
+  margin-top: 2.2rem;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.skills-tools strong {
+  font-family: var(--font-display);
+  font-weight: 700;
+  color: var(--text);
+  margin-right: 0.6rem;
 }
 
 .about-details { display: flex; flex-direction: column; gap: 1.5rem; }
@@ -448,7 +466,7 @@ nav .nav-links a:hover { color: var(--accent); }
   margin-bottom: 1rem;
 }
 
-.contact p {
+.contact .contact-sub {
   color: var(--text-muted);
   margin-bottom: 2rem;
   font-size: 1.05rem;
@@ -490,6 +508,7 @@ footer {
 .case-hero {
   padding: 10rem 3rem 4rem;
   position: relative;
+  overflow: hidden;
 }
 
 .case-hero::before {
@@ -620,14 +639,14 @@ footer {
 }
 
 .case-content p {
-  color: var(--text-muted);
+  color: var(--text-soft);
   font-size: 1.05rem;
   line-height: 1.8;
   margin-bottom: 1.2rem;
 }
 
 .case-content ul {
-  color: var(--text-muted);
+  color: var(--text-soft);
   font-size: 1.05rem;
   line-height: 1.8;
   margin-bottom: 1.2rem;
@@ -635,6 +654,8 @@ footer {
 }
 
 .case-content ul li { margin-bottom: 0.5rem; }
+
+.case-content strong { color: var(--text); }
 
 .case-gallery {
   display: grid;
@@ -668,9 +689,74 @@ footer {
 
 .highlight-box p {
   color: var(--text);
-  font-style: italic;
   margin: 0;
 }
+
+/* Kurze Zitate kursiv und größer, längere Zusammenfassungen bleiben aufrecht */
+.highlight-box.quote p {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+/* Kurzfassung am Anfang einer Case Study */
+.case-summary {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-top: 3px solid var(--accent);
+  border-radius: 6px;
+  padding: 2rem 2.2rem;
+  margin-bottom: 1rem;
+}
+
+.case-content .case-summary .section-label {
+  color: var(--accent);
+  font-size: 0.75rem;
+  line-height: 1.6;
+  margin-bottom: 1.4rem;
+}
+
+.case-summary dl {
+  display: grid;
+  grid-template-columns: 9rem 1fr;
+  gap: 1.1rem 1.5rem;
+}
+
+.case-summary dt {
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  font-weight: 700;
+  padding-top: 0.15rem;
+}
+
+.case-summary dd {
+  color: var(--text-soft);
+  font-size: 0.98rem;
+  line-height: 1.65;
+}
+
+.case-content .case-summary ol {
+  color: var(--text-soft);
+  font-size: 0.98rem;
+  line-height: 1.65;
+  margin: 0;
+  padding-left: 1.2rem;
+}
+
+.case-content .case-summary li { margin-bottom: 0.3rem; }
+
+.case-summary .summary-link {
+  display: inline-block;
+  margin-top: 1.6rem;
+  color: var(--accent);
+  font-family: var(--font-display);
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.case-summary .summary-link:hover { text-decoration: underline; }
 
 .download-link {
   display: inline-flex;
@@ -704,9 +790,6 @@ footer {
 @font-face { font-family: "IBM Plex Mono"; font-weight: 400; font-display: swap; src: url("portfolio-demo/fonts/IBMPlexMono-400.woff2") format("woff2"); }
 @font-face { font-family: "IBM Plex Mono"; font-weight: 500; font-display: swap; src: url("portfolio-demo/fonts/IBMPlexMono-500.woff2") format("woff2"); }
 @font-face { font-family: "IBM Plex Mono"; font-weight: 700; font-display: swap; src: url("portfolio-demo/fonts/IBMPlexMono-700.woff2") format("woff2"); }
-
-/* Projektkarte: Header-GIF (2,5:1) unten bündig, darüber in seiner Grundfarbe aufgefüllt */
-.project-thumb.thumb-gif { background: linear-gradient(to bottom, #0a1324, #0d1829 60%); }
 
 /* Smartphone-Rahmen für Opening und Demo */
 .phone-frame {
@@ -806,24 +889,48 @@ footer {
 }
 
 /* ── RESPONSIVE ── */
+@media (max-width: 1100px) {
+  .project-grid { grid-template-columns: 1fr 1fr; }
+  .skills-grid { grid-template-columns: 1fr 1fr; }
+}
+
 @media (max-width: 768px) {
   nav { padding: 1rem 1.5rem; }
   nav .nav-links { gap: 1rem; }
-  nav .nav-links a { font-size: 0.8rem; }
+  nav .nav-links a, #lang-toggle { font-size: 0.8rem; }
   .hero, .projects, .about, .contact, .case-hero { padding-left: 1.5rem; padding-right: 1.5rem; }
+  .hero { padding-top: 8rem; }
+  .hero h1 { font-size: clamp(1.5rem, 8.2vw, 2.8rem); }
   .about-grid { grid-template-columns: 1fr; gap: 2.5rem; }
   .hero-links { flex-direction: column; }
+  .project-grid { grid-template-columns: 1fr; }
+  .project-card.featured { display: block; }
+  .project-card.featured .project-thumb { border-right: 0; border-bottom: 1px solid var(--border); }
+  .project-card.featured .project-info { padding: 1.5rem; }
+  .project-card.featured h3 { font-size: 1.4rem; }
+  .skills-grid { grid-template-columns: 1fr; gap: 1.5rem; }
+  .case-summary { padding: 1.5rem; }
+  .case-summary dl { grid-template-columns: 1fr; gap: 0.3rem; }
+  .case-summary dd { margin-bottom: 0.9rem; }
   .case-gallery { grid-template-columns: 1fr; }
   .case-content { padding-left: 1.5rem; padding-right: 1.5rem; }
   .case-image-full { padding: 0 1.5rem; }
   .case-hero h1 { font-size: clamp(1.6rem, 8vw, 3.8rem); overflow-wrap: break-word; }
-  .skills { padding-left: 1.5rem; padding-right: 1.5rem; }
-  .skills-grid { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); }
+  .case-content h2 { font-size: 1.35rem; hyphens: auto; overflow-wrap: break-word; }
   .case-hero-media { padding: 0 1.5rem; }
   .case-gallery.screens { grid-template-columns: 1fr 1fr; }
   .case-gallery.screens.single { grid-template-columns: 1fr; }
   .demo-embed { display: none; }
   .demo-mobile { display: block; text-align: center; }
+}
+
+/* Auf schmalen Handys reicht der Vorname, der volle Name steht im Hero.
+   „Über mich" entfällt dort, der Abschnitt folgt ohnehin direkt auf die Projekte. */
+@media (max-width: 480px) {
+  nav .logo-last,
+  nav .nav-about { display: none; }
+  nav .logo { font-size: 1rem; }
+  nav .nav-links { gap: 0.9rem; }
 }
 </style>
 </head>
@@ -831,12 +938,12 @@ footer {
 
 <!-- ═══ NAVIGATION ═══ -->
 <nav>
-  <span class="logo" onclick="showPage('home')">MATHIS</span>
+  <a class="logo" href="#top">MATHIS<span class="logo-last"> WORTHMANN</span></a>
   <div class="nav-links">
-    <a href="#projects" onclick="showPage('home')" data-i18n="nav-projects">Projekte</a>
-    <a href="#about" onclick="showPage('home')" data-i18n="nav-about">Über mich</a>
-    <a href="#contact" onclick="showPage('home')" data-i18n="nav-contact">Kontakt</a>
-    <span id="lang-toggle" style="color:var(--accent);font-weight:600;cursor:pointer;font-size:0.9rem;letter-spacing:0.04em;text-transform:uppercase;">EN</span>
+    <a href="#projects" data-i18n="nav-projects">Projekte</a>
+    <a href="#about" class="nav-about" data-i18n="nav-about">Über mich</a>
+    <a href="#contact" data-i18n="nav-contact">Kontakt</a>
+    <span id="lang-toggle">EN</span>
   </div>
 </nav>
 
@@ -846,9 +953,9 @@ footer {
 <div id="page-home" class="page active">
 
   <!-- HERO -->
-  <section class="hero">
+  <section class="hero" id="top">
     <div class="hero-badge" data-i18n="hero-badge">Portfolio</div>
-    <h1>Mathis<br><span>Game Designer</span></h1>
+    <h1>Mathis Worthmann<br><span>Game Designer</span></h1>
     <p class="hero-sub" data-i18n="hero-sub">
       Core Game Designer mit Fokus auf kooperative Spielmechaniken, 
       Spielbalance und durchdachte Spielerfahrungen – vom Brettspiel bis zum digitalen Prototyp.
@@ -859,87 +966,6 @@ footer {
     </div>
   </section>
 
-  <!-- SKILLS -->
-  <section class="skills" id="skills">
-    <p class="section-label" data-i18n="skills-label">Kompetenzen</p>
-    <h2 class="section-title" data-i18n="skills-title">Skills</h2>
-    <div class="skills-grid">
-
-      <div class="skill-card" onclick="toggleSkill(this)">
-        <div class="skill-card-header">
-          <span class="skill-card-name" data-i18n="skill-gd-name">Game Design</span>
-          <span class="skill-card-toggle">+</span>
-        </div>
-        <div class="skill-card-detail">
-          <p data-i18n="skill-gd-detail">Konzeption von Spielmechaniken, Regelsystemen und Spielerfahrungen. Erfahrung mit kooperativen und kompetitiven Designansätzen, Szenario-Design und Kampagnenstrukturen.</p>
-        </div>
-      </div>
-
-      <div class="skill-card" onclick="toggleSkill(this)">
-        <div class="skill-card-header">
-          <span class="skill-card-name" data-i18n="skill-balance-name">Balancing</span>
-          <span class="skill-card-toggle">+</span>
-        </div>
-        <div class="skill-card-detail">
-          <p data-i18n="skill-balance-detail">Analytisches Balancing über Kennzahlen, Skalierung für verschiedene Spieleranzahlen, Persona-basierte Spaß- und Frustanalyse. Erkennen und Vermeiden von Doppelskalierung.</p>
-        </div>
-      </div>
-
-      <div class="skill-card" onclick="toggleSkill(this)">
-        <div class="skill-card-header">
-          <span class="skill-card-name" data-i18n="skill-proto-name">Prototyping</span>
-          <span class="skill-card-toggle">+</span>
-        </div>
-        <div class="skill-card-detail">
-          <p data-i18n="skill-proto-detail">Erstellung analoger und digitaler Prototypen. Erfahrung mit Tabletop Simulator, Steam Workshop und physischem Prototypenbau für iteratives Testen.</p>
-        </div>
-      </div>
-
-      <div class="skill-card" onclick="toggleSkill(this)">
-        <div class="skill-card-header">
-          <span class="skill-card-name" data-i18n="skill-unity-name">Unity</span>
-          <span class="skill-card-toggle">+</span>
-        </div>
-        <div class="skill-card-detail">
-          <p data-i18n="skill-unity-detail">Spielprototypen und interaktive Walkthroughs in Unity (URP). Erfahrung mit C#-Scripting, Post-Processing, Lighting und Audio-Integration.</p>
-        </div>
-      </div>
-
-      <div class="skill-card" onclick="toggleSkill(this)">
-        <div class="skill-card-header">
-          <span class="skill-card-name" data-i18n="skill-blender-name">Blender</span>
-          <span class="skill-card-toggle">+</span>
-        </div>
-        <div class="skill-card-detail">
-          <p data-i18n="skill-blender-detail">3D-Modellierung, prozedurale Texturen und Rendering in Cycles. Erfahrung mit Hard-Surface-Modeling, Environment Art und Export-Workflows für Unity.</p>
-        </div>
-      </div>
-
-      <div class="skill-card" onclick="toggleSkill(this)">
-        <div class="skill-card-header">
-          <span class="skill-card-name" data-i18n="skill-analysis-name">Spielanalyse</span>
-          <span class="skill-card-toggle">+</span>
-        </div>
-        <div class="skill-card-detail">
-          <p data-i18n="skill-analysis-detail">Systematische Analyse von Spielmechaniken, Genre-Verortung und Wettbewerbsanalyse. Ableitung von Design-Prinzipien aus bestehenden Titeln.</p>
-        </div>
-      </div>
-
-
-
-      <div class="skill-card" onclick="toggleSkill(this)">
-        <div class="skill-card-header">
-          <span class="skill-card-name" data-i18n="skill-gimp-name">Bildbearbeitung (GIMP)</span>
-          <span class="skill-card-toggle">+</span>
-        </div>
-        <div class="skill-card-detail">
-          <p data-i18n="skill-gimp-detail">Bildbearbeitung, Asset-Aufbereitung und Texturanpassungen für Spiel- und Präsentationsmaterialien.</p>
-        </div>
-      </div>
-
-    </div>
-  </section>
-
   <!-- PROJECTS -->
   <section class="projects" id="projects">
     <p class="section-label" data-i18n="projects-label">Ausgewählte Arbeiten</p>
@@ -947,20 +973,25 @@ footer {
     <div class="project-grid">
 
       <!-- Card 0: Rätseljagd -->
-      <a class="project-card" onclick="showPage('raetseljagd')">
-        <div class="project-thumb thumb-gif">
-          <img src="images/Header_Raetseljagd_600x240.gif" alt="Animierter Header der Rätseljagd: Schriftzug über der Braunschweiger Skyline" loading="lazy" style="width:100%; height:100%; object-fit:contain; object-position:center bottom;">
+      <a class="project-card featured" href="#raetseljagd">
+        <div class="project-thumb">
+          <img src="images/Header_Raetseljagd_16zu10_1200x750.gif" alt="Animierter Header der Rätseljagd: Schriftzug über der Braunschweiger Skyline" style="width:100%; height:100%; object-fit:cover;">
         </div>
         <div class="project-info">
           <p class="project-tag" data-i18n="project4-tag">Outdoor-Rätsel · Web-App</p>
           <h3 data-i18n="project4-name">Rätseljagd Braunschweig</h3>
           <p data-i18n="project4-desc">Eine Rätseljagd durch Braunschweig, entwickelt für Hidden Games. Die Ermittlungs-App ist gehackt, nur die Stadt sagt die Wahrheit.</p>
+          <ul class="project-facts">
+            <li class="highlight" data-i18n="project4-fact1">▶ Spielbare Demo</li>
+            <li data-i18n="project4-fact2">9 Stationen · ca. 2,5 km</li>
+            <li data-i18n="project4-fact3">Werkstudent bei Hidden Games</li>
+          </ul>
           <div class="project-arrow" data-i18n="project4-arrow">Case Study lesen →</div>
         </div>
       </a>
 
       <!-- Card 1: Brettspiel -->
-      <a class="project-card" onclick="showPage('boardgame')">
+      <a class="project-card" href="#wettermaschine">
         <div class="project-thumb">
           <img src="images/Wettermaschine_Cover.jpg" alt="Cover Die Wettermaschine - kooperatives Brettspiel mit zentralem Würfelturm" style="width:100%; height:100%; object-fit:cover;">
         </div>
@@ -973,7 +1004,7 @@ footer {
       </a>
 
       <!-- Card 2: Spielprototyp -->
-      <a class="project-card" onclick="showPage('reign')">
+      <a class="project-card" href="#reign">
         <div class="project-thumb">
           <img src="images/Reign_Cover.jpg" alt="Reign - mittelalterliches Ressourcenverwaltungsspiel in Unity" loading="lazy" style="width:100%; height:100%; object-fit:cover;">
         </div>
@@ -986,7 +1017,7 @@ footer {
       </a>
 
       <!-- Card 3: 3D-Modell -->
-      <a class="project-card" onclick="showPage('energiekern')">
+      <a class="project-card" href="#energiekern">
         <div class="project-thumb">
           <img src="images/Energiekern_Cover.png" alt="Futuristischer Energiekern - Sci-Fi Environment in Blender" loading="lazy" style="width:100%; height:100%; object-fit:cover;">
         </div>
@@ -1036,13 +1067,44 @@ footer {
         </div>
       </div>
     </div>
+
+    <div class="skills">
+      <h3 class="skills-heading" data-i18n="skills-title">Kompetenzen</h3>
+      <div class="skills-grid">
+        <div class="skill-item">
+          <h4 data-i18n="skill-gd-name">Game Design</h4>
+          <p data-i18n="skill-gd-detail">Konzeption von Spielmechaniken, Regelsystemen und Spielerfahrungen. Erfahrung mit kooperativen und kompetitiven Designansätzen, Szenario-Design und Kampagnenstrukturen.</p>
+        </div>
+        <div class="skill-item">
+          <h4 data-i18n="skill-balance-name">Balancing</h4>
+          <p data-i18n="skill-balance-detail">Analytisches Balancing über Kennzahlen, Skalierung für verschiedene Spieleranzahlen, Persona-basierte Spaß- und Frustanalyse. Erkennen und Vermeiden von Doppelskalierung.</p>
+        </div>
+        <div class="skill-item">
+          <h4 data-i18n="skill-proto-name">Prototyping</h4>
+          <p data-i18n="skill-proto-detail">Erstellung analoger und digitaler Prototypen. Erfahrung mit Tabletop Simulator, Steam Workshop und physischem Prototypenbau für iteratives Testen.</p>
+        </div>
+        <div class="skill-item">
+          <h4 data-i18n="skill-analysis-name">Spielanalyse</h4>
+          <p data-i18n="skill-analysis-detail">Systematische Analyse von Spielmechaniken, Genre-Verortung und Wettbewerbsanalyse. Ableitung von Design-Prinzipien aus bestehenden Titeln.</p>
+        </div>
+        <div class="skill-item">
+          <h4 data-i18n="skill-unity-name">Unity</h4>
+          <p data-i18n="skill-unity-detail">Spielprototypen und interaktive Walkthroughs in Unity (URP). Erfahrung mit C#-Scripting, Post-Processing, Lighting und Audio-Integration.</p>
+        </div>
+        <div class="skill-item">
+          <h4 data-i18n="skill-blender-name">Blender</h4>
+          <p data-i18n="skill-blender-detail">3D-Modellierung, prozedurale Texturen und Rendering in Cycles. Erfahrung mit Hard-Surface-Modeling, Environment Art und Export-Workflows für Unity.</p>
+        </div>
+      </div>
+      <p class="skills-tools"><strong data-i18n="skills-tools-label">Werkzeuge</strong>Unity · Blender · Tabletop Simulator · GIMP · GitHub · Claude Code</p>
+    </div>
   </section>
 
   <!-- CONTACT -->
   <section class="contact" id="contact">
     <p class="section-label" data-i18n="contact-label">Kontakt</p>
     <h2 data-i18n="contact-title">Lass uns reden</h2>
-    <p data-i18n="contact-sub">Interesse an einer Zusammenarbeit oder Fragen zu meiner Arbeit?</p>
+    <p class="contact-sub" data-i18n="contact-sub">Interesse an einer Zusammenarbeit oder Fragen zu meiner Arbeit?</p>
     <div class="contact-links">
       <a href="mailto:mathis.worthmann@hotmail.com">✉ E-Mail</a>
       <a href="https://www.linkedin.com/in/mathisworthmann/" target="_blank">LinkedIn</a>
@@ -1065,7 +1127,7 @@ footer {
 <div id="page-boardgame" class="page">
 
   <section class="case-hero">
-    <a class="case-back" onclick="showPage('home')" data-i18n="case-back">← Zurück zur Übersicht</a>
+    <a class="case-back" href="#projects" data-i18n="case-back">← Zurück zur Übersicht</a>
     <p class="section-label" data-i18n="case-label">Case Study · Brettspiel</p>
     <h1 data-i18n="case-title">Die Wettermaschine</h1>
     <p class="hero-sub" data-i18n="case-sub">
@@ -1097,14 +1159,39 @@ footer {
 
   <div class="case-content">
 
+    <div class="case-summary">
+      <p class="section-label" data-i18n="cs-summary-label">Kurzfassung</p>
+      <dl>
+        <dt data-i18n="cs-summary-game-label">Das Spiel</dt>
+        <dd data-i18n="cs-summary-game">Kooperatives Survival-Strategie-Kennerspiel für 1–4 Spieler. Jede Runde richten die Spieler die Wettermaschine auf einen von vier Orten aus, und diese Ausrichtung entscheidet, welcher Effekt der Wetterkarte greift.</dd>
+        <dt data-i18n="cs-summary-role-label">Meine Rolle</dt>
+        <dd data-i18n="cs-summary-role">Solo-Entwickler: Konzept, Regelwerk, Balancing, Kampagne, analoger und digitaler Prototyp (Tabletop Simulator, Steam Workshop) sowie ein selbst gebauter physischer Prototyp.</dd>
+        <dt data-i18n="cs-summary-decisions-label">Kernentscheidungen</dt>
+        <dd>
+          <ol>
+            <li data-i18n="cs-summary-decision1">Die ausrichtbare Maschine als unverrückbarer Kern: jede Runde eine echte Entscheidung mit unmittelbaren Folgen.</li>
+            <li data-i18n="cs-summary-decision2">Koop-Modus vorerst gestrichen, um zuerst das Solo-Fundament sauber auszubalancieren.</li>
+            <li data-i18n="cs-summary-decision3">Skalierung analytisch hergeleitet, Doppelskalierung gezielt vermieden.</li>
+          </ol>
+        </dd>
+        <dt data-i18n="cs-summary-status-label">Stand</dt>
+        <dd data-i18n="cs-summary-status">Solo-Modus mit Regelheft und neun Kampagnenszenarien spielbar. Koop-Modus und Kampagnensystem in Arbeit; als Nächstes steht ein strukturiertes, unabhängiges Testprogramm an.</dd>
+      </dl>
+      <a href="images/Wettermaschine_Anleitung.pdf" class="summary-link" target="_blank" data-i18n="cs-summary-pdf">↓ Spielregeln als PDF</a>
+    </div>
+
     <h2 data-i18n="cs-overview-title">Überblick</h2>
     <p data-i18n="cs-overview-text">"Die Wettermaschine" ist ein mechanik-fokussiertes, kooperatives Survival-Strategie-Kennerspiel für 1–4 Spieler, in dem die Spieler auf der abgelegenen Insel Tristan da Cunha im Jahr 1605 eine außer Kontrolle geratene Wettermaschine bändigen müssen. Sie sammeln Ressourcen, bauen die Stadt wieder auf und müssen Reparaturen durchführen, bevor der Katastrophenfortschritt die Insel zerstört. Das Spiel erstreckt sich über eine Kampagne aus neun aufeinander aufbauenden Szenarien mit freischaltbaren Upgrades und Achievements.</p>
 
     <h2 data-i18n="cs-idea-title">Woher die Idee kam</h2>
-    <p data-i18n="cs-idea-text">Der Ursprung von Die Wettermaschine war kein methodischer Designprozess, sondern ein spontaner kreativer Moment. Ich lag im Bett und schlief, als ich um 6 Uhr morgens hochschreckte, und die Idee für ein eigenes Brettspiel war einfach da. Sie hielt mich wach, und das Spiel setzte sich vor meinem inneren Auge immer weiter zusammen. Das klingt ausgedacht und klischeehaft, ist aber genau so passiert. Der Kern dieser ersten Vision war sofort klar umrissen: Eine Wettermaschine ist außer Kontrolle geraten und muss repariert werden, bevor sie eine Katastrophe auslöst. Das entscheidende Detail, das die Idee von Anfang an trug, war die Möglichkeit, die Maschine in verschiedene Richtungen auszurichten und damit ihre Effekte zu beeinflussen. Diese eine Mechanik ist bis heute das Herzstück des Spiels geblieben.</p>
+    <p data-i18n="cs-idea-text">Der Ursprung von Die Wettermaschine war kein methodischer Designprozess, sondern ein spontaner kreativer Moment. Ich lag im Bett und schlief, als ich um 6 Uhr morgens hochschreckte, und die Idee für ein eigenes Brettspiel war einfach da. Sie hielt mich wach, und das Spiel setzte sich vor meinem inneren Auge immer weiter zusammen. Das klingt ausgedacht und klischeehaft, ist aber genau so passiert.</p>
+    <p data-i18n="cs-idea-text2">Der Kern dieser ersten Vision war sofort klar umrissen: Eine Wettermaschine ist außer Kontrolle geraten und muss repariert werden, bevor sie eine Katastrophe auslöst. Das entscheidende Detail, das die Idee von Anfang an trug, war die Möglichkeit, die Maschine in verschiedene Richtungen auszurichten und damit ihre Effekte zu beeinflussen. Diese eine Mechanik ist bis heute das Herzstück des Spiels geblieben.</p>
 
     <h2 data-i18n="cs-experience-title">Welche Erfahrung ich schaffen wollte</h2>
-    <p data-i18n="cs-experience-text">Meine initiale Vision drehte sich weniger darum, ein konkretes Problem zu lösen, als darum, ein bestimmtes Spielgefühl zu erzeugen. Rückblickend lassen sich drei Motivationen benennen, die mich angetrieben haben. Erstens die Faszination für das Spiel gegen das Spiel. Ich bin bekennender Spieleliebhaber, und besonders Kennerspiele ziehen mich in ihren Bann. Mich begeistern Spiele, in denen man gegen das System antritt und es zu schlagen versucht, allein oder im Team. Daraus ergab sich fast zwangsläufig mein Genre-Entschluss: ein kooperatives Survival-Strategie-Kennerspiel. Zweitens wollte ich Herausforderung mit Planbarkeit als zentrales Erlebnis verankern. Das Gefühl, das ich treffen wollte, war eine Mischung aus Bedrohung, Anspannung und der Genugtuung, übermächtige Naturgewalten am Ende doch zu bezwingen. Drittens reizte mich der Effekt eines physischen Objekts, das beim Aufbau begeistert. Schon in meiner ersten Mindmap hielt ich fest, dass die Wettermaschine als Würfelturm funktionieren soll. Inspiriert von dem Spiel Flügelschlag wollte ich den Moment einfangen, in dem ein haptisches Element für ein spürbares „Woah" sorgt. Die Maschine sollte also nicht nur das Thema sein, sondern auch ein greifbares Spielobjekt.</p>
+    <p data-i18n="cs-experience-text">Meine initiale Vision drehte sich weniger darum, ein konkretes Problem zu lösen, als darum, ein bestimmtes Spielgefühl zu erzeugen. Rückblickend lassen sich drei Motivationen benennen, die mich angetrieben haben.</p>
+    <p data-i18n="cs-experience-text2"><strong>Erstens die Faszination für das Spiel gegen das Spiel.</strong> Ich bin bekennender Spieleliebhaber, und besonders Kennerspiele ziehen mich in ihren Bann. Mich begeistern Spiele, in denen man gegen das System antritt und es zu schlagen versucht, allein oder im Team. Daraus ergab sich fast zwangsläufig mein Genre-Entschluss: ein kooperatives Survival-Strategie-Kennerspiel.</p>
+    <p data-i18n="cs-experience-text3"><strong>Zweitens wollte ich Herausforderung mit Planbarkeit als zentrales Erlebnis verankern.</strong> Das Gefühl, das ich treffen wollte, war eine Mischung aus Bedrohung, Anspannung und der Genugtuung, übermächtige Naturgewalten am Ende doch zu bezwingen.</p>
+    <p data-i18n="cs-experience-text4"><strong>Drittens reizte mich der Effekt eines physischen Objekts, das beim Aufbau begeistert.</strong> Schon in meiner ersten Mindmap hielt ich fest, dass die Wettermaschine als Würfelturm funktionieren soll. Inspiriert von dem Spiel Flügelschlag wollte ich den Moment einfangen, in dem ein haptisches Element für ein spürbares „Woah" sorgt. Die Maschine sollte also nicht nur das Thema sein, sondern auch ein greifbares Spielobjekt.</p>
 
     <h2 data-i18n="cs-anchoring-title">Wie ich die Vision verankert habe</h2>
     <p data-i18n="cs-anchoring-text1">Anders als bei vielen Projekten kam bei mir das Setting gemeinsam mit der Spielidee, sodass es mir sogar schwerfiel, überhaupt Alternativen zu suchen. Trotzdem habe ich methodisch drei Optionen durchgespielt: ein neuzeitliches Insel-Setting, ein postapokalyptisches Ödland und ein mythisches Fantasy-Szenario. Entschieden habe ich mich für die abgelegene Insel Tristan da Cunha im Jahr 1605: ein exzentrischer Erfinder, der seine eigene Maschine bändigen muss, die er ursprünglich gebaut hatte, um die Insel sicherer und bewohnbarer zu machen.</p>
@@ -1146,7 +1233,7 @@ footer {
     <p data-i18n="cs-decision3">Die dritte war die <strong>thematische Überarbeitung der Ressourcen</strong>, ebenfalls eine direkte Reaktion auf Feedback, die ich im Playtesting-Abschnitt ausführlich beschreibe.</p>
     <p data-i18n="cs-decision4">Die vierte war die <strong>Kampagnenstruktur</strong>. Statt einer Aneinanderreihung loser Partien habe ich neun Szenarien in fester Reihenfolge entworfen, die im Schwierigkeitsgrad ansteigen und thematisch eine Entwicklung erzählen – von der ersten Rückkehr in die zerstörte Stadt bis zum großen Finale an der Maschine.</p>
 
-    <div class="highlight-box">
+    <div class="highlight-box quote">
       <p data-i18n="cs-highlight-blind">„Betriebsblindheit ist die größte Gefahr des Solo-Entwicklers."</p>
     </div>
 
@@ -1237,7 +1324,7 @@ footer {
 <div id="page-reign" class="page">
 
   <section class="case-hero">
-    <a class="case-back" onclick="showPage('home')" data-i18n="reign-back">← Zurück zur Übersicht</a>
+    <a class="case-back" href="#projects" data-i18n="reign-back">← Zurück zur Übersicht</a>
     <p class="section-label" data-i18n="reign-label">Case Study · Digitaler Prototyp</p>
     <h1 data-i18n="reign-title">Reign</h1>
     <p class="hero-sub" data-i18n="reign-sub">
@@ -1347,7 +1434,7 @@ footer {
 <div id="page-energiekern" class="page">
 
   <section class="case-hero">
-    <a class="case-back" onclick="showPage('home')" data-i18n="ek-back">← Zurück zur Übersicht</a>
+    <a class="case-back" href="#projects" data-i18n="ek-back">← Zurück zur Übersicht</a>
     <p class="section-label" data-i18n="ek-label">Case Study · 3D Art</p>
     <h1 data-i18n="ek-title">Futuristischer Energiekern</h1>
     <p class="hero-sub" data-i18n="ek-sub">
@@ -1373,9 +1460,12 @@ footer {
     </div>
   </section>
 
-<video autoplay loop muted playsinline style="width:100%; border-radius:4px;">
-  <source src="images/Energiekern_Hero.mp4" type="video/mp4">
-</video>
+  <div class="case-image-full">
+    <video autoplay loop muted playsinline style="display:block; width:100%; border-radius:6px;">
+      <source src="images/Energiekern_Hero.mp4" type="video/mp4">
+    </video>
+  </div>
+
   <div class="case-content">
 
     <h2 data-i18n="ek-overview-title">Überblick</h2>
@@ -1424,7 +1514,7 @@ footer {
 <div id="page-raetseljagd" class="page">
 
   <section class="case-hero">
-    <a class="case-back" onclick="showPage('home')" data-i18n="rj-back">← Zurück zur Übersicht</a>
+    <a class="case-back" href="#projects" data-i18n="rj-back">← Zurück zur Übersicht</a>
     <p class="section-label" data-i18n="rj-label">Case Study · Outdoor-Rätsel</p>
     <h1 data-i18n="rj-title">Rätseljagd Braun&shy;schweig</h1>
     <p class="hero-sub" data-i18n="rj-sub">
@@ -1482,7 +1572,7 @@ footer {
       <img src="images/Waypoint_Riley.png" alt="App-Screen mit Kommissar Riley: sichere Leitung, Sprachnachricht und Transkript in Blau" loading="lazy" style="width:100%; border-radius:16px;">
     </div>
 
-    <div class="highlight-box">
+    <div class="highlight-box quote">
       <p data-i18n="rj-highlight">„Nichts darf allein vom Bildschirm aus lösbar sein.“</p>
     </div>
 
@@ -1515,9 +1605,7 @@ footer {
 
     <div class="demo-embed">
       <div class="phone-frame">
-        <div class="phone-screen">
-          <iframe id="rj-demo" data-src="portfolio-demo/" title="Rätseljagd – spielbare Demo" allow="autoplay"></iframe>
-        </div>
+        <div class="phone-screen" id="rj-demo"></div>
       </div>
     </div>
     <div class="demo-mobile">
@@ -1545,46 +1633,69 @@ footer {
 </div>
 <!-- ═══ PAGE ROUTING ═══ -->
 <script>
+// Jede Case Study hat einen eigenen Hash (z. B. #raetseljagd), damit sie verlinkbar ist
+// und der Zurück-Button des Browsers funktioniert. Alle anderen Hashes sind Abschnitte der Startseite.
+const casePages = {
+  wettermaschine: 'boardgame',
+  reign: 'reign',
+  energiekern: 'energiekern',
+  raetseljagd: 'raetseljagd'
+};
+let homeScroll = 0;
+
 function showPage(page) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.getElementById('page-' + page).classList.add('active');
-  window.scrollTo({ top: 0, behavior: 'smooth' });
   raetseljagdPage(page === 'raetseljagd');
 }
 
-// Smooth scroll for anchor links on home page
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-  anchor.addEventListener('click', function(e) {
-    const target = this.getAttribute('href');
-    if (target !== '#' && document.querySelector(target)) {
-      e.preventDefault();
-      document.querySelector(target).scrollIntoView({ behavior: 'smooth' });
-    }
-  });
-});
-</script>
+function route() {
+  const hash = decodeURIComponent(location.hash.slice(1));
+  const homeActive = document.getElementById('page-home').classList.contains('active');
 
-<!-- ═══ SKILL TOGGLE ═══ -->
-<script>
-function toggleSkill(card) {
-  const wasActive = card.classList.contains('active');
-  document.querySelectorAll('.skill-card').forEach(c => c.classList.remove('active'));
-  if (!wasActive) card.classList.add('active');
+  if (casePages[hash]) {
+    if (homeActive) homeScroll = window.scrollY;
+    showPage(casePages[hash]);
+    window.scrollTo({ top: 0, behavior: 'instant' });
+    return;
+  }
+
+  showPage('home');
+  const section = hash && document.getElementById(hash);
+  if (section) section.scrollIntoView({ behavior: homeActive ? 'smooth' : 'instant' });
+  else if (!homeActive) window.scrollTo({ top: homeScroll, behavior: 'instant' });
 }
+
+window.addEventListener('hashchange', route);
+document.addEventListener('DOMContentLoaded', route);
 </script>
 
 <!-- ═══ LIGHTBOX ═══ -->
 <script>
 document.querySelectorAll('.case-gallery img, .case-image-full img').forEach(img => {
-  img.style.cursor = 'pointer';
+  img.style.cursor = 'zoom-in';
   img.addEventListener('click', function() {
     const overlay = document.createElement('div');
-    overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.9);display:flex;align-items:center;justify-content:center;z-index:1000;cursor:pointer;';
+    overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,0.9);display:flex;align-items:center;justify-content:center;z-index:1000;cursor:zoom-out;';
     const bigImg = document.createElement('img');
     bigImg.src = this.src;
+    bigImg.alt = this.alt;
     bigImg.style.cssText = 'max-width:90vw;max-height:90vh;border-radius:6px;';
-    overlay.appendChild(bigImg);
-    overlay.addEventListener('click', () => overlay.remove());
+    const closeBtn = document.createElement('button');
+    closeBtn.type = 'button';
+    closeBtn.textContent = '×';
+    closeBtn.setAttribute('aria-label', 'Schließen');
+    closeBtn.style.cssText = 'position:absolute;top:1rem;right:1.5rem;background:none;border:0;color:#e8e6e3;font-size:2.5rem;line-height:1;cursor:pointer;';
+    overlay.append(bigImg, closeBtn);
+
+    function close() {
+      overlay.remove();
+      document.removeEventListener('keydown', onKey);
+    }
+    function onKey(e) { if (e.key === 'Escape') close(); }
+
+    overlay.addEventListener('click', close);
+    document.addEventListener('keydown', onKey);
     document.body.appendChild(overlay);
   });
 });
@@ -1640,13 +1751,25 @@ document.querySelectorAll('.case-gallery img, .case-image-full img').forEach(img
   // Demo: nur am Desktop eingebettet und erst geladen, wenn die Seite offen ist.
   // Beim Verlassen wird sie entladen, damit kein Ton weiterläuft; den Fortschritt
   // speichert die Demo selbst.
-  const demo = document.getElementById('rj-demo');
+  // Das iframe wird jedes Mal neu erzeugt und wieder entfernt, statt seine src
+  // umzuschalten. So legt es keine eigenen Einträge im Browserverlauf an, und der
+  // Zurück-Button wechselt die Seite statt der Demo.
+  const demoBox = document.getElementById('rj-demo');
   const breit = window.matchMedia('(min-width: 769px)');
-  let aktiv = false;
+  let aktiv = false, demo = null;
 
   function demoLaden() {
-    const soll = aktiv && breit.matches ? demo.dataset.src : 'about:blank';
-    if (demo.getAttribute('src') !== soll) demo.src = soll;
+    const soll = aktiv && breit.matches;
+    if (soll && !demo) {
+      demo = document.createElement('iframe');
+      demo.src = 'portfolio-demo/';
+      demo.title = 'Rätseljagd – spielbare Demo';
+      demo.allow = 'autoplay';
+      demoBox.appendChild(demo);
+    } else if (!soll && demo) {
+      demo.remove();
+      demo = null;
+    }
   }
 
   window.raetseljagdPage = function(istAktiv) {

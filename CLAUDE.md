@@ -15,7 +15,9 @@ The entire site lives in two files:
 
 ### Page navigation
 
-Four "pages" are defined as `<div id="page-*" class="page">` elements. Only one has the `active` class at a time (controlled by `showPage(pageId)` at line 1296). Page IDs: `home`, `boardgame`, `reign`, `energiekern`. The URL never changes — there is no hash routing.
+Five "pages" are defined as `<div id="page-*" class="page">` elements. Only one has the `active` class at a time (controlled by `showPage(pageId)`). Page IDs: `home`, `boardgame`, `reign`, `energiekern`, `raetseljagd`.
+
+Navigation uses hash routing (`route()` on `hashchange`): each case study has its own shareable hash, mapped in `casePages` — `#wettermaschine` → `boardgame`, `#reign`, `#energiekern`, `#raetseljagd`. Any other hash (`#projects`, `#about`, `#contact`, `#top`) shows the home page and scrolls to that section. Links are plain `<a href="#…">`, no `onclick`. The browser back button works; don't add iframes that change their `src`, since each change creates a history entry (the Rätseljagd demo iframe is created/removed instead).
 
 ### Localisation system
 
